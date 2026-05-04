@@ -1,0 +1,1159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="NutriGoalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Alergije">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Opis" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Ciljevi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Opis" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="FokusTekst" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Faktor" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Favoriti">
+          <Key>
+            <PropertyRef Name="KorisnikId" />
+            <PropertyRef Name="ReceptId" />
+          </Key>
+          <Property Name="KorisnikId" Type="int" Nullable="false" />
+          <Property Name="ReceptId" Type="int" Nullable="false" />
+          <Property Name="DatumDodavanja" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kategorije">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Komentari">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KorisnikId" Type="int" Nullable="false" />
+          <Property Name="ReceptId" Type="int" Nullable="false" />
+          <Property Name="Tekst" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DatumKreiranja" Type="datetime" Nullable="false" />
+          <Property Name="Odobren" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Korisnici">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="DatumRegistracije" Type="datetime" Nullable="false" />
+          <Property Name="Uloga" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KorisnickiProfil">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KorisnikId" Type="int" Nullable="false" />
+          <Property Name="Ime" Type="nvarchar" MaxLength="100" />
+          <Property Name="Prezime" Type="nvarchar" MaxLength="100" />
+          <Property Name="DatumRodjenja" Type="date" />
+          <Property Name="Pol" Type="char" MaxLength="1" />
+          <Property Name="Visina" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Tezina" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="NivoAktivnosti" Type="int" />
+          <Property Name="CiljId" Type="int" />
+          <Property Name="BMR" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="TDEE" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="PreporucenoKalorija" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="DatumAzuriranja" Type="datetime" />
+        </EntityType>
+        <EntityType Name="KorisnikAlergije">
+          <Key>
+            <PropertyRef Name="KorisnikId" />
+            <PropertyRef Name="AlergijaId" />
+          </Key>
+          <Property Name="KorisnikId" Type="int" Nullable="false" />
+          <Property Name="AlergijaId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ocjene">
+          <Key>
+            <PropertyRef Name="KorisnikId" />
+            <PropertyRef Name="ReceptId" />
+          </Key>
+          <Property Name="KorisnikId" Type="int" Nullable="false" />
+          <Property Name="ReceptId" Type="int" Nullable="false" />
+          <Property Name="Vrijednost" Type="int" Nullable="false" />
+          <Property Name="DatumOcjene" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlanIshrane">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KorisnikId" Type="int" Nullable="false" />
+          <Property Name="DatumKreiranja" Type="datetime" Nullable="false" />
+          <Property Name="DatumOd" Type="date" Nullable="false" />
+          <Property Name="DatumDo" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReceptCiljevi">
+          <Key>
+            <PropertyRef Name="ReceptId" />
+            <PropertyRef Name="CiljId" />
+          </Key>
+          <Property Name="ReceptId" Type="int" Nullable="false" />
+          <Property Name="CiljId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recepti">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Opis" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Postupak" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Fotografija" Type="nvarchar" MaxLength="500" />
+          <Property Name="KategorijaId" Type="int" Nullable="false" />
+          <Property Name="VrijemePripreme" Type="int" Nullable="false" />
+          <Property Name="Kalorije" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Proteini" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="UgljeniHidrati" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Masti" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="DatumKreiranja" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReceptSastojci">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReceptId" Type="int" Nullable="false" />
+          <Property Name="SastojakId" Type="int" Nullable="false" />
+          <Property Name="KolicinaG" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SastojakAlergija">
+          <Key>
+            <PropertyRef Name="SastojakId" />
+            <PropertyRef Name="AlergijaId" />
+          </Key>
+          <Property Name="SastojakId" Type="int" Nullable="false" />
+          <Property Name="AlergijaId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sastojci">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="KalorijeNa100g" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="ProteinNa100g" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="UHNa100g" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="MastiNa100g" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StavkePlana">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlanId" Type="int" Nullable="false" />
+          <Property Name="ReceptId" Type="int" Nullable="false" />
+          <Property Name="DanSedmice" Type="int" Nullable="false" />
+          <Property Name="ObrokTip" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Favoriti__Korisn__0A9D95DB">
+          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="1" />
+          <End Role="Favoriti" Type="Self.Favoriti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Favoriti">
+              <PropertyRef Name="KorisnikId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Favoriti__Recept__0B91BA14">
+          <End Role="Recepti" Type="Self.Recepti" Multiplicity="1" />
+          <End Role="Favoriti" Type="Self.Favoriti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recepti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Favoriti">
+              <PropertyRef Name="ReceptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Komentari__Koris__00200768">
+          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="1" />
+          <End Role="Komentari" Type="Self.Komentari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Komentari">
+              <PropertyRef Name="KorisnikId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Komentari__Recep__01142BA1">
+          <End Role="Recepti" Type="Self.Recepti" Multiplicity="1" />
+          <End Role="Komentari" Type="Self.Komentari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recepti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Komentari">
+              <PropertyRef Name="ReceptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Korisnick__CiljI__656C112C">
+          <End Role="Ciljevi" Type="Self.Ciljevi" Multiplicity="0..1" />
+          <End Role="KorisnickiProfil" Type="Self.KorisnickiProfil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciljevi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KorisnickiProfil">
+              <PropertyRef Name="CiljId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Korisnick__Koris__6477ECF3">
+          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="1" />
+          <End Role="KorisnickiProfil" Type="Self.KorisnickiProfil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KorisnickiProfil">
+              <PropertyRef Name="KorisnikId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KorisnikA__Alerg__7B5B524B">
+          <End Role="Alergije" Type="Self.Alergije" Multiplicity="1" />
+          <End Role="KorisnikAlergije" Type="Self.KorisnikAlergije" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alergije">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KorisnikAlergije">
+              <PropertyRef Name="AlergijaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KorisnikA__Koris__7A672E12">
+          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="1" />
+          <End Role="KorisnikAlergije" Type="Self.KorisnikAlergije" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KorisnikAlergije">
+              <PropertyRef Name="KorisnikId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ocjene__Korisnik__05D8E0BE">
+          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="1" />
+          <End Role="Ocjene" Type="Self.Ocjene" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ocjene">
+              <PropertyRef Name="KorisnikId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ocjene__ReceptId__06CD04F7">
+          <End Role="Recepti" Type="Self.Recepti" Multiplicity="1" />
+          <End Role="Ocjene" Type="Self.Ocjene" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recepti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ocjene">
+              <PropertyRef Name="ReceptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PlanIshra__Koris__0F624AF8">
+          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="1" />
+          <End Role="PlanIshrane" Type="Self.PlanIshrane" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlanIshrane">
+              <PropertyRef Name="KorisnikId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReceptCil__CiljI__6E01572D">
+          <End Role="Ciljevi" Type="Self.Ciljevi" Multiplicity="1" />
+          <End Role="ReceptCiljevi" Type="Self.ReceptCiljevi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciljevi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceptCiljevi">
+              <PropertyRef Name="CiljId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReceptCil__Recep__6D0D32F4">
+          <End Role="Recepti" Type="Self.Recepti" Multiplicity="1" />
+          <End Role="ReceptCiljevi" Type="Self.ReceptCiljevi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recepti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceptCiljevi">
+              <PropertyRef Name="ReceptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Recepti__Kategor__6A30C649">
+          <End Role="Kategorije" Type="Self.Kategorije" Multiplicity="1" />
+          <End Role="Recepti" Type="Self.Recepti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategorije">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Recepti">
+              <PropertyRef Name="KategorijaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReceptSas__Recep__72C60C4A">
+          <End Role="Recepti" Type="Self.Recepti" Multiplicity="1" />
+          <End Role="ReceptSastojci" Type="Self.ReceptSastojci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recepti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceptSastojci">
+              <PropertyRef Name="ReceptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReceptSas__Sasto__73BA3083">
+          <End Role="Sastojci" Type="Self.Sastojci" Multiplicity="1" />
+          <End Role="ReceptSastojci" Type="Self.ReceptSastojci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sastojci">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceptSastojci">
+              <PropertyRef Name="SastojakId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SastojakA__Alerg__778AC167">
+          <End Role="Alergije" Type="Self.Alergije" Multiplicity="1" />
+          <End Role="SastojakAlergija" Type="Self.SastojakAlergija" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alergije">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SastojakAlergija">
+              <PropertyRef Name="AlergijaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SastojakA__Sasto__76969D2E">
+          <End Role="Sastojci" Type="Self.Sastojci" Multiplicity="1" />
+          <End Role="SastojakAlergija" Type="Self.SastojakAlergija" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sastojci">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SastojakAlergija">
+              <PropertyRef Name="SastojakId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StavkePla__PlanI__151B244E">
+          <End Role="PlanIshrane" Type="Self.PlanIshrane" Multiplicity="1" />
+          <End Role="StavkePlana" Type="Self.StavkePlana" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlanIshrane">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StavkePlana">
+              <PropertyRef Name="PlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StavkePla__Recep__160F4887">
+          <End Role="Recepti" Type="Self.Recepti" Multiplicity="1" />
+          <End Role="StavkePlana" Type="Self.StavkePlana" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recepti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StavkePlana">
+              <PropertyRef Name="ReceptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NutriGoalModelStoreContainer">
+          <EntitySet Name="Alergije" EntityType="Self.Alergije" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ciljevi" EntityType="Self.Ciljevi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Favoriti" EntityType="Self.Favoriti" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kategorije" EntityType="Self.Kategorije" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Komentari" EntityType="Self.Komentari" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Korisnici" EntityType="Self.Korisnici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KorisnickiProfil" EntityType="Self.KorisnickiProfil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KorisnikAlergije" EntityType="Self.KorisnikAlergije" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ocjene" EntityType="Self.Ocjene" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlanIshrane" EntityType="Self.PlanIshrane" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReceptCiljevi" EntityType="Self.ReceptCiljevi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recepti" EntityType="Self.Recepti" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReceptSastojci" EntityType="Self.ReceptSastojci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SastojakAlergija" EntityType="Self.SastojakAlergija" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sastojci" EntityType="Self.Sastojci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StavkePlana" EntityType="Self.StavkePlana" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Favoriti__Korisn__0A9D95DB" Association="Self.FK__Favoriti__Korisn__0A9D95DB">
+            <End Role="Korisnici" EntitySet="Korisnici" />
+            <End Role="Favoriti" EntitySet="Favoriti" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Favoriti__Recept__0B91BA14" Association="Self.FK__Favoriti__Recept__0B91BA14">
+            <End Role="Recepti" EntitySet="Recepti" />
+            <End Role="Favoriti" EntitySet="Favoriti" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Komentari__Koris__00200768" Association="Self.FK__Komentari__Koris__00200768">
+            <End Role="Korisnici" EntitySet="Korisnici" />
+            <End Role="Komentari" EntitySet="Komentari" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Komentari__Recep__01142BA1" Association="Self.FK__Komentari__Recep__01142BA1">
+            <End Role="Recepti" EntitySet="Recepti" />
+            <End Role="Komentari" EntitySet="Komentari" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Korisnick__CiljI__656C112C" Association="Self.FK__Korisnick__CiljI__656C112C">
+            <End Role="Ciljevi" EntitySet="Ciljevi" />
+            <End Role="KorisnickiProfil" EntitySet="KorisnickiProfil" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Korisnick__Koris__6477ECF3" Association="Self.FK__Korisnick__Koris__6477ECF3">
+            <End Role="Korisnici" EntitySet="Korisnici" />
+            <End Role="KorisnickiProfil" EntitySet="KorisnickiProfil" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KorisnikA__Alerg__7B5B524B" Association="Self.FK__KorisnikA__Alerg__7B5B524B">
+            <End Role="Alergije" EntitySet="Alergije" />
+            <End Role="KorisnikAlergije" EntitySet="KorisnikAlergije" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KorisnikA__Koris__7A672E12" Association="Self.FK__KorisnikA__Koris__7A672E12">
+            <End Role="Korisnici" EntitySet="Korisnici" />
+            <End Role="KorisnikAlergije" EntitySet="KorisnikAlergije" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ocjene__Korisnik__05D8E0BE" Association="Self.FK__Ocjene__Korisnik__05D8E0BE">
+            <End Role="Korisnici" EntitySet="Korisnici" />
+            <End Role="Ocjene" EntitySet="Ocjene" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ocjene__ReceptId__06CD04F7" Association="Self.FK__Ocjene__ReceptId__06CD04F7">
+            <End Role="Recepti" EntitySet="Recepti" />
+            <End Role="Ocjene" EntitySet="Ocjene" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PlanIshra__Koris__0F624AF8" Association="Self.FK__PlanIshra__Koris__0F624AF8">
+            <End Role="Korisnici" EntitySet="Korisnici" />
+            <End Role="PlanIshrane" EntitySet="PlanIshrane" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReceptCil__CiljI__6E01572D" Association="Self.FK__ReceptCil__CiljI__6E01572D">
+            <End Role="Ciljevi" EntitySet="Ciljevi" />
+            <End Role="ReceptCiljevi" EntitySet="ReceptCiljevi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReceptCil__Recep__6D0D32F4" Association="Self.FK__ReceptCil__Recep__6D0D32F4">
+            <End Role="Recepti" EntitySet="Recepti" />
+            <End Role="ReceptCiljevi" EntitySet="ReceptCiljevi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Recepti__Kategor__6A30C649" Association="Self.FK__Recepti__Kategor__6A30C649">
+            <End Role="Kategorije" EntitySet="Kategorije" />
+            <End Role="Recepti" EntitySet="Recepti" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReceptSas__Recep__72C60C4A" Association="Self.FK__ReceptSas__Recep__72C60C4A">
+            <End Role="Recepti" EntitySet="Recepti" />
+            <End Role="ReceptSastojci" EntitySet="ReceptSastojci" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReceptSas__Sasto__73BA3083" Association="Self.FK__ReceptSas__Sasto__73BA3083">
+            <End Role="Sastojci" EntitySet="Sastojci" />
+            <End Role="ReceptSastojci" EntitySet="ReceptSastojci" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SastojakA__Alerg__778AC167" Association="Self.FK__SastojakA__Alerg__778AC167">
+            <End Role="Alergije" EntitySet="Alergije" />
+            <End Role="SastojakAlergija" EntitySet="SastojakAlergija" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SastojakA__Sasto__76969D2E" Association="Self.FK__SastojakA__Sasto__76969D2E">
+            <End Role="Sastojci" EntitySet="Sastojci" />
+            <End Role="SastojakAlergija" EntitySet="SastojakAlergija" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StavkePla__PlanI__151B244E" Association="Self.FK__StavkePla__PlanI__151B244E">
+            <End Role="PlanIshrane" EntitySet="PlanIshrane" />
+            <End Role="StavkePlana" EntitySet="StavkePlana" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StavkePla__Recep__160F4887" Association="Self.FK__StavkePla__Recep__160F4887">
+            <End Role="Recepti" EntitySet="Recepti" />
+            <End Role="StavkePlana" EntitySet="StavkePlana" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NutriGoalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Alergije">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Korisnici" Relationship="Self.KorisnikAlergije" FromRole="Alergije" ToRole="Korisnici" />
+          <NavigationProperty Name="Sastojci" Relationship="Self.SastojakAlergija" FromRole="Alergije" ToRole="Sastojci" />
+        </EntityType>
+        <EntityType Name="Ciljevi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FokusTekst" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Faktor" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
+          <NavigationProperty Name="KorisnickiProfil" Relationship="Self.FK__Korisnick__CiljI__656C112C" FromRole="Ciljevi" ToRole="KorisnickiProfil" />
+          <NavigationProperty Name="Recepti" Relationship="Self.ReceptCiljevi" FromRole="Ciljevi" ToRole="Recepti" />
+        </EntityType>
+        <EntityType Name="Favoriti">
+          <Key>
+            <PropertyRef Name="KorisnikId" />
+            <PropertyRef Name="ReceptId" />
+          </Key>
+          <Property Name="KorisnikId" Type="Int32" Nullable="false" />
+          <Property Name="ReceptId" Type="Int32" Nullable="false" />
+          <Property Name="DatumDodavanja" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Korisnici" Relationship="Self.FK__Favoriti__Korisn__0A9D95DB" FromRole="Favoriti" ToRole="Korisnici" />
+          <NavigationProperty Name="Recepti" Relationship="Self.FK__Favoriti__Recept__0B91BA14" FromRole="Favoriti" ToRole="Recepti" />
+        </EntityType>
+        <EntityType Name="Kategorije">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Recepti" Relationship="Self.FK__Recepti__Kategor__6A30C649" FromRole="Kategorije" ToRole="Recepti" />
+        </EntityType>
+        <EntityType Name="Komentari">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KorisnikId" Type="Int32" Nullable="false" />
+          <Property Name="ReceptId" Type="Int32" Nullable="false" />
+          <Property Name="Tekst" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DatumKreiranja" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Odobren" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Korisnici" Relationship="Self.FK__Komentari__Koris__00200768" FromRole="Komentari" ToRole="Korisnici" />
+          <NavigationProperty Name="Recepti" Relationship="Self.FK__Komentari__Recep__01142BA1" FromRole="Komentari" ToRole="Recepti" />
+        </EntityType>
+        <EntityType Name="Korisnici">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DatumRegistracije" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Uloga" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Favoriti" Relationship="Self.FK__Favoriti__Korisn__0A9D95DB" FromRole="Korisnici" ToRole="Favoriti" />
+          <NavigationProperty Name="Komentari" Relationship="Self.FK__Komentari__Koris__00200768" FromRole="Korisnici" ToRole="Komentari" />
+          <NavigationProperty Name="KorisnickiProfil" Relationship="Self.FK__Korisnick__Koris__6477ECF3" FromRole="Korisnici" ToRole="KorisnickiProfil" />
+          <NavigationProperty Name="Ocjene" Relationship="Self.FK__Ocjene__Korisnik__05D8E0BE" FromRole="Korisnici" ToRole="Ocjene" />
+          <NavigationProperty Name="PlanIshrane" Relationship="Self.FK__PlanIshra__Koris__0F624AF8" FromRole="Korisnici" ToRole="PlanIshrane" />
+          <NavigationProperty Name="Alergije" Relationship="Self.KorisnikAlergije" FromRole="Korisnici" ToRole="Alergije" />
+        </EntityType>
+        <EntityType Name="KorisnickiProfil">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KorisnikId" Type="Int32" Nullable="false" />
+          <Property Name="Ime" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Prezime" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DatumRodjenja" Type="DateTime" Precision="0" />
+          <Property Name="Pol" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Visina" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Tezina" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="NivoAktivnosti" Type="Int32" />
+          <Property Name="CiljId" Type="Int32" />
+          <Property Name="BMR" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="TDEE" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="PreporucenoKalorija" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="DatumAzuriranja" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Ciljevi" Relationship="Self.FK__Korisnick__CiljI__656C112C" FromRole="KorisnickiProfil" ToRole="Ciljevi" />
+          <NavigationProperty Name="Korisnici" Relationship="Self.FK__Korisnick__Koris__6477ECF3" FromRole="KorisnickiProfil" ToRole="Korisnici" />
+        </EntityType>
+        <EntityType Name="Ocjene">
+          <Key>
+            <PropertyRef Name="KorisnikId" />
+            <PropertyRef Name="ReceptId" />
+          </Key>
+          <Property Name="KorisnikId" Type="Int32" Nullable="false" />
+          <Property Name="ReceptId" Type="Int32" Nullable="false" />
+          <Property Name="Vrijednost" Type="Int32" Nullable="false" />
+          <Property Name="DatumOcjene" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Korisnici" Relationship="Self.FK__Ocjene__Korisnik__05D8E0BE" FromRole="Ocjene" ToRole="Korisnici" />
+          <NavigationProperty Name="Recepti" Relationship="Self.FK__Ocjene__ReceptId__06CD04F7" FromRole="Ocjene" ToRole="Recepti" />
+        </EntityType>
+        <EntityType Name="PlanIshrane">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KorisnikId" Type="Int32" Nullable="false" />
+          <Property Name="DatumKreiranja" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DatumOd" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DatumDo" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Korisnici" Relationship="Self.FK__PlanIshra__Koris__0F624AF8" FromRole="PlanIshrane" ToRole="Korisnici" />
+          <NavigationProperty Name="StavkePlana" Relationship="Self.FK__StavkePla__PlanI__151B244E" FromRole="PlanIshrane" ToRole="StavkePlana" />
+        </EntityType>
+        <EntityType Name="Recepti">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Postupak" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Fotografija" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="KategorijaId" Type="Int32" Nullable="false" />
+          <Property Name="VrijemePripreme" Type="Int32" Nullable="false" />
+          <Property Name="Kalorije" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Proteini" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="UgljeniHidrati" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Masti" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="DatumKreiranja" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Favoriti" Relationship="Self.FK__Favoriti__Recept__0B91BA14" FromRole="Recepti" ToRole="Favoriti" />
+          <NavigationProperty Name="Kategorije" Relationship="Self.FK__Recepti__Kategor__6A30C649" FromRole="Recepti" ToRole="Kategorije" />
+          <NavigationProperty Name="Komentari" Relationship="Self.FK__Komentari__Recep__01142BA1" FromRole="Recepti" ToRole="Komentari" />
+          <NavigationProperty Name="Ocjene" Relationship="Self.FK__Ocjene__ReceptId__06CD04F7" FromRole="Recepti" ToRole="Ocjene" />
+          <NavigationProperty Name="ReceptSastojci" Relationship="Self.FK__ReceptSas__Recep__72C60C4A" FromRole="Recepti" ToRole="ReceptSastojci" />
+          <NavigationProperty Name="StavkePlana" Relationship="Self.FK__StavkePla__Recep__160F4887" FromRole="Recepti" ToRole="StavkePlana" />
+          <NavigationProperty Name="Ciljevi" Relationship="Self.ReceptCiljevi" FromRole="Recepti" ToRole="Ciljevi" />
+        </EntityType>
+        <EntityType Name="ReceptSastojci">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReceptId" Type="Int32" Nullable="false" />
+          <Property Name="SastojakId" Type="Int32" Nullable="false" />
+          <Property Name="KolicinaG" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Recepti" Relationship="Self.FK__ReceptSas__Recep__72C60C4A" FromRole="ReceptSastojci" ToRole="Recepti" />
+          <NavigationProperty Name="Sastojci" Relationship="Self.FK__ReceptSas__Sasto__73BA3083" FromRole="ReceptSastojci" ToRole="Sastojci" />
+        </EntityType>
+        <EntityType Name="Sastojci">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KalorijeNa100g" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="ProteinNa100g" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="UHNa100g" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="MastiNa100g" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="ReceptSastojci" Relationship="Self.FK__ReceptSas__Sasto__73BA3083" FromRole="Sastojci" ToRole="ReceptSastojci" />
+          <NavigationProperty Name="Alergije" Relationship="Self.SastojakAlergija" FromRole="Sastojci" ToRole="Alergije" />
+        </EntityType>
+        <EntityType Name="StavkePlana">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlanId" Type="Int32" Nullable="false" />
+          <Property Name="ReceptId" Type="Int32" Nullable="false" />
+          <Property Name="DanSedmice" Type="Int32" Nullable="false" />
+          <Property Name="ObrokTip" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PlanIshrane" Relationship="Self.FK__StavkePla__PlanI__151B244E" FromRole="StavkePlana" ToRole="PlanIshrane" />
+          <NavigationProperty Name="Recepti" Relationship="Self.FK__StavkePla__Recep__160F4887" FromRole="StavkePlana" ToRole="Recepti" />
+        </EntityType>
+        <Association Name="FK__Korisnick__CiljI__656C112C">
+          <End Role="Ciljevi" Type="Self.Ciljevi" Multiplicity="0..1" />
+          <End Role="KorisnickiProfil" Type="Self.KorisnickiProfil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciljevi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KorisnickiProfil">
+              <PropertyRef Name="CiljId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Favoriti__Korisn__0A9D95DB">
+          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="1" />
+          <End Role="Favoriti" Type="Self.Favoriti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Favoriti">
+              <PropertyRef Name="KorisnikId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Favoriti__Recept__0B91BA14">
+          <End Role="Recepti" Type="Self.Recepti" Multiplicity="1" />
+          <End Role="Favoriti" Type="Self.Favoriti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recepti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Favoriti">
+              <PropertyRef Name="ReceptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Recepti__Kategor__6A30C649">
+          <End Role="Kategorije" Type="Self.Kategorije" Multiplicity="1" />
+          <End Role="Recepti" Type="Self.Recepti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategorije">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Recepti">
+              <PropertyRef Name="KategorijaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Komentari__Koris__00200768">
+          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="1" />
+          <End Role="Komentari" Type="Self.Komentari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Komentari">
+              <PropertyRef Name="KorisnikId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Komentari__Recep__01142BA1">
+          <End Role="Recepti" Type="Self.Recepti" Multiplicity="1" />
+          <End Role="Komentari" Type="Self.Komentari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recepti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Komentari">
+              <PropertyRef Name="ReceptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Korisnick__Koris__6477ECF3">
+          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="1" />
+          <End Role="KorisnickiProfil" Type="Self.KorisnickiProfil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KorisnickiProfil">
+              <PropertyRef Name="KorisnikId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ocjene__Korisnik__05D8E0BE">
+          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="1" />
+          <End Role="Ocjene" Type="Self.Ocjene" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ocjene">
+              <PropertyRef Name="KorisnikId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PlanIshra__Koris__0F624AF8">
+          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="1" />
+          <End Role="PlanIshrane" Type="Self.PlanIshrane" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlanIshrane">
+              <PropertyRef Name="KorisnikId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ocjene__ReceptId__06CD04F7">
+          <End Role="Recepti" Type="Self.Recepti" Multiplicity="1" />
+          <End Role="Ocjene" Type="Self.Ocjene" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recepti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ocjene">
+              <PropertyRef Name="ReceptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StavkePla__PlanI__151B244E">
+          <End Role="PlanIshrane" Type="Self.PlanIshrane" Multiplicity="1" />
+          <End Role="StavkePlana" Type="Self.StavkePlana" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlanIshrane">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StavkePlana">
+              <PropertyRef Name="PlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReceptSas__Recep__72C60C4A">
+          <End Role="Recepti" Type="Self.Recepti" Multiplicity="1" />
+          <End Role="ReceptSastojci" Type="Self.ReceptSastojci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recepti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceptSastojci">
+              <PropertyRef Name="ReceptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StavkePla__Recep__160F4887">
+          <End Role="Recepti" Type="Self.Recepti" Multiplicity="1" />
+          <End Role="StavkePlana" Type="Self.StavkePlana" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recepti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StavkePlana">
+              <PropertyRef Name="ReceptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReceptSas__Sasto__73BA3083">
+          <End Role="Sastojci" Type="Self.Sastojci" Multiplicity="1" />
+          <End Role="ReceptSastojci" Type="Self.ReceptSastojci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sastojci">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceptSastojci">
+              <PropertyRef Name="SastojakId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="KorisnikAlergije">
+          <End Role="Alergije" Type="Self.Alergije" Multiplicity="*" />
+          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="*" />
+        </Association>
+        <Association Name="ReceptCiljevi">
+          <End Role="Ciljevi" Type="Self.Ciljevi" Multiplicity="*" />
+          <End Role="Recepti" Type="Self.Recepti" Multiplicity="*" />
+        </Association>
+        <Association Name="SastojakAlergija">
+          <End Role="Alergije" Type="Self.Alergije" Multiplicity="*" />
+          <End Role="Sastojci" Type="Self.Sastojci" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="NutriGoalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Alergije" EntityType="Self.Alergije" />
+          <EntitySet Name="Ciljevi" EntityType="Self.Ciljevi" />
+          <EntitySet Name="Favoriti" EntityType="Self.Favoriti" />
+          <EntitySet Name="Kategorije" EntityType="Self.Kategorije" />
+          <EntitySet Name="Komentari" EntityType="Self.Komentari" />
+          <EntitySet Name="Korisnici" EntityType="Self.Korisnici" />
+          <EntitySet Name="KorisnickiProfil" EntityType="Self.KorisnickiProfil" />
+          <EntitySet Name="Ocjene" EntityType="Self.Ocjene" />
+          <EntitySet Name="PlanIshrane" EntityType="Self.PlanIshrane" />
+          <EntitySet Name="Recepti" EntityType="Self.Recepti" />
+          <EntitySet Name="ReceptSastojci" EntityType="Self.ReceptSastojci" />
+          <EntitySet Name="Sastojci" EntityType="Self.Sastojci" />
+          <EntitySet Name="StavkePlana" EntityType="Self.StavkePlana" />
+          <AssociationSet Name="FK__Korisnick__CiljI__656C112C" Association="Self.FK__Korisnick__CiljI__656C112C">
+            <End Role="Ciljevi" EntitySet="Ciljevi" />
+            <End Role="KorisnickiProfil" EntitySet="KorisnickiProfil" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Favoriti__Korisn__0A9D95DB" Association="Self.FK__Favoriti__Korisn__0A9D95DB">
+            <End Role="Korisnici" EntitySet="Korisnici" />
+            <End Role="Favoriti" EntitySet="Favoriti" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Favoriti__Recept__0B91BA14" Association="Self.FK__Favoriti__Recept__0B91BA14">
+            <End Role="Recepti" EntitySet="Recepti" />
+            <End Role="Favoriti" EntitySet="Favoriti" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Recepti__Kategor__6A30C649" Association="Self.FK__Recepti__Kategor__6A30C649">
+            <End Role="Kategorije" EntitySet="Kategorije" />
+            <End Role="Recepti" EntitySet="Recepti" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Komentari__Koris__00200768" Association="Self.FK__Komentari__Koris__00200768">
+            <End Role="Korisnici" EntitySet="Korisnici" />
+            <End Role="Komentari" EntitySet="Komentari" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Komentari__Recep__01142BA1" Association="Self.FK__Komentari__Recep__01142BA1">
+            <End Role="Recepti" EntitySet="Recepti" />
+            <End Role="Komentari" EntitySet="Komentari" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Korisnick__Koris__6477ECF3" Association="Self.FK__Korisnick__Koris__6477ECF3">
+            <End Role="Korisnici" EntitySet="Korisnici" />
+            <End Role="KorisnickiProfil" EntitySet="KorisnickiProfil" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ocjene__Korisnik__05D8E0BE" Association="Self.FK__Ocjene__Korisnik__05D8E0BE">
+            <End Role="Korisnici" EntitySet="Korisnici" />
+            <End Role="Ocjene" EntitySet="Ocjene" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PlanIshra__Koris__0F624AF8" Association="Self.FK__PlanIshra__Koris__0F624AF8">
+            <End Role="Korisnici" EntitySet="Korisnici" />
+            <End Role="PlanIshrane" EntitySet="PlanIshrane" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ocjene__ReceptId__06CD04F7" Association="Self.FK__Ocjene__ReceptId__06CD04F7">
+            <End Role="Recepti" EntitySet="Recepti" />
+            <End Role="Ocjene" EntitySet="Ocjene" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StavkePla__PlanI__151B244E" Association="Self.FK__StavkePla__PlanI__151B244E">
+            <End Role="PlanIshrane" EntitySet="PlanIshrane" />
+            <End Role="StavkePlana" EntitySet="StavkePlana" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReceptSas__Recep__72C60C4A" Association="Self.FK__ReceptSas__Recep__72C60C4A">
+            <End Role="Recepti" EntitySet="Recepti" />
+            <End Role="ReceptSastojci" EntitySet="ReceptSastojci" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StavkePla__Recep__160F4887" Association="Self.FK__StavkePla__Recep__160F4887">
+            <End Role="Recepti" EntitySet="Recepti" />
+            <End Role="StavkePlana" EntitySet="StavkePlana" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReceptSas__Sasto__73BA3083" Association="Self.FK__ReceptSas__Sasto__73BA3083">
+            <End Role="Sastojci" EntitySet="Sastojci" />
+            <End Role="ReceptSastojci" EntitySet="ReceptSastojci" />
+          </AssociationSet>
+          <AssociationSet Name="KorisnikAlergije" Association="Self.KorisnikAlergije">
+            <End Role="Alergije" EntitySet="Alergije" />
+            <End Role="Korisnici" EntitySet="Korisnici" />
+          </AssociationSet>
+          <AssociationSet Name="ReceptCiljevi" Association="Self.ReceptCiljevi">
+            <End Role="Ciljevi" EntitySet="Ciljevi" />
+            <End Role="Recepti" EntitySet="Recepti" />
+          </AssociationSet>
+          <AssociationSet Name="SastojakAlergija" Association="Self.SastojakAlergija">
+            <End Role="Alergije" EntitySet="Alergije" />
+            <End Role="Sastojci" EntitySet="Sastojci" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NutriGoalModelStoreContainer" CdmEntityContainer="NutriGoalEntities">
+          <EntitySetMapping Name="Alergije">
+            <EntityTypeMapping TypeName="NutriGoalModel.Alergije">
+              <MappingFragment StoreEntitySet="Alergije">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ciljevi">
+            <EntityTypeMapping TypeName="NutriGoalModel.Ciljevi">
+              <MappingFragment StoreEntitySet="Ciljevi">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="FokusTekst" ColumnName="FokusTekst" />
+                <ScalarProperty Name="Faktor" ColumnName="Faktor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Favoriti">
+            <EntityTypeMapping TypeName="NutriGoalModel.Favoriti">
+              <MappingFragment StoreEntitySet="Favoriti">
+                <ScalarProperty Name="KorisnikId" ColumnName="KorisnikId" />
+                <ScalarProperty Name="ReceptId" ColumnName="ReceptId" />
+                <ScalarProperty Name="DatumDodavanja" ColumnName="DatumDodavanja" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kategorije">
+            <EntityTypeMapping TypeName="NutriGoalModel.Kategorije">
+              <MappingFragment StoreEntitySet="Kategorije">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Komentari">
+            <EntityTypeMapping TypeName="NutriGoalModel.Komentari">
+              <MappingFragment StoreEntitySet="Komentari">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="KorisnikId" ColumnName="KorisnikId" />
+                <ScalarProperty Name="ReceptId" ColumnName="ReceptId" />
+                <ScalarProperty Name="Tekst" ColumnName="Tekst" />
+                <ScalarProperty Name="DatumKreiranja" ColumnName="DatumKreiranja" />
+                <ScalarProperty Name="Odobren" ColumnName="Odobren" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Korisnici">
+            <EntityTypeMapping TypeName="NutriGoalModel.Korisnici">
+              <MappingFragment StoreEntitySet="Korisnici">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="DatumRegistracije" ColumnName="DatumRegistracije" />
+                <ScalarProperty Name="Uloga" ColumnName="Uloga" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KorisnickiProfil">
+            <EntityTypeMapping TypeName="NutriGoalModel.KorisnickiProfil">
+              <MappingFragment StoreEntitySet="KorisnickiProfil">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="KorisnikId" ColumnName="KorisnikId" />
+                <ScalarProperty Name="Ime" ColumnName="Ime" />
+                <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+                <ScalarProperty Name="DatumRodjenja" ColumnName="DatumRodjenja" />
+                <ScalarProperty Name="Pol" ColumnName="Pol" />
+                <ScalarProperty Name="Visina" ColumnName="Visina" />
+                <ScalarProperty Name="Tezina" ColumnName="Tezina" />
+                <ScalarProperty Name="NivoAktivnosti" ColumnName="NivoAktivnosti" />
+                <ScalarProperty Name="CiljId" ColumnName="CiljId" />
+                <ScalarProperty Name="BMR" ColumnName="BMR" />
+                <ScalarProperty Name="TDEE" ColumnName="TDEE" />
+                <ScalarProperty Name="PreporucenoKalorija" ColumnName="PreporucenoKalorija" />
+                <ScalarProperty Name="DatumAzuriranja" ColumnName="DatumAzuriranja" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ocjene">
+            <EntityTypeMapping TypeName="NutriGoalModel.Ocjene">
+              <MappingFragment StoreEntitySet="Ocjene">
+                <ScalarProperty Name="KorisnikId" ColumnName="KorisnikId" />
+                <ScalarProperty Name="ReceptId" ColumnName="ReceptId" />
+                <ScalarProperty Name="Vrijednost" ColumnName="Vrijednost" />
+                <ScalarProperty Name="DatumOcjene" ColumnName="DatumOcjene" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlanIshrane">
+            <EntityTypeMapping TypeName="NutriGoalModel.PlanIshrane">
+              <MappingFragment StoreEntitySet="PlanIshrane">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="KorisnikId" ColumnName="KorisnikId" />
+                <ScalarProperty Name="DatumKreiranja" ColumnName="DatumKreiranja" />
+                <ScalarProperty Name="DatumOd" ColumnName="DatumOd" />
+                <ScalarProperty Name="DatumDo" ColumnName="DatumDo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recepti">
+            <EntityTypeMapping TypeName="NutriGoalModel.Recepti">
+              <MappingFragment StoreEntitySet="Recepti">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="Postupak" ColumnName="Postupak" />
+                <ScalarProperty Name="Fotografija" ColumnName="Fotografija" />
+                <ScalarProperty Name="KategorijaId" ColumnName="KategorijaId" />
+                <ScalarProperty Name="VrijemePripreme" ColumnName="VrijemePripreme" />
+                <ScalarProperty Name="Kalorije" ColumnName="Kalorije" />
+                <ScalarProperty Name="Proteini" ColumnName="Proteini" />
+                <ScalarProperty Name="UgljeniHidrati" ColumnName="UgljeniHidrati" />
+                <ScalarProperty Name="Masti" ColumnName="Masti" />
+                <ScalarProperty Name="DatumKreiranja" ColumnName="DatumKreiranja" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReceptSastojci">
+            <EntityTypeMapping TypeName="NutriGoalModel.ReceptSastojci">
+              <MappingFragment StoreEntitySet="ReceptSastojci">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ReceptId" ColumnName="ReceptId" />
+                <ScalarProperty Name="SastojakId" ColumnName="SastojakId" />
+                <ScalarProperty Name="KolicinaG" ColumnName="KolicinaG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sastojci">
+            <EntityTypeMapping TypeName="NutriGoalModel.Sastojci">
+              <MappingFragment StoreEntitySet="Sastojci">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="KalorijeNa100g" ColumnName="KalorijeNa100g" />
+                <ScalarProperty Name="ProteinNa100g" ColumnName="ProteinNa100g" />
+                <ScalarProperty Name="UHNa100g" ColumnName="UHNa100g" />
+                <ScalarProperty Name="MastiNa100g" ColumnName="MastiNa100g" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StavkePlana">
+            <EntityTypeMapping TypeName="NutriGoalModel.StavkePlana">
+              <MappingFragment StoreEntitySet="StavkePlana">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PlanId" ColumnName="PlanId" />
+                <ScalarProperty Name="ReceptId" ColumnName="ReceptId" />
+                <ScalarProperty Name="DanSedmice" ColumnName="DanSedmice" />
+                <ScalarProperty Name="ObrokTip" ColumnName="ObrokTip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="KorisnikAlergije" TypeName="NutriGoalModel.KorisnikAlergije" StoreEntitySet="KorisnikAlergije">
+            <EndProperty Name="Alergije">
+              <ScalarProperty Name="Id" ColumnName="AlergijaId" />
+            </EndProperty>
+            <EndProperty Name="Korisnici">
+              <ScalarProperty Name="Id" ColumnName="KorisnikId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ReceptCiljevi" TypeName="NutriGoalModel.ReceptCiljevi" StoreEntitySet="ReceptCiljevi">
+            <EndProperty Name="Ciljevi">
+              <ScalarProperty Name="Id" ColumnName="CiljId" />
+            </EndProperty>
+            <EndProperty Name="Recepti">
+              <ScalarProperty Name="Id" ColumnName="ReceptId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="SastojakAlergija" TypeName="NutriGoalModel.SastojakAlergija" StoreEntitySet="SastojakAlergija">
+            <EndProperty Name="Alergije">
+              <ScalarProperty Name="Id" ColumnName="AlergijaId" />
+            </EndProperty>
+            <EndProperty Name="Sastojci">
+              <ScalarProperty Name="Id" ColumnName="SastojakId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

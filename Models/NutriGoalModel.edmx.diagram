@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="064237aa2d304c1fb787220d706d329e" Name="Diagram1" ZoomLevel="27">
+        <EntityTypeShape EntityType="NutriGoalModel.Alergije" Width="1.5" PointX="1.5" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NutriGoalModel.Ciljevi" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NutriGoalModel.Favoriti" Width="1.5" PointX="8.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NutriGoalModel.Kategorije" Width="1.5" PointX="3.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NutriGoalModel.Komentari" Width="1.5" PointX="8.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="NutriGoalModel.Korisnici" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NutriGoalModel.KorisnickiProfil" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NutriGoalModel.Ocjene" Width="1.5" PointX="8.25" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NutriGoalModel.PlanIshrane" Width="1.5" PointX="9" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NutriGoalModel.Recepti" Width="1.5" PointX="6" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="NutriGoalModel.ReceptSastojci" Width="1.5" PointX="11.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NutriGoalModel.Sastojci" Width="1.5" PointX="9" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="NutriGoalModel.StavkePlana" Width="1.5" PointX="11.25" PointY="7.125" IsExpanded="true" />
+        <AssociationConnector Association="NutriGoalModel.FK__Korisnick__CiljI__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="NutriGoalModel.FK__Favoriti__Korisn__0A9D95DB" ManuallyRouted="false" />
+        <AssociationConnector Association="NutriGoalModel.FK__Favoriti__Recept__0B91BA14" ManuallyRouted="false" />
+        <AssociationConnector Association="NutriGoalModel.FK__Recepti__Kategor__6A30C649" ManuallyRouted="false" />
+        <AssociationConnector Association="NutriGoalModel.FK__Komentari__Koris__00200768" ManuallyRouted="false" />
+        <AssociationConnector Association="NutriGoalModel.FK__Komentari__Recep__01142BA1" ManuallyRouted="false" />
+        <AssociationConnector Association="NutriGoalModel.FK__Korisnick__Koris__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="NutriGoalModel.FK__Ocjene__Korisnik__05D8E0BE" ManuallyRouted="false" />
+        <AssociationConnector Association="NutriGoalModel.FK__PlanIshra__Koris__0F624AF8" ManuallyRouted="false" />
+        <AssociationConnector Association="NutriGoalModel.FK__Ocjene__ReceptId__06CD04F7" ManuallyRouted="false" />
+        <AssociationConnector Association="NutriGoalModel.FK__StavkePla__PlanI__151B244E" ManuallyRouted="false" />
+        <AssociationConnector Association="NutriGoalModel.FK__ReceptSas__Recep__72C60C4A" ManuallyRouted="false" />
+        <AssociationConnector Association="NutriGoalModel.FK__StavkePla__Recep__160F4887" ManuallyRouted="false" />
+        <AssociationConnector Association="NutriGoalModel.FK__ReceptSas__Sasto__73BA3083" ManuallyRouted="false" />
+        <AssociationConnector Association="NutriGoalModel.KorisnikAlergije" ManuallyRouted="false" />
+        <AssociationConnector Association="NutriGoalModel.ReceptCiljevi" ManuallyRouted="false" />
+        <AssociationConnector Association="NutriGoalModel.SastojakAlergija" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
