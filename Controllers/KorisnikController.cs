@@ -86,11 +86,13 @@ namespace NutriGoal.Controllers
                     ModelState.AddModelError("Password", "Lozinka je neispravna.");
                     return View(model);
                 }
-                 
+
+                var profil = postoji.KorisnickiProfil.FirstOrDefault();
                 Session["KorisnikId"] = postoji.Id;
                 Session["KorisnikEmail"] = postoji.Email;
                 Session["KorisnikUloga"] = postoji.Uloga;
-                Session["KorisnikIme"] = postoji.KorisnickiProfil.FirstOrDefault()?.Ime; // Pretpostavljamo da korisnik ima profil i da profil ima ime
+                Session["KorisnikIme"] = profil?.Ime ?? postoji.Email;
+
                 return RedirectToAction("Index", "Home");
             }
 
@@ -198,5 +200,6 @@ namespace NutriGoal.Controllers
 
             return RedirectToAction("Profil");
         }
+    
     }
 }

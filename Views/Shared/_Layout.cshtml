@@ -23,9 +23,7 @@
                     @if (Session["KorisnikId"] != null)
                     {
                         <li>
-                            <span class="navbar-text fw-bold text-success">
-                                👤 @Session["KorisnikEmail"]
-                            </span>
+                            @Html.ActionLink("Profil", "Profil", "Korisnik", new { area = "" }, new { @class = "nav-link" });
                         </li>
                         <li>
                             @Html.ActionLink("Logout", "Logout", "Korisnik", new { area = "" }, new { @class = "nav-link" });
