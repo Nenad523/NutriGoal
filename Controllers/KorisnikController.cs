@@ -36,10 +36,12 @@ namespace NutriGoal.Controllers
                     return View(model);
                 }
 
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(model.Password);
+
                 var noviKorisnik = new Korisnici
                 {
                    Email = model.Email,
-                   PasswordHash = model.Password, // U stvarnoj aplikaciji, lozinku treba hashirati!
+                   PasswordHash = hashedPassword,
                    DatumRegistracije = DateTime.Now,
                    Uloga = "Korisnik"
                 };
@@ -79,7 +81,7 @@ namespace NutriGoal.Controllers
                 }
 
                 // Provjeri lozinku na postojećem korisniku
-                if (postoji.PasswordHash != model.Password)
+                if (!BCrypt.Net.BCrypt.Verify(model.Password, postoji.PasswordHash))
                 {
                     ModelState.AddModelError("Password", "Lozinka je neispravna.");
                     return View(model);
