@@ -193,6 +193,7 @@
     <Compile Include="Models\PlanIshrane.cs">
       <DependentUpon>NutriGoalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProfilViewModel.cs" />
     <Compile Include="Models\Recepti.cs">
       <DependentUpon>NutriGoalModel.tt</DependentUpon>
     </Compile>
