@@ -88,7 +88,7 @@ namespace NutriGoal.Controllers
                 Session["KorisnikId"] = postoji.Id;
                 Session["KorisnikEmail"] = postoji.Email;
                 Session["KorisnikUloga"] = postoji.Uloga;
-
+                Session["KorisnikIme"] = postoji.KorisnickiProfil.FirstOrDefault()?.Ime; // Pretpostavljamo da korisnik ima profil i da profil ima ime
                 return RedirectToAction("Index", "Home");
             }
 

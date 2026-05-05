@@ -19,7 +19,27 @@
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                
+                    @if (Session["KorisnikId"] != null)
+                    {
+                        <li>
+                            <span class="navbar-text fw-bold text-success">
+                                👤 @Session["KorisnikEmail"]
+                            </span>
+                        </li>
+                        <li>
+                            @Html.ActionLink("Logout", "Logout", "Korisnik", new { area = "" }, new { @class = "nav-link" });
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            @Html.ActionLink("Prijava", "Login", "Korisnik", new { area = "" }, new { @class = "nav-link" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Registracija", "Register", "Korisnik", new { area = "" }, new { @class = "nav-link" })
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
