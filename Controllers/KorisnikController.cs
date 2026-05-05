@@ -105,5 +105,37 @@ namespace NutriGoal.Controllers
             Session.Clear();
             return RedirectToAction("Login");
         }
+
+        // @desc - Prikaz stranice sa korisničkim profilom
+        // @route - GET: /Korisnik/Profil
+        // @access - Private
+        public ActionResult Profil()
+        {
+            if (Session["KorisnikId"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var korisnikId = (int)Session["KorisnikId"];
+            var profil = db.KorisnickiProfil.FirstOrDefault(kp => kp.KorisnikId == korisnikId);
+
+            var model = new ProfilViewModel();
+
+            if (profil != null)
+            {
+                // Popuni model sa postojećim podacima
+                model.Ime = profil.Ime;
+                model.Prezime = profil.Prezime;
+                model.DatumRodjenja = profil.DatumRodjenja;
+                model.Pol = profil.Pol;
+                model.Visina = profil.Visina;
+                model.Tezina = profil.Tezina;
+                model.NivoAktivnosti = profil.NivoAktivnosti;
+                model.CiljId = profil.CiljId;
+            }
+
+            ViewBag.Ciljevi = db.Ciljevi.ToList();
+            return View(model);
+        }
     }
 }
