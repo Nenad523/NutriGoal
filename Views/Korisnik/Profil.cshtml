@@ -1,0 +1,113 @@
+﻿@model NutriGoal.Models.ProfilViewModel
+
+@{
+    ViewBag.Title = "Profil";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Registracija</h4>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Profil", "Korisnik", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.Ime)
+                            @Html.TextBoxFor(m => m.Ime, new { @class = "form-control", @placeholder = "Marko" })
+                            @Html.ValidationMessageFor(m => m.Ime, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.Prezime)
+                            @Html.TextBoxFor(m => m.Prezime, new { @class = "form-control", @placeholder = "Marković" })
+                            @Html.ValidationMessageFor(m => m.Prezime, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.DatumRodjenja)
+                            @Html.TextBoxFor(m => m.DatumRodjenja, "{0:yyyy-MM-dd}",
+                                new { @type = "date", @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.DatumRodjenja, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.Pol)
+                            @Html.DropDownListFor(m => m.Pol,
+                                new SelectList(new[] {
+                                    new { Value = "M", Text = "Muški" },
+                                    new { Value = "Z", Text = "Ženski" }
+                                }, "Value", "Text"),
+                                "Odaberite pol", new { @class = "form-control" })
+                        </div>
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.Visina)
+                            @Html.TextBoxFor(m => m.Visina, "{0:F2}", new
+                       {
+                           @type = "number",
+                           @class = "form-control",
+                           @step = "0.01",
+                           @min = "50",
+                           @max = "300",
+                           @placeholder = "cm",
+                           @lang = "en"
+                       })
+                            @Html.ValidationMessageFor(m => m.Visina, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.Tezina)
+                            @Html.TextBoxFor(m => m.Tezina, "{0:F2}", new
+                            {
+                                @type = "number",
+                                @class = "form-control",
+                                @step = "0.01",
+                                @min = "20",
+                                @max = "500",
+                                @placeholder = "kg",
+                                @lang = "en"
+                            })
+                            @Html.ValidationMessageFor(m => m.Tezina, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.NivoAktivnosti)
+                            @Html.DropDownListFor(m => m.NivoAktivnosti,
+                                new SelectList(new[]
+                                {
+                                    new { Value = 1, Text = "Sjedilački način života" },
+                                    new { Value = 2, Text = "Lagana aktivnost (1-3 dana)" },
+                                    new { Value = 3, Text = "Umjerena aktivnost (3-5 dana)" },
+                                    new { Value = 4, Text = "Visoka aktivnost (6-7 dana)" }
+                                }, "Value", "Text"),
+                                "Odaberite nivo aktivnosti", new { @class = "form-control" }
+                            )
+                        </div>
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.CiljId)
+                            @Html.DropDownListFor(m => m.CiljId,
+                                new SelectList(ViewBag.Ciljevi, "Id", "Naziv"),
+                                "-- Izaberi cilj --",
+                                new { @class = "form-control" })
+
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            Sačuvaj
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

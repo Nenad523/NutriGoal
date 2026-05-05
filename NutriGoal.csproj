@@ -193,6 +193,7 @@
     <Compile Include="Models\PlanIshrane.cs">
       <DependentUpon>NutriGoalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProfilViewModel.cs" />
     <Compile Include="Models\Recepti.cs">
       <DependentUpon>NutriGoalModel.tt</DependentUpon>
     </Compile>
@@ -278,6 +279,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Korisnik\Register.cshtml" />
     <Content Include="Views\Korisnik\Login.cshtml" />
+    <Content Include="Views\Korisnik\Profil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
