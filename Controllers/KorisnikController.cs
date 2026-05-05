@@ -52,5 +52,47 @@ namespace NutriGoal.Controllers
 
             return View(model);
         }
+
+        // @desc - Prikaz forme za prijavu korisnika
+        // @route - GET: /Korisnik/Login
+        // @access - Public
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        // @desc - Prijavljivanje korisnika na nalog
+        // @route - POST: /Korisnik/Login
+        // @access - Public
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var postoji = db.Korisnici.FirstOrDefault(k => k.Email == model.Email);
+
+                if (postoji == null)
+                {
+                    ModelState.AddModelError("Email", "Nalog sa ovom email adresom ne postoji.");
+                    return View(model);
+                }
+
+                // Provjeri lozinku na postojećem korisniku
+                if (postoji.PasswordHash != model.Password)
+                {
+                    ModelState.AddModelError("Password", "Lozinka je neispravna.");
+                    return View(model);
+                }
+                 
+                Session["KorisnikId"] = postoji.Id;
+                Session["KorisnikEmail"] = postoji.Email;
+                Session["KorisnikUloga"] = postoji.Uloga;
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(model);
+        }
     }
 }
