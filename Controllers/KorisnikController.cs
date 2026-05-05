@@ -94,5 +94,14 @@ namespace NutriGoal.Controllers
 
             return View(model);
         }
+
+        // @desc - Odjava korisnika sa naloga
+        // @route - GET: /Korisnik/Logout
+        // @access - Private
+        public ActionResult LogOut()
+        {
+            Session.Clear();
+            return RedirectToAction("Login");
+        }
     }
 }
