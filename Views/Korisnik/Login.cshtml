@@ -1,0 +1,43 @@
+﻿@model NutriGoal.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Prijavljivanje</h4>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Login", "Korisnik", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.Email)
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.Password)
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            Prijavi se
+                        </button>
+                    }
+                </div>
+                <div class="card-footer text-center">
+                    Nemaš nalog? @Html.ActionLink("Registruj se", "Register", "Korisnik");
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
