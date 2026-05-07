@@ -25,3 +25,17 @@ BEGIN
 			 WHERE KA.KorisnikId = @KorisnikId
 		  )
 END
+
+CREATE PROCEDURE sp_PretragaRecepata
+    @Naziv NVARCHAR(255) = NULL,
+    @KategorijaId INT = NULL,
+    @CiljId INT = NULL,
+    @MinKalorije DECIMAL(10,2) = NULL,
+    @MaxKalorije DECIMAL(10,2) = NULL,
+    @MaxVrijeme INT = NULL,
+	@Sortiranje NVARCHAR(500) = 'Naziv' -- sorting po nazivu je default
+AS
+BEGIN
+
+END
+GO
