@@ -25,22 +25,21 @@ BEGIN
 	RETURN @BMR
 END
 
-CREATE FUNCTION fn_UkupnoKalorijaRecepta
+CREATE FUNCTION fn_NutritivneVrijednostiRecepta
 (
     @ReceptId INT
 )
-RETURNS DECIMAL(10,2)
+RETURNS TABLE
 AS
-BEGIN
-    DECLARE @Ukupno DECIMAL(10,2)
-
-    SELECT @Ukupno = SUM(S.KalorijeNa100g * RS.KolicinaG / 100)
+RETURN
+(
+    SELECT 
+        ISNULL(SUM(S.KalorijeNa100g * RS.KolicinaG / 100), 0) AS Kalorije,
+        ISNULL(SUM(S.ProteinNa100g * RS.KolicinaG / 100), 0) AS Proteini,
+        ISNULL(SUM(S.UHNa100g * RS.KolicinaG / 100), 0) AS UgljeniHidrati,
+        ISNULL(SUM(S.MastiNa100g * RS.KolicinaG / 100), 0) AS Masti
     FROM ReceptSastojci RS
     JOIN Sastojci S ON RS.SastojakId = S.Id
     WHERE RS.ReceptId = @ReceptId
-
-    RETURN ISNULL(@Ukupno, 0)
-END
+)
 GO
-
-SELECT dbo.fn_UkupnoKalorijaRecepta(1)
