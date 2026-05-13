@@ -101,5 +101,38 @@ namespace NutriGoal.Controllers
             ViewBag.SviRecepti = false;
             return View(recepti);
         }
+
+        // @desc - Dodavanje recepta u favorite
+        // @route - POST: /Recept/DodajUFavorite
+        // @access - Private
+        [HttpPost]
+        public ActionResult DodajUFavorite(int receptId)
+        {
+            if (Session["KorisnikId"] == null)
+            {
+                return RedirectToAction("Login", "Korisnik");
+            }
+
+            var korisnikId = (int)Session["KorisnikId"];
+
+            // Provjeri da li je već u favoritima
+            var postojiFavorit = db.Favoriti
+                .Any(f => f.KorisnikId == korisnikId && f.ReceptId == receptId);
+
+            if (!postojiFavorit)
+            {
+                var favorit = new Favoriti
+                {
+                    KorisnikId = korisnikId,
+                    ReceptId = receptId,
+                    DatumDodavanja = DateTime.Now
+                };
+
+                db.Favoriti.Add(favorit);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }
