@@ -147,6 +147,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KorisnikController.cs" />
+    <Compile Include="Controllers\ReceptController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -200,8 +201,15 @@
     <Compile Include="Models\ReceptSastojci.cs">
       <DependentUpon>NutriGoalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReceptViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\Sastojci.cs">
+      <DependentUpon>NutriGoalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_PreporuciRecepte_Result.cs">
+      <DependentUpon>NutriGoalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_PretragaRecepata_Result.cs">
       <DependentUpon>NutriGoalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StavkePlana.cs">
@@ -283,6 +291,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Recept\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

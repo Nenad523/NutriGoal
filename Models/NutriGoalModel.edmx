@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="NutriGoalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="NutriGoalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Alergije">
           <Key>
             <PropertyRef Name="Id" />
@@ -410,6 +410,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_PreporuciRecepte" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="KorisnikId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_PretragaRecepata" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Naziv" Type="nvarchar" Mode="In" />
+          <Parameter Name="KategorijaId" Type="int" Mode="In" />
+          <Parameter Name="CiljId" Type="int" Mode="In" />
+          <Parameter Name="MinKalorije" Type="decimal" Mode="In" />
+          <Parameter Name="MaxKalorije" Type="decimal" Mode="In" />
+          <Parameter Name="MaxVrijeme" Type="int" Mode="In" />
+          <Parameter Name="Sortiranje" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="NutriGoalModelStoreContainer">
           <EntitySet Name="Alergije" EntityType="Self.Alergije" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ciljevi" EntityType="Self.Ciljevi" Schema="dbo" store:Type="Tables" />
@@ -508,8 +520,7 @@
             <End Role="StavkePlana" EntitySet="StavkePlana" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NutriGoalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -950,7 +961,47 @@
             <End Role="Alergije" EntitySet="Alergije" />
             <End Role="Sastojci" EntitySet="Sastojci" />
           </AssociationSet>
+          <FunctionImport Name="sp_PreporuciRecepte" ReturnType="Collection(NutriGoalModel.sp_PreporuciRecepte_Result)">
+            <Parameter Name="KorisnikId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_PretragaRecepata" ReturnType="Collection(NutriGoalModel.sp_PretragaRecepata_Result)">
+            <Parameter Name="Naziv" Mode="In" Type="String" />
+            <Parameter Name="KategorijaId" Mode="In" Type="Int32" />
+            <Parameter Name="CiljId" Mode="In" Type="Int32" />
+            <Parameter Name="MinKalorije" Mode="In" Type="Decimal" />
+            <Parameter Name="MaxKalorije" Mode="In" Type="Decimal" />
+            <Parameter Name="MaxVrijeme" Mode="In" Type="Int32" />
+            <Parameter Name="Sortiranje" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="sp_PreporuciRecepte_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Naziv" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Opis" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="Postupak" Nullable="false" />
+          <Property Type="String" Name="Fotografija" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="KategorijaId" Nullable="false" />
+          <Property Type="Int32" Name="VrijemePripreme" Nullable="false" />
+          <Property Type="Decimal" Name="Kalorije" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="Proteini" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="UgljeniHidrati" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="Masti" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="DateTime" Name="DatumKreiranja" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_PretragaRecepata_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Naziv" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Opis" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="Postupak" Nullable="false" />
+          <Property Type="String" Name="Fotografija" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="KategorijaId" Nullable="false" />
+          <Property Type="Int32" Name="VrijemePripreme" Nullable="false" />
+          <Property Type="Decimal" Name="Kalorije" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="Proteini" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="UgljeniHidrati" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="Masti" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="DateTime" Name="DatumKreiranja" Nullable="false" Precision="23" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1133,6 +1184,42 @@
               <ScalarProperty Name="Id" ColumnName="SastojakId" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="sp_PreporuciRecepte" FunctionName="NutriGoalModel.Store.sp_PreporuciRecepte">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NutriGoalModel.sp_PreporuciRecepte_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="Postupak" ColumnName="Postupak" />
+                <ScalarProperty Name="Fotografija" ColumnName="Fotografija" />
+                <ScalarProperty Name="KategorijaId" ColumnName="KategorijaId" />
+                <ScalarProperty Name="VrijemePripreme" ColumnName="VrijemePripreme" />
+                <ScalarProperty Name="Kalorije" ColumnName="Kalorije" />
+                <ScalarProperty Name="Proteini" ColumnName="Proteini" />
+                <ScalarProperty Name="UgljeniHidrati" ColumnName="UgljeniHidrati" />
+                <ScalarProperty Name="Masti" ColumnName="Masti" />
+                <ScalarProperty Name="DatumKreiranja" ColumnName="DatumKreiranja" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_PretragaRecepata" FunctionName="NutriGoalModel.Store.sp_PretragaRecepata">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NutriGoalModel.sp_PretragaRecepata_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="Postupak" ColumnName="Postupak" />
+                <ScalarProperty Name="Fotografija" ColumnName="Fotografija" />
+                <ScalarProperty Name="KategorijaId" ColumnName="KategorijaId" />
+                <ScalarProperty Name="VrijemePripreme" ColumnName="VrijemePripreme" />
+                <ScalarProperty Name="Kalorije" ColumnName="Kalorije" />
+                <ScalarProperty Name="Proteini" ColumnName="Proteini" />
+                <ScalarProperty Name="UgljeniHidrati" ColumnName="UgljeniHidrati" />
+                <ScalarProperty Name="Masti" ColumnName="Masti" />
+                <ScalarProperty Name="DatumKreiranja" ColumnName="DatumKreiranja" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
