@@ -134,5 +134,30 @@ namespace NutriGoal.Controllers
 
             return RedirectToAction("Index");
         }
+
+        // @desc - Uklanjanje recepta iz favorita
+        // @route - POST: /Recept/UkloniIzFavorita
+        // @access - Private
+        [HttpPost]
+        public ActionResult UkloniIzFavorita(int receptId)
+        {
+            if (Session["KorisnikId"] == null)
+            {
+                return RedirectToAction("Login", "Korisnik");
+            }
+
+            var korisnikId = (int)Session["KorisnikId"];
+
+            var favorit = db.Favoriti
+                .FirstOrDefault(f => f.KorisnikId == korisnikId && f.ReceptId == receptId);
+
+            if (favorit != null)
+            {
+                db.Favoriti.Remove(favorit);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }
