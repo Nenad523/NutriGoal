@@ -12,6 +12,8 @@ namespace NutriGoal.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class NutriGoalEntities : DbContext
     {
@@ -38,5 +40,47 @@ namespace NutriGoal.Models
         public virtual DbSet<ReceptSastojci> ReceptSastojci { get; set; }
         public virtual DbSet<Sastojci> Sastojci { get; set; }
         public virtual DbSet<StavkePlana> StavkePlana { get; set; }
+    
+        public virtual ObjectResult<sp_PreporuciRecepte_Result> sp_PreporuciRecepte(Nullable<int> korisnikId)
+        {
+            var korisnikIdParameter = korisnikId.HasValue ?
+                new ObjectParameter("KorisnikId", korisnikId) :
+                new ObjectParameter("KorisnikId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PreporuciRecepte_Result>("sp_PreporuciRecepte", korisnikIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_PretragaRecepata_Result> sp_PretragaRecepata(string naziv, Nullable<int> kategorijaId, Nullable<int> ciljId, Nullable<decimal> minKalorije, Nullable<decimal> maxKalorije, Nullable<int> maxVrijeme, string sortiranje)
+        {
+            var nazivParameter = naziv != null ?
+                new ObjectParameter("Naziv", naziv) :
+                new ObjectParameter("Naziv", typeof(string));
+    
+            var kategorijaIdParameter = kategorijaId.HasValue ?
+                new ObjectParameter("KategorijaId", kategorijaId) :
+                new ObjectParameter("KategorijaId", typeof(int));
+    
+            var ciljIdParameter = ciljId.HasValue ?
+                new ObjectParameter("CiljId", ciljId) :
+                new ObjectParameter("CiljId", typeof(int));
+    
+            var minKalorijeParameter = minKalorije.HasValue ?
+                new ObjectParameter("MinKalorije", minKalorije) :
+                new ObjectParameter("MinKalorije", typeof(decimal));
+    
+            var maxKalorijeParameter = maxKalorije.HasValue ?
+                new ObjectParameter("MaxKalorije", maxKalorije) :
+                new ObjectParameter("MaxKalorije", typeof(decimal));
+    
+            var maxVrijemeParameter = maxVrijeme.HasValue ?
+                new ObjectParameter("MaxVrijeme", maxVrijeme) :
+                new ObjectParameter("MaxVrijeme", typeof(int));
+    
+            var sortiranjeParameter = sortiranje != null ?
+                new ObjectParameter("Sortiranje", sortiranje) :
+                new ObjectParameter("Sortiranje", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PretragaRecepata_Result>("sp_PretragaRecepata", nazivParameter, kategorijaIdParameter, ciljIdParameter, minKalorijeParameter, maxKalorijeParameter, maxVrijemeParameter, sortiranjeParameter);
+        }
     }
 }
