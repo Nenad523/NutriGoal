@@ -7,42 +7,95 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0;">
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                
+<body>
+    <nav style="position: sticky; top: 0; z-index: 50; background: rgba(245, 240, 232, 0.85); backdrop-filter: blur(8px); border-bottom: 1px solid #e5e7eb;">
+        <div style="max-width: 1280px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between;">
+
+            <!-- Logo + Navigacija lijevo -->
+            <div style="display: flex; align-items: center; gap: 32px;">
+                @Html.ActionLink("NutriGoal", "Index", "Home", null, new
+                {
+                    style = "color: #1C3D2E; font-weight: 600; font-size: 18px; font-style: italic; text-decoration: none;"
+                })
+                <div style="display: flex; align-items: center; gap: 24px;">
+                    @Html.ActionLink("Recepti", "Index", "Recept", null, new
+                    {
+                        style = "color: #6b7280; font-size: 14px; font-weight: 500; text-decoration: none;"
+                    })
                     @if (Session["KorisnikId"] != null)
                     {
-                        <li>
-                            @Html.ActionLink("Profil", "Profil", "Korisnik", new { area = "" }, new { @class = "nav-link" });
-                        </li>
-                        <li>
-                            @Html.ActionLink("Logout", "Logout", "Korisnik", new { area = "" }, new { @class = "nav-link" });
-                        </li>
+                        @Html.ActionLink("Favoriti", "Index", "Favoriti", null, new
+                        {
+                            style = "color: #6b7280; font-size: 14px; font-weight: 500; text-decoration: none;"
+                        })
                     }
-                    else
+                    @if (Session["KorisnikUloga"] != null && Session["KorisnikUloga"].ToString() == "Admin")
                     {
-                        <li>
-                            @Html.ActionLink("Prijava", "Login", "Korisnik", new { area = "" }, new { @class = "nav-link" })
-                        </li>
-                        <li>
-                            @Html.ActionLink("Registracija", "Register", "Korisnik", new { area = "" }, new { @class = "nav-link" })
-                        </li>
+                        @Html.ActionLink("Admin panel", "Admin", "Recept", null, new
+                        {
+                            style = "color: #6b7280; font-size: 14px; font-weight: 500; text-decoration: none;"
+                        })
                     }
-                </ul>
+                </div>
+            </div>
+
+            <!-- Desna strana -->
+            <div style="display: flex; align-items: center; gap: 12px;">
+                @if (Session["KorisnikId"] == null)
+                {
+                    @Html.ActionLink("Prijava", "Login", "Korisnik", null, new
+                    {
+                        style = "color: #6b7280; font-size: 14px; font-weight: 500; text-decoration: none;"
+                    })
+                    @Html.ActionLink("Registracija", "Register", "Korisnik", null, new
+                    {
+                        style = "background: #1C3D2E; color: white; padding: 8px 16px; border-radius: 50px; font-size: 14px; font-weight: 500; text-decoration: none;"
+                    })
+                }
+                else
+                {
+                    <!-- Dropdown meni -->
+                    <div style="position: relative;" class="dropdown-container">
+                        <button onclick="toggleDropdown()" style="display: flex; align-items: center; gap: 8px; background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 50px; padding: 6px 12px 6px 6px; cursor: pointer; font-size: 14px; font-weight: 500;">
+                            <span style="width: 28px; height: 28px; border-radius: 50%; background: #D4E8D4; display: grid; place-items: center; color: #1C3D2E; font-size: 12px; font-weight: 700;">
+                                @(Session["KorisnikEmail"] != null ? Session["KorisnikEmail"].ToString()[0].ToString().ToUpper() : "U")
+                            </span>
+                            <span>@(Session["KorisnikEmail"] != null ? Session["KorisnikEmail"].ToString().Split('@')[0] : "")</span>
+                            <span style="color: #9ca3af;">▼</span>
+                        </button>
+
+                        <!-- Dropdown -->
+                        <div id="dropdown-menu" style="display: none; position: absolute; right: 0; margin-top: 8px; width: 192px; background: white; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); overflow: hidden;">
+                            @Html.ActionLink("Profil", "Profil", "Korisnik", null, new
+                            {
+                                style = "display: block; padding: 10px 16px; font-size: 14px; color: #374151; text-decoration: none;"
+                            })
+                            @Html.ActionLink("Odjava", "LogOut", "Korisnik", null, new
+                            {
+                                style = "display: block; padding: 10px 16px; font-size: 14px; color: #dc2626; text-decoration: none;"
+                            })
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </nav>
-    <div class="container body-content" style="flex: 1;">
+
+    <script>
+        function toggleDropdown() {
+            var menu = document.getElementById('dropdown-menu');
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Zatvori dropdown kada klikneš van
+        document.addEventListener('click', function(e) {
+            var container = document.querySelector('.dropdown-container');
+            if (container && !container.contains(e.target)) {
+                document.getElementById('dropdown-menu').style.display = 'none';
+            }
+        });
+    </script>
+    <div class="container body-content">
         @RenderBody()
     </div>
 
