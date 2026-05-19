@@ -1,33 +1,38 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+@{
+    ViewBag.Title = "NutriGoal";
 }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
+<style>
+    body {
+        background-color: #F5F0E8;
+    }
+</style>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+<section style="max-width: 1280px; margin: 0 auto; padding: 90px 24px 80px 24px;">
+
+    <p style="font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #C87941; margin: 0 0 20px 0;">
+        Personalizovana ishrana
+    </p>
+
+    <h1 style="font-size: clamp(40px, 5vw, 64px); font-weight: 800; line-height: 1.1; color: #111827; margin: 0 0 24px 0; max-width: 720px;">
+        Pametnija ishrana uz nauku,
+        <span style="color: #1C3D2E; font-style: italic;"> prilagodjena vama.</span>
+    </h1>
+
+    <p style="font-size: 16px; color: #6b7280; line-height: 1.6; max-width: 480px; margin: 0 0 40px 0;">
+        Zaboravite genericke dijete. NutriGoal analizira vas metabolizam, ciljeve i
+        alergije kako bi kreirao plan obroka koji zaista volite jesti.
+    </p>
+
+    <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+        @Html.ActionLink("-> Pocni odmah", "Register", "Korisnik", null, new
+        {
+            style = "background: #1C3D2E; color: white; padding: 14px 28px; border-radius: 50px; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-block;"
+        })
+        @Html.ActionLink("Pregledaj recepte", "Index", "Recept", null, new
+        {
+            style = "color: #374151; font-size: 15px; font-weight: 500; text-decoration: none;"
+        })
     </div>
-</main>
+
+</section>
