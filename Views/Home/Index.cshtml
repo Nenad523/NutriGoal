@@ -64,3 +64,22 @@
     </div>
 </section>
 <!-- KRAJ SEKCIJE 3 KORAKA -->
+
+@if (Session["KorisnikId"] == null)
+{
+    <!-- POCETAK CTA SEKCIJE -->
+    <section style="max-width: 1280px; margin: 0 auto; padding: 70px 24px;">
+        <div style="background-color: #EDE8DE; border-radius: 20px; padding: 64px 24px; text-align: center;">
+
+            <h2 style="font-size: 32px; font-weight: 800; color: #111827; margin: 0 0 12px 0;">Spremni za prvi korak?</h2>
+            <p style="font-size: 15px; color: #6b7280; margin: 0 0 32px 0;">Registracija traje minut. Profil i preporuke su besplatni.</p>
+
+            @Html.ActionLink("Kreiraj nalog", "Register", "Korisnik", null, new
+            {
+                style = "background: #1C3D2E; color: white; padding: 14px 32px; border-radius: 50px; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-block;"
+            })
+
+        </div>
+    </section>
+    <!-- KRAJ CTA SEKCIJE -->
+}
