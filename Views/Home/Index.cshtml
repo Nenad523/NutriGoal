@@ -1,33 +1,148 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+@{
+    ViewBag.Title = "NutriGoal";
 }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
+<style>
+    body {
+        background-color: #F5F0E8;
+    }
+</style>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+<!-- POCETAK HEARO SEKCIJE -->
+<section style="max-width: 1280px; margin: 0 auto; padding: clamp(48px, 7vw, 90px) 24px clamp(40px, 6vw, 80px) 24px;">
+
+    <p style="font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #C87941; margin: 0 0 20px 0;">
+        Personalizovana ishrana
+    </p>
+
+    <h1 style="font-size: clamp(40px, 5vw, 64px); font-weight: 800; line-height: 1.1; color: #111827; margin: 0 0 24px 0; max-width: 720px;">
+        Pametnija ishrana uz nauku,
+        <span style="color: #1C3D2E; font-style: italic;"> prilagođena vama.</span>
+    </h1>
+
+    <p style="font-size: 16px; color: #6b7280; line-height: 1.6; max-width: 480px; margin: 0 0 40px 0;">
+        Zaboravite generičke dijete. NutriGoal analizira vaš metabolizam, ciljeve i
+        alergije kako bi kreirao plan obroka koji zaista volite jesti.
+    </p>
+
+    <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+        @Html.ActionLink("→ Počni odmah", "Register", "Korisnik", null, new
+        {
+            style = "background: #1C3D2E; color: white; padding: 14px 28px; border-radius: 50px; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-block;"
+        })
+        @Html.ActionLink("Pregledaj recepte", "Index", "Recept", null, new
+        {
+            style = "color: #374151; font-size: 15px; font-weight: 500; text-decoration: none;"
+        })
     </div>
-</main>
+
+</section>
+<!-- KRAJ HEARO SEKCIJE -->
+
+<!-- POCETAK SEKCIJE PREPORUCENIH RECEPATA -->
+@{
+    var preporuceniRecepti = ViewBag.PreporuceniRecepti as List<NutriGoal.Models.ReceptViewModel>;
+}
+@if (preporuceniRecepti != null && preporuceniRecepti.Count > 0)
+{
+    <section style="background-color: #EDE8DE; width: 100vw; position: relative; left: 50%; margin-left: -50vw; padding: clamp(40px, 5vw, 70px) 24px;">
+        <div style="max-width: 1280px; margin: 0 auto;">
+
+            <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 36px; flex-wrap: wrap; gap: 12px;">
+                <div>
+                    <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #C87941; margin: 0 0 10px 0;">Za ovo doba dana</p>
+                    <h2 style="font-size: clamp(28px, 3.5vw, 42px); font-weight: 700; color: #111827; margin: 0 0 8px 0;">@ViewBag.NaslovObroka</h2>
+                    <p style="font-size: 14px; color: #6b7280; margin: 0;">@ViewBag.OpisObroka</p>
+                </div>
+                @Html.ActionLink("Svi recepti →", "Index", "Recept", null, new
+                {
+                    style = "font-size: 14px; font-weight: 500; color: #1C3D2E; text-decoration: none; white-space: nowrap;"
+                })
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px;">
+                @foreach (var recept in preporuceniRecepti)
+                {
+                    <a href="@Url.Action("Index", "Recept")" style="text-decoration: none; color: inherit; display: block; background: white; border-radius: 16px; overflow: hidden; border: 1px solid #ddd8ce;">
+
+                        <div style="position: relative; height: 240px; overflow: hidden;">
+                            @if (!string.IsNullOrEmpty(recept.Fotografija))
+                            {
+                                <img src="@recept.Fotografija" alt="@recept.Naziv"
+                                     style="width: 100%; height: 100%; object-fit: cover;" />
+                            }
+                            else
+                            {
+                                <div style="width: 100%; height: 100%; background: #D4E8D4; display: flex; align-items: center; justify-content: center;">
+                                    <span style="font-size: 56px;">🥗</span>
+                                </div>
+                            }
+                            <span style="position: absolute; top: 14px; left: 14px; background: rgba(0,0,0,0.5); color: white; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 12px; border-radius: 50px;">
+                                @ViewBag.KategorijaObroka
+                            </span>
+                        </div>
+
+                        <div style="padding: 20px;">
+                            <p style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 12px 0;">@recept.Naziv</p>
+                            <div style="display: flex; align-items: center; gap: 20px;">
+                                <span style="font-size: 14px; font-weight: 500; color: #4b5563;">⏱ @recept.VrijemePripreme min</span>
+                                @if (recept.Kalorije.HasValue)
+                                {
+                                    <span style="font-size: 14px; font-weight: 500; color: #4b5563;">🔥 @recept.Kalorije kcal</span>
+                                }
+                            </div>
+                        </div>
+
+                    </a>
+                }
+            </div>
+
+        </div>
+    </section>
+}
+<!-- KRAJ SEKCIJE PREPORUCENIH RECEPATA -->
+
+<!-- POCETAK SEKCIJE 3 KORAKA -->
+<section style="background-color: #162C20; padding: clamp(40px, 5vw, 70px) 24px; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
+    <div style="max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 48px;">
+
+        <div>
+            <p style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C87941; margin: 0 0 12px 0;">01. Korak</p>
+            <h3 style="font-size: 22px; font-weight: 700; color: white; margin: 0 0 12px 0;">Postavi cilj</h3>
+            <p style="font-size: 14px; color: #9db8a8; line-height: 1.6; margin: 0;">Unesite mjere, nivo aktivnosti i šta želite postići.</p>
+        </div>
+
+        <div>
+            <p style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C87941; margin: 0 0 12px 0;">02. Korak</p>
+            <h3 style="font-size: 22px; font-weight: 700; color: white; margin: 0 0 12px 0;">Dobij preporuke</h3>
+            <p style="font-size: 14px; color: #9db8a8; line-height: 1.6; margin: 0;">Naš algoritam filtrira recepte prema vašem metabolizmu i alergijama.</p>
+        </div>
+
+        <div>
+            <p style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C87941; margin: 0 0 12px 0;">03. Korak</p>
+            <h3 style="font-size: 22px; font-weight: 700; color: white; margin: 0 0 12px 0;">Jedi pametno</h3>
+            <p style="font-size: 14px; color: #9db8a8; line-height: 1.6; margin: 0;">Uživajte u hrani koja vas približava idealnom balansu.</p>
+        </div>
+
+    </div>
+</section>
+<!-- KRAJ SEKCIJE 3 KORAKA -->
+
+@if (Session["KorisnikId"] == null)
+{
+    <!-- POCETAK CTA SEKCIJE -->
+    <section style="max-width: 1280px; margin: 0 auto; padding: clamp(40px, 5vw, 70px) 24px;">
+        <div style="background-color: #EDE8DE; border-radius: 20px; padding: clamp(32px, 5vw, 64px) 24px; text-align: center; max-width: 860px; margin: 0 auto; border: 1px solid #cec9c0;">
+
+            <h2 style="font-size: 32px; font-weight: 800; color: #111827; margin: 0 0 12px 0;">Spremni za prvi korak?</h2>
+            <p style="font-size: 15px; color: #6b7280; margin: 0 0 32px 0;">Registracija traje minut. Profil i preporuke su besplatni.</p>
+
+            @Html.ActionLink("Kreiraj nalog", "Register", "Korisnik", null, new
+            {
+                style = "background: #1C3D2E; color: white; padding: 14px 32px; border-radius: 50px; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-block;"
+            })
+
+        </div>
+    </section>
+    <!-- KRAJ CTA SEKCIJE -->
+}
