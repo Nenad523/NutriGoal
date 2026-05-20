@@ -5,86 +5,240 @@
 }
 
 <style>
-    body {
-        background-color: #F5F0E8;
+    body { background-color: #F5F0E8; }
+
+    /* HEADER */
+    .recept-header {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: clamp(28px, 4vw, 48px) 24px 32px 24px;
+    }
+    .recept-header-inner {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+    .recept-label {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #C87941;
+        margin: 0 0 16px 0;
+    }
+    .recept-naslov {
+        font-size: clamp(32px, 4vw, 52px);
+        font-weight: 600;
+        color: #111827;
+        margin: 0;
     }
 
+    /* TOGGLE */
+    .toggle-wrapper {
+        display: inline-flex;
+        background: #E8E2D6;
+        border-radius: 50px;
+        padding: 5px;
+    }
+    .toggle-btn {
+        padding: 10px 26px;
+        border-radius: 50px;
+        font-size: 15px;
+        font-weight: 500;
+        text-decoration: none;
+    }
+    .toggle-btn-active {
+        background: white;
+        color: #111827;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .toggle-btn-inactive {
+        background: transparent;
+        color: #6b7280;
+    }
+
+    /* LAYOUT */
+    .sadrzaj-sekcija {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px clamp(48px, 6vw, 80px) 24px;
+    }
     .layout-wrapper {
         display: flex;
         gap: 40px;
         align-items: flex-start;
     }
-
     .sidebar {
         width: 260px;
         flex-shrink: 0;
     }
-
     .main-content {
         flex: 1;
         min-width: 0;
     }
-
     .mobile-filter-bar {
         display: none;
+        background: #EDE8DE;
+        border-radius: 12px;
+        padding: 14px 18px;
+        margin-bottom: 20px;
+        align-items: center;
+        justify-content: space-between;
     }
 
+    /* RECEPTI */
+    .recepti-count {
+        font-size: 14px;
+        font-weight: 500;
+        color: #6b7280;
+        margin: 0 0 24px 0;
+    }
+    .recepti-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+        gap: 24px;
+    }
+
+    /* KARTICA */
+    .kartica {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid #ddd8ce;
+    }
+    .kartica-slika {
+        position: relative;
+        height: 240px;
+        overflow: hidden;
+    }
+    .kartica-slika img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .kartica-placeholder {
+        width: 100%;
+        height: 100%;
+        background: #D4E8D4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 56px;
+    }
+    .badges {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+    .badge-kategorija {
+        background: rgba(0,0,0,0.5);
+        color: white;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 50px;
+    }
+    .badge-cilj {
+        background: #1C3D2E;
+        color: white;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 50px;
+    }
+    .srce-wrapper {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+    }
+    .srce-btn {
+        background: rgba(255,255,255,0.9);
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+    .kartica-sadrzaj {
+        padding: 20px;
+    }
+    .kartica-naziv {
+        font-size: 18px;
+        font-weight: 700;
+        color: #111827;
+        margin: 0 0 12px 0;
+    }
+    .kartica-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    .kartica-info span {
+        font-size: 14px;
+        font-weight: 500;
+        color: #4b5563;
+    }
+    .kartica-alergen {
+        font-size: 12px;
+        font-weight: 600;
+        color: #b45309;
+        margin: 10px 0 0 0;
+    }
+
+    /* RESPONSIVE */
     @@media (max-width: 768px) {
-        .sidebar {
-            display: none;
-        }
-        .mobile-filter-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+        .sidebar { display: none; }
+        .layout-wrapper { flex-direction: column; }
+        .mobile-filter-bar { display: flex; }
     }
 </style>
 
 <!-- POCETAK HEADER SEKCIJE -->
-<section style="max-width: 1280px; margin: 0 auto; padding: clamp(28px, 4vw, 48px) 24px 32px 24px;">
-
-    <div style="display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+<section class="recept-header">
+    <div class="recept-header-inner">
 
         <div>
-            <p style="font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #C87941; margin: 0 0 16px 0;">
-                Biblioteka recepata
-            </p>
-            <h1 style="font-size: clamp(32px, 4vw, 52px); font-weight: 600; color: #111827; margin: 0;">
-                Istražite recepte
-            </h1>
+            <p class="recept-label">Biblioteka recepata</p>
+            <h1 class="recept-naslov">Istražite recepte</h1>
         </div>
 
         @if ((bool)ViewBag.ImaKorisnikCilj)
         {
-            <div style="display: inline-flex; background: #E8E2D6; border-radius: 50px; padding: 5px;">
+            <div class="toggle-wrapper">
                 @Html.ActionLink("Preporučeno za vas", "Index", "Recept", new { sviRecepti = false }, new
                 {
-                    style = "padding: 10px 26px; border-radius: 50px; font-size: 15px; font-weight: 500; text-decoration: none; " +
-                            (!(bool)ViewBag.SviRecepti
-                                ? "background: white; color: #111827; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"
-                                : "background: transparent; color: #6b7280;")
+                    @class = "toggle-btn " + (!(bool)ViewBag.SviRecepti ? "toggle-btn-active" : "toggle-btn-inactive")
                 })
                 @Html.ActionLink("Svi recepti", "Index", "Recept", new { sviRecepti = true }, new
                 {
-                    style = "padding: 10px 26px; border-radius: 50px; font-size: 15px; font-weight: 500; text-decoration: none; " +
-                            ((bool)ViewBag.SviRecepti
-                                ? "background: white; color: #111827; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"
-                                : "background: transparent; color: #6b7280;")
+                    @class = "toggle-btn " + ((bool)ViewBag.SviRecepti ? "toggle-btn-active" : "toggle-btn-inactive")
                 })
             </div>
         }
 
     </div>
-
 </section>
 <!-- KRAJ HEADER SEKCIJE -->
 
 <!-- POCETAK SADRZAJ SEKCIJE -->
-<section style="max-width: 1280px; margin: 0 auto; padding: 0 24px clamp(48px, 6vw, 80px) 24px;">
+<section class="sadrzaj-sekcija">
 
-    <!-- MOBILNI FILTER BAR - vidljiv samo na mobile -->
-    <div class="mobile-filter-bar" style="background: #EDE8DE; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px;">
+    <!-- MOBILNI FILTER BAR - vidljiv samo na mobilnom -->
+    <div class="mobile-filter-bar">
         <!-- dugme i panel dolaze u sledecem commitu -->
     </div>
 
@@ -98,77 +252,70 @@
         <!-- GLAVNI SADRZAJ -->
         <div class="main-content">
 
-            <p style="font-size: 14px; font-weight: 500; color: #6b7280; margin: 0 0 24px 0;">
-                @Model.Count recepata
-            </p>
+            <p class="recepti-count">@Model.Count recepata</p>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 24px;">
-        @foreach (var recept in Model)
-        {
-            <div style="background: white; border-radius: 16px; overflow: hidden; border: 1px solid #ddd8ce;">
+            <div class="recepti-grid">
+                @foreach (var recept in Model)
+                {
+                    <div class="kartica">
 
-                <!-- SLIKA -->
-                <div style="position: relative; height: 240px; overflow: hidden;">
-                    @if (!string.IsNullOrEmpty(recept.Fotografija))
-                    {
-                        <img src="@recept.Fotografija" alt="@recept.Naziv"
-                             style="width: 100%; height: 100%; object-fit: cover;" />
-                    }
-                    else
-                    {
-                        <div style="width: 100%; height: 100%; background: #D4E8D4; display: flex; align-items: center; justify-content: center;">
-                            <span style="font-size: 56px;">🥗</span>
-                        </div>
-                    }
-
-                    <!-- BADGES LIJEVO -->
-                    <div style="position: absolute; top: 14px; left: 14px; display: flex; gap: 6px; flex-wrap: wrap;">
-                        <span style="background: rgba(0,0,0,0.5); color: white; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 12px; border-radius: 50px;">
-                            @recept.KategorijaIme
-                        </span>
-                        @if ((bool)ViewBag.Personalizovano)
-                        {
-                            <span style="background: #1C3D2E; color: white; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 12px; border-radius: 50px;">
-                                Odgovara cilju
-                            </span>
-                        }
-                    </div>
-
-                    <!-- SRCE IKONA DESNO -->
-                    @if (Session["KorisnikId"] != null)
-                    {
-                        <div style="position: absolute; top: 12px; right: 12px;">
-                            @using (Html.BeginForm(recept.UFavoritima ? "UkloniIzFavorita" : "DodajUFavorite", "Recept", FormMethod.Post))
+                        <!-- SLIKA -->
+                        <div class="kartica-slika">
+                            @if (!string.IsNullOrEmpty(recept.Fotografija))
                             {
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="receptId" value="@recept.Id" />
-                                <button type="submit" style="background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; padding: 0;">
-                                    @(recept.UFavoritima ? "♥" : "♡")
-                                </button>
+                                <img src="@recept.Fotografija" alt="@recept.Naziv" />
+                            }
+                            else
+                            {
+                                <div class="kartica-placeholder">🥗</div>
+                            }
+
+                            <!-- BADGES LIJEVO -->
+                            <div class="badges">
+                                <span class="badge-kategorija">@recept.KategorijaIme</span>
+                                @if ((bool)ViewBag.Personalizovano)
+                                {
+                                    <span class="badge-cilj">Odgovara cilju</span>
+                                }
+                            </div>
+
+                            <!-- SRCE -->
+                            @if (Session["KorisnikId"] != null)
+                            {
+                                <div class="srce-wrapper">
+                                    @using (Html.BeginForm(recept.UFavoritima ? "UkloniIzFavorita" : "DodajUFavorite", "Recept", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="receptId" value="@recept.Id" />
+                                        <button type="submit" class="srce-btn">@(recept.UFavoritima ? "♥" : "♡")</button>
+                                    }
+                                </div>
                             }
                         </div>
-                    }
-                </div>
 
-                <!-- SADRZAJ -->
-                <div style="padding: 20px;">
-                    <p style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 12px 0;">@recept.Naziv</p>
-                    <div style="display: flex; align-items: center; gap: 20px;">
-                        <span style="font-size: 14px; font-weight: 500; color: #4b5563;">⏱ @recept.VrijemePripreme min</span>
-                        @if (recept.Kalorije.HasValue)
-                        {
-                            <span style="font-size: 14px; font-weight: 500; color: #4b5563;">🔥 @recept.Kalorije kcal</span>
-                        }
+                        <!-- SADRZAJ -->
+                        <div class="kartica-sadrzaj">
+                            <p class="kartica-naziv">@recept.Naziv</p>
+                            <div class="kartica-info">
+                                <span>⏱ @recept.VrijemePripreme min</span>
+                                @if (recept.Kalorije.HasValue)
+                                {
+                                    <span>🔥 @recept.Kalorije kcal</span>
+                                }
+                            </div>
+                            @if (recept.SadrziAlergen && Session["KorisnikId"] != null)
+                            {
+                                <p class="kartica-alergen">⚠ Sadrži vaš alergen</p>
+                            }
+                        </div>
+
                     </div>
-                    @if (recept.SadrziAlergen && Session["KorisnikId"] != null)
-                    {
-                        <p style="font-size: 12px; font-weight: 600; color: #b45309; margin: 10px 0 0 0;">⚠ Sadrži vaš alergen</p>
-                    }
-                </div>
-
+                }
             </div>
-        }
+
+        </div>
+
     </div>
 
 </section>
-<!-- KRAJ GRID SEKCIJE -->
+<!-- KRAJ SADRZAJ SEKCIJE -->
