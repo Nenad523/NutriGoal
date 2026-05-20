@@ -59,7 +59,68 @@
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
         @foreach (var recept in Model)
         {
-            <!-- kartica dolazi u sledecem commitu -->
+            <div style="background: white; border-radius: 16px; overflow: hidden; border: 1px solid #ddd8ce;">
+
+                <!-- SLIKA -->
+                <div style="position: relative; height: 240px; overflow: hidden;">
+                    @if (!string.IsNullOrEmpty(recept.Fotografija))
+                    {
+                        <img src="@recept.Fotografija" alt="@recept.Naziv"
+                             style="width: 100%; height: 100%; object-fit: cover;" />
+                    }
+                    else
+                    {
+                        <div style="width: 100%; height: 100%; background: #D4E8D4; display: flex; align-items: center; justify-content: center;">
+                            <span style="font-size: 56px;">🥗</span>
+                        </div>
+                    }
+
+                    <!-- BADGES LIJEVO -->
+                    <div style="position: absolute; top: 14px; left: 14px; display: flex; gap: 6px; flex-wrap: wrap;">
+                        <span style="background: rgba(0,0,0,0.5); color: white; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 12px; border-radius: 50px;">
+                            @recept.KategorijaIme
+                        </span>
+                        @if ((bool)ViewBag.Personalizovano)
+                        {
+                            <span style="background: #1C3D2E; color: white; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 12px; border-radius: 50px;">
+                                Odgovara cilju
+                            </span>
+                        }
+                    </div>
+
+                    <!-- SRCE IKONA DESNO -->
+                    @if (Session["KorisnikId"] != null)
+                    {
+                        <div style="position: absolute; top: 12px; right: 12px;">
+                            @using (Html.BeginForm(recept.UFavoritima ? "UkloniIzFavorita" : "DodajUFavorite", "Recept", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="receptId" value="@recept.Id" />
+                                <button type="submit" style="background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; padding: 0;">
+                                    @(recept.UFavoritima ? "♥" : "♡")
+                                </button>
+                            }
+                        </div>
+                    }
+                </div>
+
+                <!-- SADRZAJ -->
+                <div style="padding: 20px;">
+                    <p style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 12px 0;">@recept.Naziv</p>
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <span style="font-size: 14px; font-weight: 500; color: #4b5563;">⏱ @recept.VrijemePripreme min</span>
+                        @if (recept.Kalorije.HasValue)
+                        {
+                            <span style="font-size: 14px; font-weight: 500; color: #4b5563;">🔥 @recept.Kalorije kcal</span>
+                        }
+                    </div>
+                    @if (recept.SadrziAlergen && Session["KorisnikId"] != null)
+                    {
+                        <p style="font-size: 12px; font-weight: 600; color: #b45309; margin: 10px 0 0 0;">⚠ Sadrži vaš alergen</p>
+                    }
+                </div>
+
+            </div>
         }
     </div>
 
