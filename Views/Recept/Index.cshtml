@@ -13,37 +13,38 @@
 <!-- POCETAK HEADER SEKCIJE -->
 <section style="max-width: 1280px; margin: 0 auto; padding: clamp(28px, 4vw, 48px) 24px 32px 24px;">
 
-    <p style="font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #C87941; margin: 0 0 16px 0;">
-        Biblioteka recepata
-    </p>
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
 
-    <h1 style="font-size: clamp(32px, 4vw, 52px); font-weight: 600; color: #111827; margin: 0;">
-        Istražite recepte
-    </h1>
+        <div>
+            <p style="font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #C87941; margin: 0 0 16px 0;">
+                Biblioteka recepata
+            </p>
+            <h1 style="font-size: clamp(32px, 4vw, 52px); font-weight: 600; color: #111827; margin: 0;">
+                Istražite recepte
+            </h1>
+        </div>
+
+        @if ((bool)ViewBag.ImaKorisnikCilj)
+        {
+            <div style="display: inline-flex; background: #E8E2D6; border-radius: 50px; padding: 4px;">
+                @Html.ActionLink("Preporučeno za vas", "Index", "Recept", new { sviRecepti = false }, new
+                {
+                    style = "padding: 8px 20px; border-radius: 50px; font-size: 14px; font-weight: 500; text-decoration: none; " +
+                            (!(bool)ViewBag.SviRecepti
+                                ? "background: white; color: #111827; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"
+                                : "background: transparent; color: #6b7280;")
+                })
+                @Html.ActionLink("Svi recepti", "Index", "Recept", new { sviRecepti = true }, new
+                {
+                    style = "padding: 8px 20px; border-radius: 50px; font-size: 14px; font-weight: 500; text-decoration: none; " +
+                            ((bool)ViewBag.SviRecepti
+                                ? "background: white; color: #111827; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"
+                                : "background: transparent; color: #6b7280;")
+                })
+            </div>
+        }
+
+    </div>
 
 </section>
 <!-- KRAJ HEADER SEKCIJE -->
-
-<!-- POCETAK TOGGLE SEKCIJE -->
-@if ((bool)ViewBag.Personalizovano || (bool)ViewBag.SviRecepti)
-{
-    <div style="max-width: 1280px; margin: 0 auto; padding: 0 24px 28px 24px;">
-        <div style="display: inline-flex; background: #E8E2D6; border-radius: 50px; padding: 4px;">
-            @Html.ActionLink("Preporučeno za vas", "Index", "Recept", new { sviRecepti = false }, new
-            {
-                style = "padding: 8px 20px; border-radius: 50px; font-size: 14px; font-weight: 500; text-decoration: none; " +
-                        ((bool)ViewBag.Personalizovano
-                            ? "background: white; color: #111827; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"
-                            : "background: transparent; color: #6b7280;")
-            })
-            @Html.ActionLink("Svi recepti", "Index", "Recept", new { sviRecepti = true }, new
-            {
-                style = "padding: 8px 20px; border-radius: 50px; font-size: 14px; font-weight: 500; text-decoration: none; " +
-                        ((bool)ViewBag.SviRecepti
-                            ? "background: white; color: #111827; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"
-                            : "background: transparent; color: #6b7280;")
-            })
-        </div>
-    </div>
-}
-<!-- KRAJ TOGGLE SEKCIJE -->

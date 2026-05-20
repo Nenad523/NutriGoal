@@ -35,7 +35,10 @@ namespace NutriGoal.Controllers
                 var profil = db.KorisnickiProfil
                     .FirstOrDefault(kp => kp.KorisnikId == korisnikId);
 
-                if (profil != null && profil.CiljId != null && !sviRecepti)
+                var imaCilj = profil != null && profil.CiljId != null;
+                ViewBag.ImaKorisnikCilj = imaCilj;
+
+                if (imaCilj && !sviRecepti)
                 {
                     var kategorije = db.Kategorije.ToDictionary(k => k.Id, k => k.Naziv);
 
@@ -88,6 +91,7 @@ namespace NutriGoal.Controllers
             }
 
             // Neprijavljen korisnik
+            ViewBag.ImaKorisnikCilj = false;
             var recepti = db.Recepti
                 .Select(r => new ReceptViewModel
                 {
