@@ -20,21 +20,25 @@ namespace NutriGoal.Controllers
             {
                 var korisnikId = (int)Session["KorisnikId"];
                 var korisnik = db.Korisnici.Find(korisnikId);
-               
-                // Dohvati alergene korisnika
+
                 var korisnikAlergeni = korisnik.Alergije
                     .Select(a => a.Id)
                     .ToList();
 
                 ViewBag.KorisnikAlergeni = korisnikAlergeni;
 
-                // Dohvati profil korisnika
+                var favoritiIds = db.Favoriti
+                    .Where(f => f.KorisnikId == korisnikId)
+                    .Select(f => f.ReceptId)
+                    .ToList();
+
                 var profil = db.KorisnickiProfil
                     .FirstOrDefault(kp => kp.KorisnikId == korisnikId);
 
-                // Ako ima cilj i nije kliknuo "Svi recepti"
                 if (profil != null && profil.CiljId != null && !sviRecepti)
                 {
+                    var kategorije = db.Kategorije.ToDictionary(k => k.Id, k => k.Naziv);
+
                     var preporuceniRecepti = db.sp_PreporuciRecepte(korisnikId)
                         .Select(r => new ReceptViewModel
                         {
@@ -43,12 +47,14 @@ namespace NutriGoal.Controllers
                             Opis = r.Opis,
                             Fotografija = r.Fotografija,
                             KategorijaId = r.KategorijaId,
+                            KategorijaIme = kategorije.ContainsKey(r.KategorijaId) ? kategorije[r.KategorijaId] : "",
                             VrijemePripreme = r.VrijemePripreme,
                             Kalorije = r.Kalorije,
                             Proteini = r.Proteini,
                             UgljeniHidrati = r.UgljeniHidrati,
                             Masti = r.Masti,
-                            SadrziAlergen = false // uvijek false jer procedura već filtrira
+                            SadrziAlergen = false,
+                            UFavoritima = favoritiIds.Contains(r.Id)
                         }).ToList();
 
                     ViewBag.Personalizovano = true;
@@ -56,7 +62,6 @@ namespace NutriGoal.Controllers
                     return View(preporuceniRecepti);
                 }
 
-                // Prijavljen ali kliknuo "Svi recepti" ili nema cilj
                 var sviReceptiLista = db.Recepti
                     .Select(r => new ReceptViewModel
                     {
@@ -65,6 +70,7 @@ namespace NutriGoal.Controllers
                         Opis = r.Opis,
                         Fotografija = r.Fotografija,
                         KategorijaId = r.KategorijaId,
+                        KategorijaIme = r.Kategorije.Naziv,
                         VrijemePripreme = r.VrijemePripreme,
                         Kalorije = r.Kalorije,
                         Proteini = r.Proteini,
@@ -72,7 +78,8 @@ namespace NutriGoal.Controllers
                         Masti = r.Masti,
                         SadrziAlergen = r.ReceptSastojci
                             .Any(rs => rs.Sastojci.Alergije
-                                .Any(a => korisnikAlergeni.Contains(a.Id)))
+                                .Any(a => korisnikAlergeni.Contains(a.Id))),
+                        UFavoritima = favoritiIds.Contains(r.Id)
                     }).ToList();
 
                 ViewBag.Personalizovano = false;
@@ -80,7 +87,7 @@ namespace NutriGoal.Controllers
                 return View(sviReceptiLista);
             }
 
-            // Neregistrovani korisnik — svi recepti bez oznaka
+            // Neprijavljen korisnik
             var recepti = db.Recepti
                 .Select(r => new ReceptViewModel
                 {
@@ -89,12 +96,14 @@ namespace NutriGoal.Controllers
                     Opis = r.Opis,
                     Fotografija = r.Fotografija,
                     KategorijaId = r.KategorijaId,
+                    KategorijaIme = r.Kategorije.Naziv,
                     VrijemePripreme = r.VrijemePripreme,
                     Kalorije = r.Kalorije,
                     Proteini = r.Proteini,
                     UgljeniHidrati = r.UgljeniHidrati,
                     Masti = r.Masti,
-                    SadrziAlergen = false
+                    SadrziAlergen = false,
+                    UFavoritima = false
                 }).ToList();
 
             ViewBag.Personalizovano = false;
