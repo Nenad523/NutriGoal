@@ -8,6 +8,37 @@
     body {
         background-color: #F5F0E8;
     }
+
+    .layout-wrapper {
+        display: flex;
+        gap: 40px;
+        align-items: flex-start;
+    }
+
+    .sidebar {
+        width: 260px;
+        flex-shrink: 0;
+    }
+
+    .main-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .mobile-filter-bar {
+        display: none;
+    }
+
+    @@media (max-width: 768px) {
+        .sidebar {
+            display: none;
+        }
+        .mobile-filter-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
 </style>
 
 <!-- POCETAK HEADER SEKCIJE -->
