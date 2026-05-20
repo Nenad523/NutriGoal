@@ -82,5 +82,15 @@ namespace NutriGoal.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PretragaRecepata_Result>("sp_PretragaRecepata", nazivParameter, kategorijaIdParameter, ciljIdParameter, minKalorijeParameter, maxKalorijeParameter, maxVrijemeParameter, sortiranjeParameter);
         }
+    
+        [DbFunction("NutriGoalEntities", "fn_NutritivneVrijednostiRecepta")]
+        public virtual IQueryable<fn_NutritivneVrijednostiRecepta_Result> fn_NutritivneVrijednostiRecepta(Nullable<int> receptId)
+        {
+            var receptIdParameter = receptId.HasValue ?
+                new ObjectParameter("ReceptId", receptId) :
+                new ObjectParameter("ReceptId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fn_NutritivneVrijednostiRecepta_Result>("[NutriGoalEntities].[fn_NutritivneVrijednostiRecepta](@ReceptId)", receptIdParameter);
+        }
     }
 }

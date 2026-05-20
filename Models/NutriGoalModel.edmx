@@ -410,6 +410,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_IzracunajBMR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="decimal">
+          <Parameter Name="Pol" Type="char" Mode="In" />
+          <Parameter Name="Visina" Type="decimal" Mode="In" />
+          <Parameter Name="Tezina" Type="decimal" Mode="In" />
+          <Parameter Name="Godine" Type="int" Mode="In" />
+        </Function>
+        <Function Name="fn_NutritivneVrijednostiRecepta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReceptId" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Kalorije" Type="decimal" Precision="38" Scale="8" Nullable="false" />
+                <Property Name="Proteini" Type="decimal" Precision="38" Scale="8" Nullable="false" />
+                <Property Name="UgljeniHidrati" Type="decimal" Precision="38" Scale="8" Nullable="false" />
+                <Property Name="Masti" Type="decimal" Precision="38" Scale="8" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fn_UkupnoKalorijaRecepta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="decimal">
+          <Parameter Name="ReceptId" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_PreporuciRecepte" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="KorisnikId" Type="int" Mode="In" />
         </Function>
@@ -962,7 +984,7 @@
             <End Role="Sastojci" EntitySet="Sastojci" />
           </AssociationSet>
           <FunctionImport Name="sp_PreporuciRecepte" ReturnType="Collection(NutriGoalModel.sp_PreporuciRecepte_Result)">
-            <Parameter Name="KorisnikId" Mode="In" Type="Int32" />
+          <Parameter Name="KorisnikId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_PretragaRecepata" ReturnType="Collection(NutriGoalModel.sp_PretragaRecepata_Result)">
             <Parameter Name="Naziv" Mode="In" Type="String" />
@@ -972,6 +994,9 @@
             <Parameter Name="MaxKalorije" Mode="In" Type="Decimal" />
             <Parameter Name="MaxVrijeme" Mode="In" Type="Int32" />
             <Parameter Name="Sortiranje" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="fn_NutritivneVrijednostiRecepta" IsComposable="true" ReturnType="Collection(NutriGoalModel.fn_NutritivneVrijednostiRecepta_Result)">
+            <Parameter Name="ReceptId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_PreporuciRecepte_Result">
@@ -1001,6 +1026,12 @@
           <Property Type="Decimal" Name="UgljeniHidrati" Nullable="true" Precision="10" Scale="2" />
           <Property Type="Decimal" Name="Masti" Nullable="true" Precision="10" Scale="2" />
           <Property Type="DateTime" Name="DatumKreiranja" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="fn_NutritivneVrijednostiRecepta_Result">
+          <Property Type="Decimal" Name="Kalorije" Nullable="false" Precision="38" Scale="8" />
+          <Property Type="Decimal" Name="Proteini" Nullable="false" Precision="38" Scale="8" />
+          <Property Type="Decimal" Name="UgljeniHidrati" Nullable="false" Precision="38" Scale="8" />
+          <Property Type="Decimal" Name="Masti" Nullable="false" Precision="38" Scale="8" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1217,6 +1248,16 @@
                 <ScalarProperty Name="UgljeniHidrati" ColumnName="UgljeniHidrati" />
                 <ScalarProperty Name="Masti" ColumnName="Masti" />
                 <ScalarProperty Name="DatumKreiranja" ColumnName="DatumKreiranja" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="fn_NutritivneVrijednostiRecepta" FunctionName="NutriGoalModel.Store.fn_NutritivneVrijednostiRecepta">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NutriGoalModel.fn_NutritivneVrijednostiRecepta_Result">
+                <ScalarProperty Name="Kalorije" ColumnName="Kalorije" />
+                <ScalarProperty Name="Proteini" ColumnName="Proteini" />
+                <ScalarProperty Name="UgljeniHidrati" ColumnName="UgljeniHidrati" />
+                <ScalarProperty Name="Masti" ColumnName="Masti" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -160,6 +160,9 @@
     <Compile Include="Models\Favoriti.cs">
       <DependentUpon>NutriGoalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\fn_NutritivneVrijednostiRecepta_Result.cs">
+      <DependentUpon>NutriGoalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Kategorije.cs">
       <DependentUpon>NutriGoalModel.tt</DependentUpon>
     </Compile>
