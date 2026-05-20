@@ -50,8 +50,8 @@
 
             <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 36px; flex-wrap: wrap; gap: 12px;">
                 <div>
-                    <p style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #C87941; margin: 0 0 10px 0;">Za ovo doba dana</p>
-                    <h2 style="font-size: clamp(24px, 3vw, 34px); font-weight: 800; color: #111827; margin: 0 0 6px 0;">@ViewBag.NaslovObroka</h2>
+                    <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #C87941; margin: 0 0 10px 0;">Za ovo doba dana</p>
+                    <h2 style="font-size: clamp(28px, 3.5vw, 42px); font-weight: 700; color: #111827; margin: 0 0 8px 0;">@ViewBag.NaslovObroka</h2>
                     <p style="font-size: 14px; color: #6b7280; margin: 0;">@ViewBag.OpisObroka</p>
                 </div>
                 @Html.ActionLink("Svi recepti →", "Index", "Recept", null, new
@@ -83,12 +83,12 @@
                         </div>
 
                         <div style="padding: 20px;">
-                            <p style="font-size: 16px; font-weight: 600; color: #111827; margin: 0 0 10px 0;">@recept.Naziv</p>
-                            <div style="display: flex; align-items: center; gap: 16px;">
-                                <span style="font-size: 13px; color: #6b7280;">⏱ @recept.VrijemePripreme min</span>
+                            <p style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 12px 0;">@recept.Naziv</p>
+                            <div style="display: flex; align-items: center; gap: 20px;">
+                                <span style="font-size: 14px; font-weight: 500; color: #4b5563;">⏱ @recept.VrijemePripreme min</span>
                                 @if (recept.Kalorije.HasValue)
                                 {
-                                    <span style="font-size: 13px; color: #6b7280;">🔥 @recept.Kalorije kcal</span>
+                                    <span style="font-size: 14px; font-weight: 500; color: #4b5563;">🔥 @recept.Kalorije kcal</span>
                                 }
                             </div>
                         </div>
