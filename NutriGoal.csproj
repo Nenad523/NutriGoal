@@ -291,10 +291,10 @@
     <Content Include="Views\Korisnik\Register.cshtml" />
     <Content Include="Views\Korisnik\Login.cshtml" />
     <Content Include="Views\Korisnik\Profil.cshtml" />
+    <Content Include="Views\Recept\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Recept\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
