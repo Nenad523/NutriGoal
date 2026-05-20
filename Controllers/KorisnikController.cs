@@ -49,6 +49,14 @@ namespace NutriGoal.Controllers
                 db.Korisnici.Add(noviKorisnik);
                 db.SaveChanges();
 
+                var noviProfil = new KorisnickiProfil
+                {
+                    KorisnikId = noviKorisnik.Id,
+                    DatumAzuriranja = DateTime.Now
+                };
+                db.KorisnickiProfil.Add(noviProfil);
+                db.SaveChanges();
+
                 return RedirectToAction("Login");
             }
 
