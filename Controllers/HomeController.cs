@@ -27,7 +27,7 @@ namespace NutriGoal.Controllers
             else if (sat >= 12 && sat < 17)
             {
                 kategorijaObroka = "Ručak";
-                naslovObroka = "Vrijme je za ručak.";
+                naslovObroka = "Vrijeme je za ručak.";
                 opisObroka = "Napunite energiju za ostatak dana.";
             }
             else if (sat >= 17 && sat < 21)
