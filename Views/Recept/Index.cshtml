@@ -48,3 +48,20 @@
 
 </section>
 <!-- KRAJ HEADER SEKCIJE -->
+
+<!-- POCETAK GRID SEKCIJE -->
+<section style="max-width: 1280px; margin: 0 auto; padding: 0 24px clamp(48px, 6vw, 80px) 24px;">
+
+    <p style="font-size: 14px; font-weight: 500; color: #6b7280; margin: 0 0 24px 0;">
+        @Model.Count recepata
+    </p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+        @foreach (var recept in Model)
+        {
+            <!-- kartica dolazi u sledecem commitu -->
+        }
+    </div>
+
+</section>
+<!-- KRAJ GRID SEKCIJE -->
