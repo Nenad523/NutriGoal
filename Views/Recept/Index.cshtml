@@ -56,7 +56,7 @@
         @Model.Count recepata
     </p>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 24px;">
         @foreach (var recept in Model)
         {
             <div style="background: white; border-radius: 16px; overflow: hidden; border: 1px solid #ddd8ce;">
