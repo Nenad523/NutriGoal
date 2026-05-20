@@ -39,7 +39,7 @@ namespace NutriGoal.Controllers
             else
             {
                 kategorijaObroka = "Snack";
-                naslovObroka = "Vrijme za užinu.";
+                naslovObroka = "Vrijeme za užinu.";
                 opisObroka = "Lagana užina između obroka.";
             }
 
