@@ -260,7 +260,13 @@
 
     <!-- MOBILNI FILTER BAR - vidljiv samo na mobilnom -->
     <div class="mobile-filter-bar">
-        <!-- dugme i panel dolaze u sledecem commitu -->
+        <span style="font-size: 14px; font-weight: 600; color: #374151;">🔍 Filteri</span>
+        <button class="filter-toggle-btn" id="filterToggle" onclick="toggleFilter()">Otvori</button>
+    </div>
+
+    <!-- MOBILNI FILTER PANEL -->
+    <div class="mobile-filter-panel" id="mobileFilterPanel">
+        <!-- filteri dolaze u sledecem commitu -->
     </div>
 
     <div class="layout-wrapper">
@@ -340,3 +346,12 @@
 
 </section>
 <!-- KRAJ SADRZAJ SEKCIJE -->
+
+<script>
+    function toggleFilter() {
+        var panel = document.getElementById('mobileFilterPanel');
+        var btn = document.getElementById('filterToggle');
+        var otvoren = panel.classList.toggle('otvoren');
+        btn.textContent = otvoren ? 'Zatvori' : 'Otvori';
+    }
+</script>
