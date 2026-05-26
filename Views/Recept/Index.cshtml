@@ -73,6 +73,10 @@
     .sidebar {
         width: 260px;
         flex-shrink: 0;
+        background: #EDE8DE;
+        border-radius: 16px;
+        padding: 24px;
+        align-self: flex-start;
     }
     .main-content {
         flex: 1;
@@ -349,6 +353,19 @@
     .filter-reset-link:hover {
         color: #374151;
     }
+    .kalorije-values {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        font-weight: 600;
+        color: #1C3D2E;
+        margin-bottom: 4px;
+    }
+    .kalorije-opis {
+        font-size: 12px;
+        color: #6b7280;
+        margin: 6px 0 0 0;
+    }
 
     /* RESPONSIVE */
     @@media (max-width: 768px) {
@@ -485,16 +502,22 @@
         btn.textContent = otvoren ? 'Zatvori' : 'Otvori';
     }
 
-    function updateKalorijeLabel() {
-        var min = parseInt(document.getElementById('minKalorije').value);
-        var max = parseInt(document.getElementById('maxKalorije').value);
+    function updateKalorije(input) {
+        var group = input.closest('.filter-group');
+        var rangeInputs = group.querySelectorAll('input[type=range]');
+        var min = parseInt(rangeInputs[0].value);
+        var max = parseInt(rangeInputs[1].value);
+
         if (min > max) {
-            document.getElementById('minKalorije').value = max;
+            rangeInputs[0].value = max;
             min = max;
         }
-        var labels = document.querySelectorAll('#kalorijeLabel');
-        labels.forEach(function(el) {
-            el.textContent = min + '–' + max + ' kcal';
+
+        group.querySelectorAll('.kalorije-min').forEach(function(el) {
+            el.textContent = min + ' kcal';
+        });
+        group.querySelectorAll('.kalorije-max').forEach(function(el) {
+            el.textContent = max + ' kcal';
         });
     }
 </script>

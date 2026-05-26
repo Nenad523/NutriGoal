@@ -47,13 +47,18 @@
 
     <!-- KALORIJE -->
     <div class="filter-group">
-        <label class="filter-label">Kalorije: <span id="kalorijeLabel">0–1500 kcal</span></label>
-        <div class="dual-range">
-            <input type="range" id="minKalorije" name="minKalorije" min="0" max="1500" value="0" step="50"
-                   oninput="updateKalorijeLabel()" />
-            <input type="range" id="maxKalorije" name="maxKalorije" min="0" max="1500" value="1500" step="50"
-                   oninput="updateKalorijeLabel()" />
+        <label class="filter-label">Kalorije</label>
+        <div class="kalorije-values">
+            <span class="kalorije-min">0 kcal</span>
+            <span class="kalorije-max">1500 kcal</span>
         </div>
+        <div class="dual-range">
+            <input type="range" name="minKalorije" min="0" max="1500" value="0" step="50"
+                   oninput="updateKalorije(this)" />
+            <input type="range" name="maxKalorije" min="0" max="1500" value="1500" step="50"
+                   oninput="updateKalorije(this)" />
+        </div>
+        <p class="kalorije-opis">Prikazuju se recepti između <span class="kalorije-min">0</span> i <span class="kalorije-max">1500</span> kcal</p>
     </div>
 
     <!-- VRIJME PRIPREME -->
