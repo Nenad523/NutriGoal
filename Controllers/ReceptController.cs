@@ -16,6 +16,9 @@ namespace NutriGoal.Controllers
         // @access - Public AND Private
         public ActionResult Index(bool sviRecepti = false)
         {
+            ViewBag.Kategorije = db.Kategorije.ToList();
+            ViewBag.Ciljevi = db.Ciljevi.ToList();
+
             if (Session["KorisnikId"] != null)
             {
                 var korisnikId = (int)Session["KorisnikId"];
