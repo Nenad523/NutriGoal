@@ -1,14 +1,24 @@
 @{
     var kategorije = ViewBag.Kategorije as List<NutriGoal.Models.Kategorije>;
     var ciljevi = ViewBag.Ciljevi as List<NutriGoal.Models.Ciljevi>;
+    var filterNaziv = ViewBag.FilterNaziv as string ?? "";
+    var filterKategorijaId = ViewBag.FilterKategorijaId as int?;
+    var filterCiljeviIds = (ViewBag.FilterCiljeviIds as int[]) ?? new int[0];
+    var filterMinKalorije = ViewBag.FilterMinKalorije != null ? (int)ViewBag.FilterMinKalorije : 0;
+    var filterMaxKalorije = ViewBag.FilterMaxKalorije != null ? (int)ViewBag.FilterMaxKalorije : 1500;
+    var filterMaxVrijeme = ViewBag.FilterMaxVrijeme as int?;
+    var filterSortiranje = ViewBag.FilterSortiranje as string ?? "Naziv";
+    var sviRecepti = ViewBag.SviRecepti != null ? (bool)ViewBag.SviRecepti : false;
 }
 
 @using (Html.BeginForm("Index", "Recept", FormMethod.Get, new { @class = "filter-form" }))
 {
+    <input type="hidden" name="sviRecepti" value="@sviRecepti.ToString().ToLower()" />
+
     <!-- PRETRAGA -->
     <div class="filter-group">
         <label class="filter-label">Pretraga</label>
-        <input type="text" name="naziv" class="filter-input" placeholder="Naziv ili sastojak..." />
+        <input type="text" name="naziv" class="filter-input" placeholder="Naziv ili sastojak..." value="@filterNaziv" />
     </div>
 
     <!-- KATEGORIJA -->
@@ -17,13 +27,13 @@
         <div class="filter-group">
             <label class="filter-label">Kategorija</label>
             <label class="filter-checkbox-label">
-                <input type="radio" name="kategorijaId" value="" checked="checked" />
+                <input type="radio" name="kategorijaId" value="" @(!filterKategorijaId.HasValue ? "checked" : "") />
                 Sve kategorije
             </label>
             @foreach (var k in kategorije)
             {
                 <label class="filter-checkbox-label">
-                    <input type="radio" name="kategorijaId" value="@k.Id" />
+                    <input type="radio" name="kategorijaId" value="@k.Id" @(filterKategorijaId == k.Id ? "checked" : "") />
                     @k.Naziv
                 </label>
             }
@@ -38,7 +48,7 @@
             @foreach (var c in ciljevi)
             {
                 <label class="filter-checkbox-label">
-                    <input type="checkbox" name="ciljeviIds" value="@c.Id" />
+                    <input type="checkbox" name="ciljeviIds" value="@c.Id" @(filterCiljeviIds.Contains(c.Id) ? "checked" : "") />
                     @c.Naziv
                 </label>
             }
@@ -49,16 +59,16 @@
     <div class="filter-group">
         <label class="filter-label">Kalorije</label>
         <div class="kalorije-values">
-            <span class="kalorije-min">0 kcal</span>
-            <span class="kalorije-max">1500 kcal</span>
+            <span class="kalorije-min">@filterMinKalorije kcal</span>
+            <span class="kalorije-max">@filterMaxKalorije kcal</span>
         </div>
         <div class="dual-range">
-            <input type="range" name="minKalorije" min="0" max="1500" value="0" step="50"
+            <input type="range" name="minKalorije" min="0" max="1500" value="@filterMinKalorije" step="50"
                    oninput="updateKalorije(this)" />
-            <input type="range" name="maxKalorije" min="0" max="1500" value="1500" step="50"
+            <input type="range" name="maxKalorije" min="0" max="1500" value="@filterMaxKalorije" step="50"
                    oninput="updateKalorije(this)" />
         </div>
-        <p class="kalorije-opis">Prikazuju se recepti između <span class="kalorije-min">0</span> i <span class="kalorije-max">1500</span> kcal</p>
+        <p class="kalorije-opis">Prikazuju se recepti između <span class="kalorije-min">@filterMinKalorije</span> i <span class="kalorije-max">@filterMaxKalorije</span> kcal</p>
     </div>
 
     <!-- VRIJME PRIPREME -->
@@ -66,9 +76,9 @@
         <label class="filter-label">Vrijme pripreme</label>
         <select name="maxVrijeme" class="filter-select">
             <option value="">Sva vremena</option>
-            <option value="15">&lt; 15 min</option>
-            <option value="30">&lt; 30 min</option>
-            <option value="60">&lt; 60 min</option>
+            <option value="15" @(filterMaxVrijeme == 15 ? "selected" : "")>&lt; 15 min</option>
+            <option value="30" @(filterMaxVrijeme == 30 ? "selected" : "")>&lt; 30 min</option>
+            <option value="60" @(filterMaxVrijeme == 60 ? "selected" : "")>&lt; 60 min</option>
         </select>
     </div>
 
@@ -76,12 +86,12 @@
     <div class="filter-group">
         <label class="filter-label">Sortiraj po</label>
         <select name="sortiranje" class="filter-select">
-            <option value="Naziv">Naziv</option>
-            <option value="Kalorije">Kalorije</option>
-            <option value="Vrijeme">Vrijeme</option>
+            <option value="Naziv" @(filterSortiranje == "Naziv" ? "selected" : "")>Naziv</option>
+            <option value="Kalorije" @(filterSortiranje == "Kalorije" ? "selected" : "")>Kalorije</option>
+            <option value="Vrijeme" @(filterSortiranje == "Vrijeme" ? "selected" : "")>Vrijeme</option>
         </select>
     </div>
 
     <button type="submit" class="filter-pretrazi-btn">Pretraži</button>
-    <a href="@Url.Action("Index", "Recept")" class="filter-reset-link">Resetuj filtere</a>
+    <a href="@Url.Action("Index", "Recept", new { sviRecepti = sviRecepti })" class="filter-reset-link">Resetuj filtere</a>
 }
