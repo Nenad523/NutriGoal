@@ -484,4 +484,17 @@
         var otvoren = panel.classList.toggle('otvoren');
         btn.textContent = otvoren ? 'Zatvori' : 'Otvori';
     }
+
+    function updateKalorijeLabel() {
+        var min = parseInt(document.getElementById('minKalorije').value);
+        var max = parseInt(document.getElementById('maxKalorije').value);
+        if (min > max) {
+            document.getElementById('minKalorije').value = max;
+            min = max;
+        }
+        var labels = document.querySelectorAll('#kalorijeLabel');
+        labels.forEach(function(el) {
+            el.textContent = min + '–' + max + ' kcal';
+        });
+    }
 </script>
