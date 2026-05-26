@@ -1,0 +1,218 @@
+@model List<NutriGoal.Models.ReceptViewModel>
+
+@{
+    ViewBag.Title = "Favoriti";
+}
+
+<style>
+    body { background-color: #F5F0E8; }
+
+    .favoriti-header {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: clamp(28px, 4vw, 48px) 24px 32px 24px;
+    }
+    .favoriti-label {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #C87941;
+        margin: 0 0 16px 0;
+    }
+    .favoriti-naslov {
+        font-size: clamp(32px, 4vw, 52px);
+        font-weight: 600;
+        color: #111827;
+        margin: 0;
+    }
+
+    .favoriti-sadrzaj {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px clamp(48px, 6vw, 80px) 24px;
+    }
+
+    .recepti-count {
+        font-size: 14px;
+        font-weight: 500;
+        color: #6b7280;
+        margin: 0 0 24px 0;
+    }
+
+    .recepti-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+        gap: 24px;
+    }
+
+    /* KARTICA */
+    .kartica {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid #ddd8ce;
+    }
+    .kartica-slika {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+    }
+    .kartica-slika img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .kartica-placeholder {
+        width: 100%;
+        height: 100%;
+        background: #D4E8D4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 56px;
+    }
+    .badges {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+    .badge-kategorija {
+        background: rgba(0,0,0,0.5);
+        color: white;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 50px;
+    }
+    .srce-wrapper {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+    }
+    .srce-btn {
+        background: rgba(255,255,255,0.9);
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+    .kartica-sadrzaj {
+        padding: 20px;
+    }
+    .kartica-naziv {
+        font-size: 18px;
+        font-weight: 700;
+        color: #111827;
+        margin: 0 0 12px 0;
+    }
+    .kartica-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    .kartica-info span {
+        font-size: 14px;
+        font-weight: 500;
+        color: #4b5563;
+    }
+    .kartica-alergen {
+        font-size: 12px;
+        font-weight: 600;
+        color: #b45309;
+        margin: 10px 0 0 0;
+    }
+
+    /* PRAZNO STANJE */
+    .prazno-stanje {
+        text-align: center;
+        padding: 80px 24px;
+        color: #6b7280;
+        font-size: 16px;
+    }
+    .prazno-stanje a {
+        color: #1C3D2E;
+        font-weight: 600;
+        text-decoration: underline;
+    }
+</style>
+
+<section class="favoriti-header">
+    <p class="favoriti-label">Vaši favoriti</p>
+    <h1 class="favoriti-naslov">Sačuvani recepti</h1>
+</section>
+
+<section class="favoriti-sadrzaj">
+
+    @if (!Model.Any())
+    {
+        <div class="prazno-stanje">
+            <p>Još nemate favorita. Označite recepte srcem na @Html.ActionLink("stranici recepata", "Index", "Recept").</p>
+        </div>
+    }
+    else
+    {
+        <p class="recepti-count">@Model.Count sačuvanih recepata</p>
+
+        <div class="recepti-grid">
+            @foreach (var recept in Model)
+            {
+                <div class="kartica">
+
+                    <div class="kartica-slika">
+                        @if (!string.IsNullOrEmpty(recept.Fotografija))
+                        {
+                            <img src="@recept.Fotografija" alt="@recept.Naziv" />
+                        }
+                        else
+                        {
+                            <div class="kartica-placeholder">🥗</div>
+                        }
+
+                        <div class="badges">
+                            <span class="badge-kategorija">@recept.KategorijaIme</span>
+                        </div>
+
+                        <div class="srce-wrapper">
+                            @using (Html.BeginForm("UkloniIzFavorita", "Recept", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="receptId" value="@recept.Id" />
+                                <input type="hidden" name="returnUrl" value="Favoriti" />
+                                <button type="submit" class="srce-btn">♥</button>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="kartica-sadrzaj">
+                        <p class="kartica-naziv">@recept.Naziv</p>
+                        <div class="kartica-info">
+                            <span>⏱ @recept.VrijemePripreme min</span>
+                            @if (recept.Kalorije.HasValue)
+                            {
+                                <span>🔥 @recept.Kalorije kcal</span>
+                            }
+                        </div>
+                        @if (recept.SadrziAlergen)
+                        {
+                            <p class="kartica-alergen">⚠ Sadrži vaš alergen</p>
+                        }
+                    </div>
+
+                </div>
+            }
+        </div>
+    }
+
+</section>
