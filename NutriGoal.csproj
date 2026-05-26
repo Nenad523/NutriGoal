@@ -145,6 +145,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\FavoritiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KorisnikController.cs" />
     <Compile Include="Controllers\ReceptController.cs" />
@@ -291,6 +292,7 @@
     <Content Include="Views\Korisnik\Register.cshtml" />
     <Content Include="Views\Korisnik\Login.cshtml" />
     <Content Include="Views\Korisnik\Profil.cshtml" />
+    <Content Include="Views\Favoriti\Index.cshtml" />
     <Content Include="Views\Recept\Index.cshtml" />
     <Content Include="Views\Recept\_FilteriPartial.cshtml" />
   </ItemGroup>
