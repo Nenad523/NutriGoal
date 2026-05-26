@@ -19,6 +19,13 @@ namespace NutriGoal.Controllers
             ViewBag.Kategorije = db.Kategorije.ToList();
             ViewBag.Ciljevi = db.Ciljevi.ToList();
             ViewBag.SviRecepti = sviRecepti;
+            ViewBag.FilterNaziv = naziv;
+            ViewBag.FilterKategorijaId = kategorijaId;
+            ViewBag.FilterCiljeviIds = ciljeviIds ?? new int[0];
+            ViewBag.FilterMinKalorije = minKalorije ?? 0;
+            ViewBag.FilterMaxKalorije = maxKalorije ?? 1500;
+            ViewBag.FilterMaxVrijeme = maxVrijeme;
+            ViewBag.FilterSortiranje = sortiranje ?? "Naziv";
 
             bool filtersActive = !string.IsNullOrWhiteSpace(naziv)
                 || kategorijaId.HasValue
