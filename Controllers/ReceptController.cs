@@ -14,28 +14,50 @@ namespace NutriGoal.Controllers
         // @desc - Prikazivanje liste recepata
         // @route - GET: /Recept/Index
         // @access - Public AND Private
-        public ActionResult Index(bool sviRecepti = false)
+        public ActionResult Index(bool sviRecepti = false, string naziv = null, int? kategorijaId = null, int[] ciljeviIds = null, int? minKalorije = null, int? maxKalorije = null, int? maxVrijeme = null, string sortiranje = "Naziv")
         {
+            ViewBag.Kategorije = db.Kategorije.ToList();
+            ViewBag.Ciljevi = db.Ciljevi.ToList();
+            ViewBag.SviRecepti = sviRecepti;
+            ViewBag.FilterNaziv = naziv;
+            ViewBag.FilterKategorijaId = kategorijaId;
+            ViewBag.FilterCiljeviIds = ciljeviIds ?? new int[0];
+            ViewBag.FilterMinKalorije = minKalorije ?? 0;
+            ViewBag.FilterMaxKalorije = maxKalorije ?? 1500;
+            ViewBag.FilterMaxVrijeme = maxVrijeme;
+            ViewBag.FilterSortiranje = sortiranje ?? "Naziv";
+
+            bool filtersActive = !string.IsNullOrWhiteSpace(naziv)
+                || kategorijaId.HasValue
+                || (ciljeviIds != null && ciljeviIds.Length > 0)
+                || (minKalorije.HasValue && minKalorije.Value > 0)
+                || (maxKalorije.HasValue && maxKalorije.Value < 1500)
+                || maxVrijeme.HasValue;
+
+            List<int> korisnikAlergeni = new List<int>();
+            List<int> favoritiIds = new List<int>();
+
             if (Session["KorisnikId"] != null)
             {
                 var korisnikId = (int)Session["KorisnikId"];
                 var korisnik = db.Korisnici.Find(korisnikId);
-               
-                // Dohvati alergene korisnika
-                var korisnikAlergeni = korisnik.Alergije
-                    .Select(a => a.Id)
+
+                korisnikAlergeni = korisnik.Alergije.Select(a => a.Id).ToList();
+
+                favoritiIds = db.Favoriti
+                    .Where(f => f.KorisnikId == korisnikId)
+                    .Select(f => f.ReceptId)
                     .ToList();
 
-                ViewBag.KorisnikAlergeni = korisnikAlergeni;
+                var profil = db.KorisnickiProfil.FirstOrDefault(kp => kp.KorisnikId == korisnikId);
+                var imaCilj = profil != null && profil.CiljId != null;
+                ViewBag.ImaKorisnikCilj = imaCilj;
 
-                // Dohvati profil korisnika
-                var profil = db.KorisnickiProfil
-                    .FirstOrDefault(kp => kp.KorisnikId == korisnikId);
-
-                // Ako ima cilj i nije kliknuo "Svi recepti"
-                if (profil != null && profil.CiljId != null && !sviRecepti)
+                if (imaCilj && !sviRecepti && !filtersActive)
                 {
-                    var preporuceniRecepti = db.sp_PreporuciRecepte(korisnikId)
+                    var kategorijeMapa = db.Kategorije.ToDictionary(k => k.Id, k => k.Naziv);
+
+                    var preporuceni = db.sp_PreporuciRecepte(korisnikId)
                         .Select(r => new ReceptViewModel
                         {
                             Id = r.Id,
@@ -43,62 +65,79 @@ namespace NutriGoal.Controllers
                             Opis = r.Opis,
                             Fotografija = r.Fotografija,
                             KategorijaId = r.KategorijaId,
+                            KategorijaIme = kategorijeMapa.ContainsKey(r.KategorijaId) ? kategorijeMapa[r.KategorijaId] : "",
                             VrijemePripreme = r.VrijemePripreme,
                             Kalorije = r.Kalorije,
                             Proteini = r.Proteini,
                             UgljeniHidrati = r.UgljeniHidrati,
                             Masti = r.Masti,
-                            SadrziAlergen = false // uvijek false jer procedura već filtrira
+                            SadrziAlergen = false,
+                            UFavoritima = favoritiIds.Contains(r.Id)
                         }).ToList();
 
                     ViewBag.Personalizovano = true;
-                    ViewBag.SviRecepti = false;
-                    return View(preporuceniRecepti);
+                    return View(preporuceni);
                 }
-
-                // Prijavljen ali kliknuo "Svi recepti" ili nema cilj
-                var sviReceptiLista = db.Recepti
-                    .Select(r => new ReceptViewModel
-                    {
-                        Id = r.Id,
-                        Naziv = r.Naziv,
-                        Opis = r.Opis,
-                        Fotografija = r.Fotografija,
-                        KategorijaId = r.KategorijaId,
-                        VrijemePripreme = r.VrijemePripreme,
-                        Kalorije = r.Kalorije,
-                        Proteini = r.Proteini,
-                        UgljeniHidrati = r.UgljeniHidrati,
-                        Masti = r.Masti,
-                        SadrziAlergen = r.ReceptSastojci
-                            .Any(rs => rs.Sastojci.Alergije
-                                .Any(a => korisnikAlergeni.Contains(a.Id)))
-                    }).ToList();
-
-                ViewBag.Personalizovano = false;
-                ViewBag.SviRecepti = true;
-                return View(sviReceptiLista);
+            }
+            else
+            {
+                ViewBag.ImaKorisnikCilj = false;
             }
 
-            // Neregistrovani korisnik — svi recepti bez oznaka
-            var recepti = db.Recepti
-                .Select(r => new ReceptViewModel
-                {
-                    Id = r.Id,
-                    Naziv = r.Naziv,
-                    Opis = r.Opis,
-                    Fotografija = r.Fotografija,
-                    KategorijaId = r.KategorijaId,
-                    VrijemePripreme = r.VrijemePripreme,
-                    Kalorije = r.Kalorije,
-                    Proteini = r.Proteini,
-                    UgljeniHidrati = r.UgljeniHidrati,
-                    Masti = r.Masti,
-                    SadrziAlergen = false
-                }).ToList();
+            // LINQ filtering
+            var query = db.Recepti.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(naziv))
+                query = query.Where(r => r.Naziv.Contains(naziv));
+
+            if (kategorijaId.HasValue)
+                query = query.Where(r => r.KategorijaId == kategorijaId.Value);
+
+            if (ciljeviIds != null && ciljeviIds.Length > 0)
+                query = query.Where(r => r.Ciljevi.Any(c => ciljeviIds.Contains(c.Id)));
+
+            if (minKalorije.HasValue && minKalorije.Value > 0)
+                query = query.Where(r => r.Kalorije >= minKalorije.Value);
+
+            if (maxKalorije.HasValue && maxKalorije.Value < 1500)
+                query = query.Where(r => r.Kalorije <= maxKalorije.Value);
+
+            if (maxVrijeme.HasValue)
+                query = query.Where(r => r.VrijemePripreme <= maxVrijeme.Value);
+
+            switch (sortiranje)
+            {
+                case "Kalorije":
+                    query = query.OrderBy(r => r.Kalorije);
+                    break;
+                case "Vrijeme":
+                    query = query.OrderBy(r => r.VrijemePripreme);
+                    break;
+                default:
+                    query = query.OrderBy(r => r.Naziv);
+                    break;
+            }
+
+            var recepti = query.Select(r => new ReceptViewModel
+            {
+                Id = r.Id,
+                Naziv = r.Naziv,
+                Opis = r.Opis,
+                Fotografija = r.Fotografija,
+                KategorijaId = r.KategorijaId,
+                KategorijaIme = r.Kategorije.Naziv,
+                VrijemePripreme = r.VrijemePripreme,
+                Kalorije = r.Kalorije,
+                Proteini = r.Proteini,
+                UgljeniHidrati = r.UgljeniHidrati,
+                Masti = r.Masti,
+                SadrziAlergen = r.ReceptSastojci
+                    .Any(rs => rs.Sastojci.Alergije
+                        .Any(a => korisnikAlergeni.Contains(a.Id))),
+                UFavoritima = favoritiIds.Contains(r.Id)
+            }).ToList();
 
             ViewBag.Personalizovano = false;
-            ViewBag.SviRecepti = false;
             return View(recepti);
         }
 

@@ -291,10 +291,11 @@
     <Content Include="Views\Korisnik\Register.cshtml" />
     <Content Include="Views\Korisnik\Login.cshtml" />
     <Content Include="Views\Korisnik\Profil.cshtml" />
+    <Content Include="Views\Recept\Index.cshtml" />
+    <Content Include="Views\Recept\_FilteriPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Recept\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -344,7 +345,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>57852</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:57852/</IISUrl>
+          <IISUrl>http://localhost:57412/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

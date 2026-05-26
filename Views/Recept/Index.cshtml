@@ -1,0 +1,533 @@
+@model List<NutriGoal.Models.ReceptViewModel>
+
+@{
+    ViewBag.Title = "Recepti";
+}
+
+<style>
+    body { background-color: #F5F0E8; }
+
+    /* HEADER */
+    .recept-header {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: clamp(28px, 4vw, 48px) 24px 32px 24px;
+    }
+    .recept-header-inner {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+    .recept-label {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #C87941;
+        margin: 0 0 16px 0;
+    }
+    .recept-naslov {
+        font-size: clamp(32px, 4vw, 52px);
+        font-weight: 600;
+        color: #111827;
+        margin: 0;
+    }
+
+    /* TOGGLE */
+    .toggle-wrapper {
+        display: inline-flex;
+        background: #E8E2D6;
+        border-radius: 50px;
+        padding: 5px;
+    }
+    .toggle-btn {
+        padding: 10px 26px;
+        border-radius: 50px;
+        font-size: 15px;
+        font-weight: 500;
+        text-decoration: none;
+    }
+    .toggle-btn-active {
+        background: white;
+        color: #111827;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .toggle-btn-inactive {
+        background: transparent;
+        color: #6b7280;
+    }
+
+    /* LAYOUT */
+    .sadrzaj-sekcija {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px clamp(48px, 6vw, 80px) 24px;
+    }
+    .layout-wrapper {
+        display: flex;
+        gap: 40px;
+        align-items: flex-start;
+    }
+    .sidebar {
+        width: 300px;
+        flex-shrink: 0;
+        background: #EDE8DE;
+        border-radius: 16px;
+        border: 1px solid #ccc7bd;
+        padding: 28px 24px;
+        align-self: flex-start;
+        position: sticky;
+        top: 24px;
+        max-height: calc(100vh - 48px);
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .sidebar::-webkit-scrollbar {
+        display: none;
+    }
+    .main-content {
+        flex: 1;
+        min-width: 0;
+    }
+    .mobile-filter-bar {
+        display: none;
+        background: #EDE8DE;
+        border-radius: 12px;
+        padding: 14px 18px;
+        margin-bottom: 20px;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    /* RECEPTI */
+    .recepti-count {
+        font-size: 14px;
+        font-weight: 500;
+        color: #6b7280;
+        margin: 0 0 24px 0;
+    }
+    .recepti-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+        gap: 24px;
+    }
+
+    /* KARTICA */
+    .kartica {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid #ddd8ce;
+    }
+    .kartica-slika {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+    }
+    .kartica-slika img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .kartica-placeholder {
+        width: 100%;
+        height: 100%;
+        background: #D4E8D4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 56px;
+    }
+    .badges {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+    .badge-kategorija {
+        background: rgba(0,0,0,0.5);
+        color: white;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 50px;
+    }
+    .badge-cilj {
+        background: #1C3D2E;
+        color: white;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 50px;
+    }
+    .srce-wrapper {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+    }
+    .srce-btn {
+        background: rgba(255,255,255,0.9);
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+    .kartica-sadrzaj {
+        padding: 20px;
+    }
+    .kartica-naziv {
+        font-size: 18px;
+        font-weight: 700;
+        color: #111827;
+        margin: 0 0 12px 0;
+    }
+    .kartica-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    .kartica-info span {
+        font-size: 14px;
+        font-weight: 500;
+        color: #4b5563;
+    }
+    .kartica-alergen {
+        font-size: 12px;
+        font-weight: 600;
+        color: #b45309;
+        margin: 10px 0 0 0;
+    }
+
+    /* MOBILE FILTER PANEL */
+    .mobile-filter-panel {
+        display: none;
+        background: #EDE8DE;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    .mobile-filter-panel.otvoren {
+        display: block;
+    }
+    .filter-toggle-btn {
+        background: none;
+        border: none;
+        font-size: 14px;
+        font-weight: 600;
+        color: #1C3D2E;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    /* FILTERI */
+    .filter-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .filter-label {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #1C3D2E;
+    }
+    .filter-input {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid #d1ccc4;
+        border-radius: 10px;
+        background: #F5F0E8;
+        font-size: 14px;
+        color: #374151;
+        box-sizing: border-box;
+        outline: none;
+    }
+    .filter-input:focus {
+        border-color: #1C3D2E;
+    }
+    .filter-checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        color: #374151;
+        cursor: pointer;
+    }
+    .filter-checkbox-label input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: #1C3D2E;
+        cursor: pointer;
+    }
+    .filter-select {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid #d1ccc4;
+        border-radius: 10px;
+        background: #F5F0E8;
+        font-size: 14px;
+        color: #374151;
+        box-sizing: border-box;
+        outline: none;
+        cursor: pointer;
+    }
+    .filter-select:focus {
+        border-color: #1C3D2E;
+    }
+    .dual-range {
+        position: relative;
+        height: 24px;
+        margin-top: 4px;
+    }
+    .dual-range input[type=range] {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        margin: 0;
+        pointer-events: none;
+        appearance: none;
+        -webkit-appearance: none;
+        background: transparent;
+        height: 4px;
+    }
+    .dual-range input[type=range]::-webkit-slider-runnable-track {
+        height: 4px;
+        background: #d1ccc4;
+        border-radius: 2px;
+    }
+    .dual-range input[type=range]::-webkit-slider-thumb {
+        pointer-events: all;
+        -webkit-appearance: none;
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #1C3D2E;
+        cursor: pointer;
+        margin-top: -7px;
+    }
+    .dual-range input[type=range]::-moz-range-thumb {
+        pointer-events: all;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #1C3D2E;
+        cursor: pointer;
+        border: none;
+    }
+    .filter-pretrazi-btn {
+        width: 100%;
+        padding: 12px;
+        background: #1C3D2E;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    .filter-pretrazi-btn:hover {
+        background: #162C20;
+    }
+    .filter-reset-link {
+        text-align: center;
+        font-size: 13px;
+        color: #6b7280;
+        text-decoration: none;
+        display: block;
+        margin-top: -8px;
+    }
+    .filter-reset-link:hover {
+        color: #374151;
+    }
+    .kalorije-values {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        font-weight: 600;
+        color: #1C3D2E;
+        margin-bottom: 4px;
+    }
+    .kalorije-opis {
+        font-size: 12px;
+        color: #6b7280;
+        margin: 6px 0 0 0;
+    }
+
+    /* RESPONSIVE */
+    @@media (max-width: 768px) {
+        .sidebar { display: none; }
+        .layout-wrapper { flex-direction: column; }
+        .mobile-filter-bar { display: flex; }
+    }
+</style>
+
+<!-- POCETAK HEADER SEKCIJE -->
+<section class="recept-header">
+    <div class="recept-header-inner">
+
+        <div>
+            <p class="recept-label">Biblioteka recepata</p>
+            <h1 class="recept-naslov">Istražite recepte</h1>
+        </div>
+
+        @if ((bool)ViewBag.ImaKorisnikCilj)
+        {
+            <div class="toggle-wrapper">
+                @Html.ActionLink("Preporučeno za vas", "Index", "Recept", new { sviRecepti = false }, new
+                {
+                    @class = "toggle-btn " + (!(bool)ViewBag.SviRecepti ? "toggle-btn-active" : "toggle-btn-inactive")
+                })
+                @Html.ActionLink("Svi recepti", "Index", "Recept", new { sviRecepti = true }, new
+                {
+                    @class = "toggle-btn " + ((bool)ViewBag.SviRecepti ? "toggle-btn-active" : "toggle-btn-inactive")
+                })
+            </div>
+        }
+
+    </div>
+</section>
+<!-- KRAJ HEADER SEKCIJE -->
+
+<!-- POCETAK SADRZAJ SEKCIJE -->
+<section class="sadrzaj-sekcija">
+
+    <!-- MOBILNI FILTER BAR - vidljiv samo na mobilnom -->
+    <div class="mobile-filter-bar">
+        <span style="font-size: 14px; font-weight: 600; color: #374151;">🔍 Filteri</span>
+        <button class="filter-toggle-btn" id="filterToggle" onclick="toggleFilter()">Otvori</button>
+    </div>
+
+    <!-- MOBILNI FILTER PANEL -->
+    <div class="mobile-filter-panel" id="mobileFilterPanel">
+        @Html.Partial("_FilteriPartial")
+    </div>
+
+    <div class="layout-wrapper">
+
+        <!-- SIDEBAR - vidljiv samo na desktopu -->
+        <aside class="sidebar">
+            @Html.Partial("_FilteriPartial")
+        </aside>
+
+        <!-- GLAVNI SADRZAJ -->
+        <div class="main-content">
+
+            <p class="recepti-count">@Model.Count recepata</p>
+
+            <div class="recepti-grid">
+                @foreach (var recept in Model)
+                {
+                    <div class="kartica">
+
+                        <!-- SLIKA -->
+                        <div class="kartica-slika">
+                            @if (!string.IsNullOrEmpty(recept.Fotografija))
+                            {
+                                <img src="@recept.Fotografija" alt="@recept.Naziv" />
+                            }
+                            else
+                            {
+                                <div class="kartica-placeholder">🥗</div>
+                            }
+
+                            <!-- BADGES LIJEVO -->
+                            <div class="badges">
+                                <span class="badge-kategorija">@recept.KategorijaIme</span>
+                                @if ((bool)ViewBag.Personalizovano)
+                                {
+                                    <span class="badge-cilj">Odgovara cilju</span>
+                                }
+                            </div>
+
+                            <!-- SRCE -->
+                            @if (Session["KorisnikId"] != null)
+                            {
+                                <div class="srce-wrapper">
+                                    @using (Html.BeginForm(recept.UFavoritima ? "UkloniIzFavorita" : "DodajUFavorite", "Recept", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="receptId" value="@recept.Id" />
+                                        <button type="submit" class="srce-btn">@(recept.UFavoritima ? "♥" : "♡")</button>
+                                    }
+                                </div>
+                            }
+                        </div>
+
+                        <!-- SADRZAJ -->
+                        <div class="kartica-sadrzaj">
+                            <p class="kartica-naziv">@recept.Naziv</p>
+                            <div class="kartica-info">
+                                <span>⏱ @recept.VrijemePripreme min</span>
+                                @if (recept.Kalorije.HasValue)
+                                {
+                                    <span>🔥 @recept.Kalorije kcal</span>
+                                }
+                            </div>
+                            @if (recept.SadrziAlergen && Session["KorisnikId"] != null)
+                            {
+                                <p class="kartica-alergen">⚠ Sadrži vaš alergen</p>
+                            }
+                        </div>
+
+                    </div>
+                }
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- KRAJ SADRZAJ SEKCIJE -->
+
+<script>
+    function toggleFilter() {
+        var panel = document.getElementById('mobileFilterPanel');
+        var btn = document.getElementById('filterToggle');
+        var otvoren = panel.classList.toggle('otvoren');
+        btn.textContent = otvoren ? 'Zatvori' : 'Otvori';
+    }
+
+    function updateKalorije(input) {
+        var group = input.closest('.filter-group');
+        var rangeInputs = group.querySelectorAll('input[type=range]');
+        var min = parseInt(rangeInputs[0].value);
+        var max = parseInt(rangeInputs[1].value);
+
+        if (min > max) {
+            rangeInputs[0].value = max;
+            min = max;
+        }
+
+        group.querySelectorAll('.kalorije-min').forEach(function(el) {
+            el.textContent = min + ' kcal';
+        });
+        group.querySelectorAll('.kalorije-max').forEach(function(el) {
+            el.textContent = max + ' kcal';
+        });
+    }
+</script>
