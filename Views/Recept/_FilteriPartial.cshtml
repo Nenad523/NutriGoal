@@ -16,10 +16,14 @@
     {
         <div class="filter-group">
             <label class="filter-label">Kategorija</label>
+            <label class="filter-checkbox-label">
+                <input type="radio" name="kategorijaId" value="" checked="checked" />
+                Sve kategorije
+            </label>
             @foreach (var k in kategorije)
             {
                 <label class="filter-checkbox-label">
-                    <input type="checkbox" name="kategorijeIds" value="@k.Id" />
+                    <input type="radio" name="kategorijaId" value="@k.Id" />
                     @k.Naziv
                 </label>
             }
