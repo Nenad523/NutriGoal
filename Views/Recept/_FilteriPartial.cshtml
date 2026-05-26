@@ -1,0 +1,78 @@
+@{
+    var kategorije = ViewBag.Kategorije as List<NutriGoal.Models.Kategorije>;
+    var ciljevi = ViewBag.Ciljevi as List<NutriGoal.Models.Ciljevi>;
+}
+
+@using (Html.BeginForm("Index", "Recept", FormMethod.Get, new { @class = "filter-form" }))
+{
+    <!-- PRETRAGA -->
+    <div class="filter-group">
+        <label class="filter-label">Pretraga</label>
+        <input type="text" name="naziv" class="filter-input" placeholder="Naziv ili sastojak..." />
+    </div>
+
+    <!-- KATEGORIJA -->
+    @if (kategorije != null && kategorije.Count > 0)
+    {
+        <div class="filter-group">
+            <label class="filter-label">Kategorija</label>
+            @foreach (var k in kategorije)
+            {
+                <label class="filter-checkbox-label">
+                    <input type="checkbox" name="kategorijeIds" value="@k.Id" />
+                    @k.Naziv
+                </label>
+            }
+        </div>
+    }
+
+    <!-- CILJ -->
+    @if (ciljevi != null && ciljevi.Count > 0)
+    {
+        <div class="filter-group">
+            <label class="filter-label">Cilj</label>
+            @foreach (var c in ciljevi)
+            {
+                <label class="filter-checkbox-label">
+                    <input type="checkbox" name="ciljeviIds" value="@c.Id" />
+                    @c.Naziv
+                </label>
+            }
+        </div>
+    }
+
+    <!-- KALORIJE -->
+    <div class="filter-group">
+        <label class="filter-label">Kalorije: <span id="kalorijeLabel">0–1500 kcal</span></label>
+        <div class="dual-range">
+            <input type="range" id="minKalorije" name="minKalorije" min="0" max="1500" value="0" step="50"
+                   oninput="updateKalorijeLabel()" />
+            <input type="range" id="maxKalorije" name="maxKalorije" min="0" max="1500" value="1500" step="50"
+                   oninput="updateKalorijeLabel()" />
+        </div>
+    </div>
+
+    <!-- VRIJME PRIPREME -->
+    <div class="filter-group">
+        <label class="filter-label">Vrijme pripreme</label>
+        <select name="maxVrijeme" class="filter-select">
+            <option value="">Sva vremena</option>
+            <option value="15">&lt; 15 min</option>
+            <option value="30">&lt; 30 min</option>
+            <option value="60">&lt; 60 min</option>
+        </select>
+    </div>
+
+    <!-- SORTIRAJ PO -->
+    <div class="filter-group">
+        <label class="filter-label">Sortiraj po</label>
+        <select name="sortiranje" class="filter-select">
+            <option value="Naziv">Naziv</option>
+            <option value="Kalorije">Kalorije</option>
+            <option value="Vrijeme">Vrijeme</option>
+        </select>
+    </div>
+
+    <button type="submit" class="filter-pretrazi-btn">Pretraži</button>
+    <a href="@Url.Action("Index", "Recept")" class="filter-reset-link">Resetuj filtere</a>
+}
