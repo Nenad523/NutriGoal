@@ -204,6 +204,7 @@
     <Compile Include="Models\ReceptSastojci.cs">
       <DependentUpon>NutriGoalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReceptDetaljiViewModel.cs" />
     <Compile Include="Models\ReceptViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\Sastojci.cs">
