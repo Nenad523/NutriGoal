@@ -52,6 +52,22 @@
         border-radius: 16px;
         overflow: hidden;
         border: 1px solid #ddd8ce;
+        position: relative;
+        transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .kartica:hover {
+        box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+        transform: translateY(-2px);
+        cursor: pointer;
+    }
+    .kartica-link {
+        text-decoration: none;
+    }
+    .kartica-link::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 0;
     }
     .kartica-slika {
         position: relative;
@@ -94,6 +110,7 @@
         position: absolute;
         top: 12px;
         right: 12px;
+        z-index: 1;
     }
     .srce-btn {
         background: rgba(255,255,255,0.9);
@@ -169,6 +186,7 @@
             @foreach (var recept in Model)
             {
                 <div class="kartica">
+                    <a href="@Url.Action("Details", "Recept", new { id = recept.Id })" class="kartica-link" aria-label="@recept.Naziv"></a>
 
                     <div class="kartica-slika">
                         @if (!string.IsNullOrEmpty(recept.Fotografija))
