@@ -30,5 +30,6 @@ namespace NutriGoal.Models
 
         public int? CiljId { get; set; }
 
+        public List<int> OdabraneAlergijeIds { get; set; } = new List<int>();
     }
 }
