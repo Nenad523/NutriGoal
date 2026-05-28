@@ -286,6 +286,37 @@
     @@media (max-width: 768px) {
         .sadrzaj-sekcija { grid-template-columns: 1fr; }
     }
+
+    /* KORACI PRIPREME */
+    .koraci-lista {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    .korak-red {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+    }
+    .korak-broj {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #1C3D2E;
+        color: white;
+        font-size: 14px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .korak-tekst {
+        font-size: 15px;
+        color: #374151;
+        line-height: 1.7;
+        padding-top: 6px;
+    }
 </style>
 
 <!-- HERO -->
@@ -421,6 +452,25 @@
         </div>
     </div>
 
-    <!-- KORACI OVDJE DOLAZE -->
+    <!-- KORACI PRIPREME -->
+    <div>
+        <p class="sekcija-naslov">Priprema</p>
+        @if (Model.KoraciPripreme != null && Model.KoraciPripreme.Count > 0)
+        {
+            <div class="koraci-lista">
+                @for (int i = 0; i < Model.KoraciPripreme.Count; i++)
+                {
+                    <div class="korak-red">
+                        <span class="korak-broj">@(i + 1)</span>
+                        <p class="korak-tekst">@Model.KoraciPripreme[i]</p>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p style="color: #9ca3af; font-size: 14px;">Nema unesenih koraka pripreme.</p>
+        }
+    </div>
 
 </div>
