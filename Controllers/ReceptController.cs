@@ -322,5 +322,43 @@ namespace NutriGoal.Controllers
             return RedirectToAction("Details", new { id = receptId });
         }
 
+        // @desc - Ocjenjivanje recepta
+        // @route - POST: /Recept/OcijeniRecept
+        // @access - Private
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult OcijeniRecept(int receptId, int vrijednost)
+        {
+            if (Session["KorisnikId"] == null)
+                return RedirectToAction("Login", "Korisnik");
+
+            if (vrijednost < 1 || vrijednost > 5)
+                return RedirectToAction("Details", new { id = receptId });
+
+            var korisnikId = (int)Session["KorisnikId"];
+
+            var postojecaOcjena = db.Ocjene
+                .FirstOrDefault(o => o.ReceptId == receptId && o.KorisnikId == korisnikId);
+
+            if (postojecaOcjena != null)
+            {
+                postojecaOcjena.Vrijednost = vrijednost;
+            }
+            else
+            {
+                db.Ocjene.Add(new Ocjene
+                {
+                    ReceptId = receptId,
+                    KorisnikId = korisnikId,
+                    Vrijednost = vrijednost,
+                    DatumOcjene = DateTime.Now
+                });
+            }
+
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = receptId });
+        }
+
     }
 }
