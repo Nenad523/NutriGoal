@@ -233,6 +233,59 @@
     @@media (max-width: 600px) {
         .nutri-grid { grid-template-columns: repeat(2, 1fr); }
     }
+
+    /* SASTOJCI I KORACI */
+    .sadrzaj-sekcija {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 40px 24px;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 48px;
+        align-items: flex-start;
+    }
+    .sekcija-naslov {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #C87941;
+        margin: 0 0 20px 0;
+    }
+    .sastojci-lista {
+        background: #EDE8DE;
+        border-radius: 16px;
+        border: 1px solid #ddd8ce;
+        overflow: hidden;
+    }
+    .sastojak-red {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+        border-bottom: 1px solid #ddd8ce;
+    }
+    .sastojak-red:last-child {
+        border-bottom: none;
+    }
+    .sastojak-naziv {
+        font-size: 15px;
+        font-weight: 500;
+        color: #111827;
+    }
+    .sastojak-kolicina {
+        font-size: 14px;
+        font-weight: 600;
+        color: #1C3D2E;
+        background: #D4E8D4;
+        padding: 4px 12px;
+        border-radius: 50px;
+        white-space: nowrap;
+    }
+
+    @@media (max-width: 768px) {
+        .sadrzaj-sekcija { grid-template-columns: 1fr; }
+    }
 </style>
 
 <!-- HERO -->
@@ -340,4 +393,34 @@
         </div>
 
     </div>
+</div>
+
+<!-- SASTOJCI I KORACI -->
+<div class="sadrzaj-sekcija">
+
+    <!-- SASTOJCI -->
+    <div>
+        <p class="sekcija-naslov">Sastojci</p>
+        <div class="sastojci-lista">
+            @if (Model.Sastojci != null && Model.Sastojci.Count > 0)
+            {
+                foreach (var s in Model.Sastojci)
+                {
+                    <div class="sastojak-red">
+                        <span class="sastojak-naziv">@s.Naziv</span>
+                        <span class="sastojak-kolicina">@s.KolicinaG g</span>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="sastojak-red">
+                    <span style="color: #9ca3af; font-size: 14px;">Nema unesenih sastojaka</span>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- KORACI OVDJE DOLAZE -->
+
 </div>
