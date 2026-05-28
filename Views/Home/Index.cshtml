@@ -6,6 +6,21 @@
     body {
         background-color: #F5F0E8;
     }
+
+    .preporucena-kartica {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid #ddd8ce;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .preporucena-kartica:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
 </style>
 
 <!-- POCETAK HEARO SEKCIJE -->
@@ -63,7 +78,7 @@
             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px;">
                 @foreach (var recept in preporuceniRecepti)
                 {
-                    <a href="@Url.Action("Index", "Recept")" style="text-decoration: none; color: inherit; display: block; background: white; border-radius: 16px; overflow: hidden; border: 1px solid #ddd8ce;">
+                    <a href="@Url.Action("Details", "Recept", new { id = recept.Id })" style="text-decoration: none; color: inherit; display: block; background: white; border-radius: 16px; overflow: hidden; border: 1px solid #ddd8ce; transition: transform 0.15s ease, box-shadow 0.15s ease;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
 
                         <div style="position: relative; height: 240px; overflow: hidden;">
                             @if (!string.IsNullOrEmpty(recept.Fotografija))
