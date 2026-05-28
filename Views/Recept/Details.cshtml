@@ -95,6 +95,92 @@
     @@media (max-width: 768px) {
         .hero { height: 320px; }
     }
+
+    /* INFO BAR */
+    .info-bar {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+        border-bottom: 1px solid #ddd8ce;
+    }
+    .info-bar-lijevo {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .ocjena-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .zvjezdice {
+        display: flex;
+        gap: 3px;
+    }
+    .zvjezdica {
+        font-size: 18px;
+        color: #d1ccc4;
+    }
+    .zvjezdica.aktivna {
+        color: #C87941;
+    }
+    .ocjena-broj {
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+    }
+    .ocjena-nema {
+        font-size: 14px;
+        color: #9ca3af;
+    }
+    .alergen-badge {
+        background: #fef3c7;
+        border: 1px solid #fbbf24;
+        color: #92400e;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 50px;
+    }
+    .cilj-badge {
+        background: #D4E8D4;
+        color: #1C3D2E;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 5px 12px;
+        border-radius: 50px;
+    }
+    .favorit-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 600;
+        border: 2px solid #1C3D2E;
+        cursor: pointer;
+        background: transparent;
+        color: #1C3D2E;
+        text-decoration: none;
+        transition: background 0.15s ease, color 0.15s ease;
+    }
+    .favorit-btn.aktivan {
+        background: #1C3D2E;
+        color: white;
+    }
+    .favorit-btn:hover {
+        background: #1C3D2E;
+        color: white;
+    }
 </style>
 
 <!-- HERO -->
