@@ -295,7 +295,32 @@ namespace NutriGoal.Controllers
 
             return RedirectToAction("Index");
         }
-        
+        // @desc - Dodavanje komentara na recept
+        // @route - POST: /Recept/DodajKomentar
+        // @access - Private
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DodajKomentar(int receptId, string tekst)
+        {
+            if (Session["KorisnikId"] == null)
+                return RedirectToAction("Login", "Korisnik");
+
+            if (string.IsNullOrWhiteSpace(tekst))
+                return RedirectToAction("Details", new { id = receptId });
+
+            var komentar = new Komentari
+            {
+                ReceptId = receptId,
+                KorisnikId = (int)Session["KorisnikId"],
+                Tekst = tekst.Trim(),
+                DatumKreiranja = DateTime.Now
+            };
+
+            db.Komentari.Add(komentar);
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = receptId });
+        }
 
     }
 }
