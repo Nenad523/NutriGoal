@@ -181,6 +181,58 @@
         background: #1C3D2E;
         color: white;
     }
+
+    /* NUTRITIVNE VRIJEDNOSTI */
+    .nutri-sekcija {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 40px 24px;
+        border-bottom: 1px solid #ddd8ce;
+    }
+    .nutri-naslov {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #C87941;
+        margin: 0 0 20px 0;
+    }
+    .nutri-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+    .nutri-kartica {
+        background: #EDE8DE;
+        border-radius: 16px;
+        padding: 24px 20px;
+        text-align: center;
+        border: 1px solid #ddd8ce;
+    }
+    .nutri-vrijednost {
+        font-size: 32px;
+        font-weight: 800;
+        color: #1C3D2E;
+        margin: 0 0 4px 0;
+        line-height: 1;
+    }
+    .nutri-jedinica {
+        font-size: 14px;
+        font-weight: 500;
+        color: #6b7280;
+    }
+    .nutri-ime {
+        font-size: 13px;
+        font-weight: 600;
+        color: #374151;
+        margin: 10px 0 0 0;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+    }
+
+    @@media (max-width: 600px) {
+        .nutri-grid { grid-template-columns: repeat(2, 1fr); }
+    }
 </style>
 
 <!-- HERO -->
@@ -256,4 +308,36 @@
         }
     }
 
+</div>
+
+<!-- NUTRITIVNE VRIJEDNOSTI -->
+<div class="nutri-sekcija">
+    <p class="nutri-naslov">Nutritivne vrijednosti (po porciji)</p>
+    <div class="nutri-grid">
+
+        <div class="nutri-kartica">
+            <p class="nutri-vrijednost">@Model.Kalorije.ToString("0")</p>
+            <span class="nutri-jedinica">kcal</span>
+            <p class="nutri-ime">Kalorije</p>
+        </div>
+
+        <div class="nutri-kartica">
+            <p class="nutri-vrijednost">@Model.Proteini.ToString("0.0")</p>
+            <span class="nutri-jedinica">g</span>
+            <p class="nutri-ime">Proteini</p>
+        </div>
+
+        <div class="nutri-kartica">
+            <p class="nutri-vrijednost">@Model.UgljeniHidrati.ToString("0.0")</p>
+            <span class="nutri-jedinica">g</span>
+            <p class="nutri-ime">Ugljeni hidrati</p>
+        </div>
+
+        <div class="nutri-kartica">
+            <p class="nutri-vrijednost">@Model.Masti.ToString("0.0")</p>
+            <span class="nutri-jedinica">g</span>
+            <p class="nutri-ime">Masti</p>
+        </div>
+
+    </div>
 </div>
