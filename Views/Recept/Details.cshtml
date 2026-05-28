@@ -205,3 +205,55 @@
         <h1 class="hero-naziv">@Model.Naziv</h1>
     </div>
 </div>
+
+<!-- INFO BAR -->
+<div class="info-bar">
+
+    <div class="info-bar-lijevo">
+
+        <!-- OCJENA -->
+        <div class="ocjena-wrapper">
+            @if (Model.ProsjekOcjena.HasValue)
+            {
+                <div class="zvjezdice">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <span class="zvjezdica @(i <= Math.Round(Model.ProsjekOcjena.Value) ? "aktivna" : "")">★</span>
+                    }
+                </div>
+                <span class="ocjena-broj">@Model.ProsjekOcjena.Value.ToString("0.0")</span>
+            }
+            else
+            {
+                <span class="ocjena-nema">Još nema ocjena</span>
+            }
+        </div>
+
+        <!-- CILJEVI -->
+        @foreach (var cilj in Model.Ciljevi)
+        {
+            <span class="cilj-badge">@cilj</span>
+        }
+
+        <!-- ALERGEN -->
+        @if (Model.SadrziAlergen)
+        {
+            <span class="alergen-badge">⚠ Sadrži vaš alergen</span>
+        }
+
+    </div>
+
+    <!-- FAVORIT DUGME -->
+    @if (Session["KorisnikId"] != null)
+    {
+        using (Html.BeginForm(Model.UFavoritima ? "UkloniIzFavorita" : "DodajUFavorite", "Recept", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="receptId" value="@Model.Id" />
+            <button type="submit" class="favorit-btn @(Model.UFavoritima ? "aktivan" : "")">
+                @(Model.UFavoritima ? "♥ U favoritima" : "♡ Dodaj u favorite")
+            </button>
+        }
+    }
+
+</div>
