@@ -184,7 +184,7 @@ namespace NutriGoal.Controllers
                 {
                     Id = k.Id,
                     KorisnikIme = k.Korisnici.KorisnickiProfil
-                        .Select(kp => kp.Ime + " " + kp.Prezime)
+                        .Select(kp => kp.Ime != null && kp.Ime != "" ? kp.Ime + " " + kp.Prezime : null)
                         .FirstOrDefault() ?? k.Korisnici.Email,
                     Tekst = k.Tekst,
                     Datum = k.DatumKreiranja
