@@ -323,6 +323,47 @@
         line-height: 1.7;
         padding-top: 6px;
     }
+
+    /* KOMENTARI */
+    .komentari-sekcija {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 40px 24px 60px 24px;
+        border-top: 1px solid #ddd8ce;
+    }
+    .komentari-lista {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 20px;
+    }
+    .komentar-kartica {
+        background: #EDE8DE;
+        border-radius: 16px;
+        border: 1px solid #ddd8ce;
+        padding: 20px 24px;
+    }
+    .komentar-vrh {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    .komentar-autor {
+        font-size: 14px;
+        font-weight: 700;
+        color: #1C3D2E;
+    }
+    .komentar-datum {
+        font-size: 13px;
+        color: #9ca3af;
+    }
+    .komentar-tekst {
+        font-size: 15px;
+        color: #374151;
+        line-height: 1.6;
+        margin: 0;
+    }
 </style>
 
 <!-- HERO -->
@@ -478,5 +519,33 @@
             <p style="color: #9ca3af; font-size: 14px;">Nema unesenih koraka pripreme.</p>
         }
     </div>
+
+</div>
+
+<!-- KOMENTARI -->
+<div class="komentari-sekcija">
+    <p class="sekcija-naslov">Komentari (@Model.Komentari.Count)</p>
+
+    @if (Model.Komentari != null && Model.Komentari.Count > 0)
+    {
+        <div class="komentari-lista">
+            @foreach (var k in Model.Komentari)
+            {
+                <div class="komentar-kartica">
+                    <div class="komentar-vrh">
+                        <span class="komentar-autor">@k.KorisnikIme</span>
+                        <span class="komentar-datum">@k.Datum.ToString("dd.MM.yyyy")</span>
+                    </div>
+                    <p class="komentar-tekst">@k.Tekst</p>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p style="color: #9ca3af; font-size: 14px; margin-top: 20px;">Još nema komentara. Budite prvi!</p>
+    }
+
+    <!-- FORMA ZA KOMENTAR DOLAZI OVDJE -->
 
 </div>
