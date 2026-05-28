@@ -179,13 +179,15 @@ namespace NutriGoal.Controllers
             // Komentari
             var komentari = db.Komentari
                 .Where(k => k.ReceptId == id)
-                .OrderByDescending(k => k.DatumKomentara)
+                .OrderByDescending(k => k.DatumKreiranja)
                 .Select(k => new KomentarStavka
                 {
                     Id = k.Id,
-                    KorisnikIme = k.Korisnici.KorisnickoIme,
+                    KorisnikIme = k.Korisnici.KorisnickiProfil
+                        .Select(kp => kp.Ime + " " + kp.Prezime)
+                        .FirstOrDefault() ?? k.Korisnici.Email,
                     Tekst = k.Tekst,
-                    Datum = k.DatumKomentara
+                    Datum = k.DatumKreiranja
                 }).ToList();
 
             // Ocjene
