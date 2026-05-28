@@ -364,6 +364,57 @@
         line-height: 1.6;
         margin: 0;
     }
+
+    /* FORMA ZA KOMENTAR */
+    .komentar-forma-wrapper {
+        margin-top: 36px;
+        padding-top: 32px;
+        border-top: 1px solid #ddd8ce;
+    }
+    .komentar-forma-naslov {
+        font-size: 18px;
+        font-weight: 700;
+        color: #111827;
+        margin: 0 0 20px 0;
+    }
+    .komentar-textarea {
+        width: 100%;
+        padding: 14px 18px;
+        border: 1px solid #d1ccc4;
+        border-radius: 12px;
+        background: white;
+        font-size: 15px;
+        color: #374151;
+        resize: vertical;
+        min-height: 120px;
+        box-sizing: border-box;
+        outline: none;
+        font-family: inherit;
+    }
+    .komentar-textarea:focus {
+        border-color: #1C3D2E;
+    }
+    .komentar-submit-btn {
+        margin-top: 12px;
+        padding: 12px 28px;
+        background: #1C3D2E;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    .komentar-submit-btn:hover {
+        background: #162C20;
+    }
+    .komentar-login-poruka {
+        margin-top: 32px;
+        padding-top: 32px;
+        border-top: 1px solid #ddd8ce;
+        font-size: 14px;
+        color: #6b7280;
+    }
 </style>
 
 <!-- HERO -->
@@ -546,6 +597,25 @@
         <p style="color: #9ca3af; font-size: 14px; margin-top: 20px;">Još nema komentara. Budite prvi!</p>
     }
 
-    <!-- FORMA ZA KOMENTAR DOLAZI OVDJE -->
+    <!-- FORMA ZA KOMENTAR -->
+    @if (Session["KorisnikId"] != null)
+    {
+        <div class="komentar-forma-wrapper">
+            <p class="komentar-forma-naslov">Ostavite komentar</p>
+            @using (Html.BeginForm("DodajKomentar", "Recept", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="receptId" value="@Model.Id" />
+                <textarea name="tekst" class="komentar-textarea" placeholder="Podijelite vaše iskustvo..."></textarea>
+                <button type="submit" class="komentar-submit-btn">Objavi komentar</button>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="komentar-login-poruka">
+            <a href="@Url.Action("Login", "Korisnik")" style="color: #1C3D2E; font-weight: 600;">Prijavite se</a> da biste ostavili komentar.
+        </p>
+    }
 
 </div>
