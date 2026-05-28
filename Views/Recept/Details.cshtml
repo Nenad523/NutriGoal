@@ -283,8 +283,14 @@
         white-space: nowrap;
     }
 
+    .sadrzaj-sekcija > div:first-child {
+        position: sticky;
+        top: 24px;
+    }
+
     @@media (max-width: 768px) {
         .sadrzaj-sekcija { grid-template-columns: 1fr; }
+        .sadrzaj-sekcija > div:first-child { position: static; }
     }
 
     /* KORACI PRIPREME */
