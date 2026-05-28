@@ -205,6 +205,7 @@
     <Compile Include="Models\ReceptSastojci.cs">
       <DependentUpon>NutriGoalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReceptDetaljiViewModel.cs" />
     <Compile Include="Models\ReceptViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\Sastojci.cs">
@@ -295,6 +296,7 @@
     <Content Include="Views\Favoriti\Index.cshtml" />
     <Content Include="Views\Recept\Index.cshtml" />
     <Content Include="Views\Recept\_FilteriPartial.cshtml" />
+    <Content Include="Views\Recept\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

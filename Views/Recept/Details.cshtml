@@ -1,0 +1,716 @@
+@model NutriGoal.Models.ReceptDetaljiViewModel
+
+@{
+    ViewBag.Title = Model.Naziv;
+}
+
+<style>
+    body { background-color: #F5F0E8; }
+
+    /* HERO */
+    .hero {
+        position: relative;
+        width: 100%;
+        height: 420px;
+        overflow: hidden;
+    }
+    .hero-slika {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .hero-placeholder {
+        width: 100%;
+        height: 100%;
+        background: #D4E8D4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 80px;
+    }
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%);
+    }
+    .hero-vrh {
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .hero-kategorija {
+        background: rgba(0,0,0,0.5);
+        color: white;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 6px 14px;
+        border-radius: 50px;
+    }
+    .hero-nazad {
+        background: rgba(255,255,255,0.9);
+        color: #111827;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 50px;
+        text-decoration: none;
+    }
+    .hero-nazad:hover {
+        background: white;
+        color: #111827;
+        text-decoration: none;
+    }
+    .hero-dno {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px 28px 24px;
+    }
+    .hero-vrijeme {
+        font-size: 14px;
+        font-weight: 500;
+        color: rgba(255,255,255,0.85);
+        margin: 0 0 12px 0;
+    }
+    .hero-naziv {
+        font-size: clamp(28px, 4vw, 48px);
+        font-weight: 700;
+        color: white;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    @@media (max-width: 768px) {
+        .hero { height: 320px; }
+    }
+
+    /* INFO BAR */
+    .info-bar {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+        border-bottom: 1px solid #ddd8ce;
+    }
+    .info-bar-lijevo {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .ocjena-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .zvjezdice {
+        display: flex;
+        gap: 3px;
+    }
+    .zvjezdica {
+        font-size: 18px;
+        color: #d1ccc4;
+    }
+    .zvjezdica.aktivna {
+        color: #C87941;
+    }
+    .ocjena-broj {
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+    }
+    .ocjena-nema {
+        font-size: 14px;
+        color: #9ca3af;
+    }
+    .alergen-badge {
+        background: #fef3c7;
+        border: 1px solid #fbbf24;
+        color: #92400e;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 50px;
+    }
+    .cilj-badge {
+        background: #D4E8D4;
+        color: #1C3D2E;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 5px 12px;
+        border-radius: 50px;
+    }
+    .favorit-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 600;
+        border: 2px solid #1C3D2E;
+        cursor: pointer;
+        background: transparent;
+        color: #1C3D2E;
+        text-decoration: none;
+        transition: background 0.15s ease, color 0.15s ease;
+    }
+    .favorit-btn.aktivan {
+        background: #1C3D2E;
+        color: white;
+    }
+    .favorit-btn:hover {
+        background: #1C3D2E;
+        color: white;
+    }
+
+    /* NUTRITIVNE VRIJEDNOSTI */
+    .nutri-sekcija {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 40px 24px;
+        border-bottom: 1px solid #ddd8ce;
+    }
+    .nutri-naslov {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #C87941;
+        margin: 0 0 20px 0;
+    }
+    .nutri-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+    .nutri-kartica {
+        background: #EDE8DE;
+        border-radius: 16px;
+        padding: 24px 20px;
+        text-align: center;
+        border: 1px solid #ddd8ce;
+    }
+    .nutri-vrijednost {
+        font-size: 32px;
+        font-weight: 800;
+        color: #1C3D2E;
+        margin: 0 0 4px 0;
+        line-height: 1;
+    }
+    .nutri-jedinica {
+        font-size: 14px;
+        font-weight: 500;
+        color: #6b7280;
+    }
+    .nutri-ime {
+        font-size: 13px;
+        font-weight: 600;
+        color: #374151;
+        margin: 10px 0 0 0;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+    }
+
+    @@media (max-width: 600px) {
+        .nutri-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* SASTOJCI I KORACI */
+    .sadrzaj-sekcija {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 40px 24px;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 48px;
+        align-items: flex-start;
+    }
+    .sekcija-naslov {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #C87941;
+        margin: 0 0 20px 0;
+    }
+    .sastojci-lista {
+        background: #EDE8DE;
+        border-radius: 16px;
+        border: 1px solid #ddd8ce;
+        overflow: hidden;
+    }
+    .sastojak-red {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+        border-bottom: 1px solid #ddd8ce;
+    }
+    .sastojak-red:last-child {
+        border-bottom: none;
+    }
+    .sastojak-naziv {
+        font-size: 15px;
+        font-weight: 500;
+        color: #111827;
+    }
+    .sastojak-kolicina {
+        font-size: 14px;
+        font-weight: 600;
+        color: #1C3D2E;
+        background: #D4E8D4;
+        padding: 4px 12px;
+        border-radius: 50px;
+        white-space: nowrap;
+    }
+
+    .sadrzaj-sekcija > div:first-child {
+        position: sticky;
+        top: 24px;
+    }
+
+    @@media (max-width: 768px) {
+        .sadrzaj-sekcija { grid-template-columns: 1fr; }
+        .sadrzaj-sekcija > div:first-child { position: static; }
+    }
+
+    /* KORACI PRIPREME */
+    .koraci-lista {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    .korak-red {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+    }
+    .korak-broj {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #1C3D2E;
+        color: white;
+        font-size: 14px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .korak-tekst {
+        font-size: 15px;
+        color: #374151;
+        line-height: 1.7;
+        padding-top: 6px;
+    }
+
+    /* KOMENTARI */
+    .komentari-sekcija {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 40px 24px 60px 24px;
+        border-top: 1px solid #ddd8ce;
+    }
+    .komentari-lista {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 20px;
+    }
+    .komentar-kartica {
+        background: #EDE8DE;
+        border-radius: 16px;
+        border: 1px solid #ddd8ce;
+        padding: 20px 24px;
+    }
+    .komentar-vrh {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    .komentar-autor {
+        font-size: 14px;
+        font-weight: 700;
+        color: #1C3D2E;
+    }
+    .komentar-datum {
+        font-size: 13px;
+        color: #9ca3af;
+    }
+    .komentar-tekst {
+        font-size: 15px;
+        color: #374151;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    /* FORMA ZA KOMENTAR */
+    .komentar-forma-wrapper {
+        margin-top: 36px;
+        padding-top: 32px;
+        border-top: 1px solid #ddd8ce;
+    }
+    .komentar-forma-naslov {
+        font-size: 18px;
+        font-weight: 700;
+        color: #111827;
+        margin: 0 0 20px 0;
+    }
+    .komentar-textarea {
+        width: 100%;
+        padding: 14px 18px;
+        border: 1px solid #d1ccc4;
+        border-radius: 12px;
+        background: white;
+        font-size: 15px;
+        color: #374151;
+        resize: vertical;
+        min-height: 120px;
+        box-sizing: border-box;
+        outline: none;
+        font-family: inherit;
+    }
+    .komentar-textarea:focus {
+        border-color: #1C3D2E;
+    }
+    .komentar-forma-wrapper form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .komentar-submit-btn {
+        align-self: flex-start;
+        padding: 12px 28px;
+        background: #1C3D2E;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    .komentar-submit-btn:hover {
+        background: #162C20;
+    }
+    .komentar-login-poruka {
+        margin-top: 32px;
+        padding-top: 32px;
+        border-top: 1px solid #ddd8ce;
+        font-size: 14px;
+        color: #6b7280;
+    }
+
+    /* OCJENJIVANJE */
+    .ocjena-forma-wrapper {
+        padding-top: 32px;
+        border-top: 1px solid #ddd8ce;
+        margin-top: 36px;
+    }
+    .ocjena-forma-naslov {
+        font-size: 18px;
+        font-weight: 700;
+        color: #111827;
+        margin: 0 0 16px 0;
+    }
+    .zvjezdice-input {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+    .zvjezdica-input {
+        font-size: 36px;
+        cursor: pointer;
+        color: #d1ccc4;
+        transition: color 0.1s ease;
+        line-height: 1;
+    }
+    .zvjezdica-input.aktivna,
+    .zvjezdica-input.hover {
+        color: #C87941;
+    }
+    .ocjena-submit-btn {
+        padding: 12px 28px;
+        background: #1C3D2E;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    .ocjena-submit-btn:hover {
+        background: #162C20;
+    }
+</style>
+
+<!-- HERO -->
+<div class="hero">
+    @if (!string.IsNullOrEmpty(Model.Fotografija))
+    {
+        <img class="hero-slika" src="@Model.Fotografija" alt="@Model.Naziv" />
+    }
+    else
+    {
+        <div class="hero-placeholder">🥗</div>
+    }
+    <div class="hero-overlay"></div>
+
+    <div class="hero-vrh">
+        <span class="hero-kategorija">@Model.KategorijaIme</span>
+        @Html.ActionLink("← Nazad na recepte", "Index", "Recept", null, new { @class = "hero-nazad" })
+    </div>
+
+    <div class="hero-dno">
+        <p class="hero-vrijeme">⏱ @Model.VrijemePripreme min</p>
+        <h1 class="hero-naziv">@Model.Naziv</h1>
+    </div>
+</div>
+
+<!-- INFO BAR -->
+<div class="info-bar">
+
+    <div class="info-bar-lijevo">
+
+        <!-- OCJENA -->
+        <div class="ocjena-wrapper">
+            @if (Model.ProsjekOcjena.HasValue)
+            {
+                <div class="zvjezdice">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <span class="zvjezdica @(i <= Math.Round(Model.ProsjekOcjena.Value) ? "aktivna" : "")">★</span>
+                    }
+                </div>
+                <span class="ocjena-broj">@Model.ProsjekOcjena.Value.ToString("0.0")</span>
+            }
+            else
+            {
+                <span class="ocjena-nema">Još nema ocjena</span>
+            }
+        </div>
+
+        <!-- CILJEVI -->
+        @foreach (var cilj in Model.Ciljevi)
+        {
+            <span class="cilj-badge">@cilj</span>
+        }
+
+        <!-- ALERGEN -->
+        @if (Model.SadrziAlergen)
+        {
+            <span class="alergen-badge">⚠ Sadrži vaš alergen</span>
+        }
+
+    </div>
+
+    <!-- FAVORIT DUGME -->
+    @if (Session["KorisnikId"] != null)
+    {
+        using (Html.BeginForm(Model.UFavoritima ? "UkloniIzFavorita" : "DodajUFavorite", "Recept", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="receptId" value="@Model.Id" />
+            <button type="submit" class="favorit-btn @(Model.UFavoritima ? "aktivan" : "")">
+                @(Model.UFavoritima ? "♥ U favoritima" : "♡ Dodaj u favorite")
+            </button>
+        }
+    }
+
+</div>
+
+<!-- NUTRITIVNE VRIJEDNOSTI -->
+<div class="nutri-sekcija">
+    <p class="nutri-naslov">Nutritivne vrijednosti (po porciji)</p>
+    <div class="nutri-grid">
+
+        <div class="nutri-kartica">
+            <p class="nutri-vrijednost">@Model.Kalorije.ToString("0")</p>
+            <span class="nutri-jedinica">kcal</span>
+            <p class="nutri-ime">Kalorije</p>
+        </div>
+
+        <div class="nutri-kartica">
+            <p class="nutri-vrijednost">@Model.Proteini.ToString("0.0")</p>
+            <span class="nutri-jedinica">g</span>
+            <p class="nutri-ime">Proteini</p>
+        </div>
+
+        <div class="nutri-kartica">
+            <p class="nutri-vrijednost">@Model.UgljeniHidrati.ToString("0.0")</p>
+            <span class="nutri-jedinica">g</span>
+            <p class="nutri-ime">Ugljeni hidrati</p>
+        </div>
+
+        <div class="nutri-kartica">
+            <p class="nutri-vrijednost">@Model.Masti.ToString("0.0")</p>
+            <span class="nutri-jedinica">g</span>
+            <p class="nutri-ime">Masti</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- SASTOJCI I KORACI -->
+<div class="sadrzaj-sekcija">
+
+    <!-- SASTOJCI -->
+    <div>
+        <p class="sekcija-naslov">Sastojci</p>
+        <div class="sastojci-lista">
+            @if (Model.Sastojci != null && Model.Sastojci.Count > 0)
+            {
+                foreach (var s in Model.Sastojci)
+                {
+                    <div class="sastojak-red">
+                        <span class="sastojak-naziv">@s.Naziv</span>
+                        <span class="sastojak-kolicina">@s.KolicinaG g</span>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="sastojak-red">
+                    <span style="color: #9ca3af; font-size: 14px;">Nema unesenih sastojaka</span>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- KORACI PRIPREME -->
+    <div>
+        <p class="sekcija-naslov">Priprema</p>
+        @if (Model.KoraciPripreme != null && Model.KoraciPripreme.Count > 0)
+        {
+            <div class="koraci-lista">
+                @for (int i = 0; i < Model.KoraciPripreme.Count; i++)
+                {
+                    <div class="korak-red">
+                        <span class="korak-broj">@(i + 1)</span>
+                        <p class="korak-tekst">@Model.KoraciPripreme[i]</p>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p style="color: #9ca3af; font-size: 14px;">Nema unesenih koraka pripreme.</p>
+        }
+    </div>
+
+</div>
+
+<!-- KOMENTARI -->
+<div class="komentari-sekcija">
+    <p class="sekcija-naslov">Komentari (@Model.Komentari.Count)</p>
+
+    @if (Model.Komentari != null && Model.Komentari.Count > 0)
+    {
+        <div class="komentari-lista">
+            @foreach (var k in Model.Komentari)
+            {
+                <div class="komentar-kartica">
+                    <div class="komentar-vrh">
+                        <span class="komentar-autor">@k.KorisnikIme</span>
+                        <span class="komentar-datum">@k.Datum.ToString("dd.MM.yyyy")</span>
+                    </div>
+                    <p class="komentar-tekst">@k.Tekst</p>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p style="color: #9ca3af; font-size: 14px; margin-top: 20px;">Još nema komentara. Budite prvi!</p>
+    }
+
+    <!-- OCJENJIVANJE -->
+    @if (Session["KorisnikId"] != null)
+    {
+        <div class="ocjena-forma-wrapper">
+            <p class="ocjena-forma-naslov">
+                @(Model.KorisnikovaOcjena.HasValue ? "Vaša ocjena" : "Ocijenite recept")
+            </p>
+            @using (Html.BeginForm("OcijeniRecept", "Recept", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="receptId" value="@Model.Id" />
+                <input type="hidden" name="vrijednost" id="ocjenaVrijednost" value="@(Model.KorisnikovaOcjena ?? 0)" />
+                <div class="zvjezdice-input" id="zvjezdiceInput">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <span class="zvjezdica-input @(Model.KorisnikovaOcjena.HasValue && i <= Model.KorisnikovaOcjena.Value ? "aktivna" : "")"
+                              data-vrijednost="@i">★</span>
+                    }
+                </div>
+                <button type="submit" class="ocjena-submit-btn">Sačuvaj ocjenu</button>
+            }
+        </div>
+    }
+
+    <!-- FORMA ZA KOMENTAR -->
+    @if (Session["KorisnikId"] != null)
+    {
+        <div class="komentar-forma-wrapper">
+            <p class="komentar-forma-naslov">Ostavite komentar</p>
+            @using (Html.BeginForm("DodajKomentar", "Recept", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="receptId" value="@Model.Id" />
+                <textarea name="tekst" class="komentar-textarea" placeholder="Podijelite vaše iskustvo..."></textarea>
+                <button type="submit" class="komentar-submit-btn">Objavi komentar</button>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="komentar-login-poruka">
+            <a href="@Url.Action("Login", "Korisnik")" style="color: #1C3D2E; font-weight: 600;">Prijavite se</a> da biste ostavili komentar.
+        </p>
+    }
+
+</div>
+
+<script>
+    var zvjezdice = document.querySelectorAll('.zvjezdica-input');
+    var input = document.getElementById('ocjenaVrijednost');
+
+    zvjezdice.forEach(function (z) {
+        z.addEventListener('mouseover', function () {
+            var val = parseInt(this.dataset.vrijednost);
+            zvjezdice.forEach(function (s, i) {
+                s.classList.toggle('hover', i < val);
+            });
+        });
+        z.addEventListener('mouseout', function () {
+            zvjezdice.forEach(function (s) { s.classList.remove('hover'); });
+        });
+        z.addEventListener('click', function () {
+            var val = parseInt(this.dataset.vrijednost);
+            input.value = val;
+            zvjezdice.forEach(function (s, i) {
+                s.classList.toggle('aktivna', i < val);
+            });
+        });
+    });
+</script>
