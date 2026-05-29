@@ -121,6 +121,64 @@
     </div>
 
     <div class="forma-card">
+        @using (Html.BeginForm(jeUredivanje ? "Uredi" : "Kreiraj", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
 
+            <p class="section-title">Osnovne informacije</p>
+
+            <div style="margin-bottom: 16px;">
+                <label class="ng-field-label">Naziv</label>
+                @Html.TextBoxFor(m => m.Naziv, new { @class = "ng-input", placeholder = "Npr. Musaka" })
+                @Html.ValidationMessageFor(m => m.Naziv, "", new { @class = "ng-validation-error" })
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label class="ng-field-label">Opis</label>
+                @Html.TextAreaFor(m => m.Opis, 3, 0, new { @class = "ng-textarea", placeholder = "Kratki opis recepta..." })
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label class="ng-field-label">Postupak pripreme</label>
+                @Html.TextAreaFor(m => m.Postupak, 6, 0, new { @class = "ng-textarea", placeholder = "Svaki korak u novom redu..." })
+            </div>
+
+            <div class="ng-two-col" style="margin-bottom: 16px;">
+                <div>
+                    <label class="ng-field-label">Kategorija</label>
+                    @Html.DropDownListFor(m => m.KategorijaId,
+                        new SelectList(ViewBag.Kategorije, "Id", "Naziv"),
+                        "— Odaberi kategoriju —",
+                        new { @class = "ng-select" })
+                    @Html.ValidationMessageFor(m => m.KategorijaId, "", new { @class = "ng-validation-error" })
+                </div>
+                <div>
+                    <label class="ng-field-label">Vrijeme pripreme (min)</label>
+                    @Html.TextBoxFor(m => m.VrijemePripreme, new { @class = "ng-input", type = "number", min = "1", max = "600", placeholder = "45" })
+                    @Html.ValidationMessageFor(m => m.VrijemePripreme, "", new { @class = "ng-validation-error" })
+                </div>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label class="ng-field-label">Fotografija (URL)</label>
+                @Html.TextBoxFor(m => m.Fotografija, new { @class = "ng-input", placeholder = "https://..." })
+            </div>
+
+            <hr class="section-divider" />
+
+            <p class="section-title">Ciljevi</p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
+                @foreach (var cilj in ViewBag.SviCiljevi as List<NutriGoal.Models.Ciljevi>)
+                {
+                    bool odabran = Model.OdabraniCiljeviIds.Contains(cilj.Id);
+                    <label style="display: inline-flex; align-items: center; gap: 8px; background: @(odabran ? "#D4E8D4" : "#F5F0E8"); border-radius: 50px; padding: 8px 16px; cursor: pointer; font-size: 14px; color: #1C3D2E;">
+                        <input type="checkbox" name="OdabraniCiljeviIds" value="@cilj.Id" @(odabran ? "checked" : "") style="accent-color: #1C3D2E;" />
+                        @cilj.Naziv
+                    </label>
+                }
+            </div>
+        }
     </div>
 </div>
