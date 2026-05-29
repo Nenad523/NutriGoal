@@ -145,6 +145,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\FavoritiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KorisnikController.cs" />
@@ -199,6 +200,7 @@
       <DependentUpon>NutriGoalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProfilViewModel.cs" />
+    <Compile Include="Models\ReceptFormViewModel.cs" />
     <Compile Include="Models\Recepti.cs">
       <DependentUpon>NutriGoalModel.tt</DependentUpon>
     </Compile>
@@ -297,6 +299,8 @@
     <Content Include="Views\Recept\Index.cshtml" />
     <Content Include="Views\Recept\_FilteriPartial.cshtml" />
     <Content Include="Views\Recept\Details.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Forma.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

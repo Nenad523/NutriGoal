@@ -1,0 +1,256 @@
+@model NutriGoal.Models.ReceptFormViewModel
+
+@{
+    bool jeUredivanje = Model.Id > 0;
+    ViewBag.Title = jeUredivanje ? "Uredi recept" : "Dodaj recept";
+}
+
+<style>
+    body { background-color: #F5F0E8; }
+
+    .forma-wrapper {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: clamp(28px, 4vw, 48px) 24px clamp(48px, 6vw, 80px) 24px;
+    }
+
+    .forma-card {
+        background: white;
+        border-radius: 20px;
+        border: 1px solid #e5e7eb;
+        padding: clamp(24px, 4vw, 40px);
+    }
+
+    .ng-field-label {
+        display: block;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin-bottom: 8px;
+    }
+
+    .ng-input {
+        display: block;
+        width: 100%;
+        background: #F5F0E8;
+        border: none;
+        border-radius: 50px;
+        padding: 13px 20px;
+        font-size: 14px;
+        color: #1C3D2E;
+        outline: none;
+        box-sizing: border-box;
+    }
+
+    .ng-input:focus { box-shadow: 0 0 0 2px rgba(28, 61, 46, 0.25); }
+
+    .ng-textarea {
+        display: block;
+        width: 100%;
+        background: #F5F0E8;
+        border: none;
+        border-radius: 16px;
+        padding: 13px 20px;
+        font-size: 14px;
+        color: #1C3D2E;
+        outline: none;
+        box-sizing: border-box;
+        resize: vertical;
+        font-family: inherit;
+    }
+
+    .ng-textarea:focus { box-shadow: 0 0 0 2px rgba(28, 61, 46, 0.25); }
+
+    .ng-select {
+        display: block;
+        width: 100%;
+        background: #F5F0E8;
+        border: none;
+        border-radius: 12px;
+        padding: 13px 20px;
+        font-size: 14px;
+        color: #1C3D2E;
+        outline: none;
+        box-sizing: border-box;
+        appearance: none;
+        cursor: pointer;
+    }
+
+    .ng-select:focus { box-shadow: 0 0 0 2px rgba(28, 61, 46, 0.25); }
+
+    .ng-validation-error {
+        display: block;
+        color: #dc2626;
+        font-size: 12px;
+        margin-top: 5px;
+        padding-left: 4px;
+    }
+
+    .ng-two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .section-divider {
+        border: none;
+        border-top: 1px solid #f3f4f6;
+        margin: 28px 0;
+    }
+
+    .section-title {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #C87941;
+        margin: 0 0 20px 0;
+    }
+
+    @@media (max-width: 600px) {
+        .ng-two-col { grid-template-columns: 1fr; }
+    }
+</style>
+
+<div class="forma-wrapper">
+    <div style="margin-bottom: 28px;">
+        <p style="font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #C87941; margin: 0 0 8px 0;">Administracija</p>
+        <h1 style="font-size: clamp(24px, 3vw, 36px); font-weight: 600; color: #111827; margin: 0;">@ViewBag.Title</h1>
+    </div>
+
+    <div class="forma-card">
+        @using (Html.BeginForm(jeUredivanje ? "Uredi" : "Kreiraj", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+
+            <p class="section-title">Osnovne informacije</p>
+
+            <div style="margin-bottom: 16px;">
+                <label class="ng-field-label">Naziv</label>
+                @Html.TextBoxFor(m => m.Naziv, new { @class = "ng-input", placeholder = "Npr. Musaka" })
+                @Html.ValidationMessageFor(m => m.Naziv, "", new { @class = "ng-validation-error" })
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label class="ng-field-label">Opis</label>
+                @Html.TextAreaFor(m => m.Opis, 3, 0, new { @class = "ng-textarea", placeholder = "Kratki opis recepta..." })
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label class="ng-field-label">Postupak pripreme</label>
+                @Html.TextAreaFor(m => m.Postupak, 6, 0, new { @class = "ng-textarea", placeholder = "Svaki korak u novom redu..." })
+            </div>
+
+            <div class="ng-two-col" style="margin-bottom: 16px;">
+                <div>
+                    <label class="ng-field-label">Kategorija</label>
+                    @Html.DropDownListFor(m => m.KategorijaId,
+                        new SelectList(ViewBag.Kategorije, "Id", "Naziv"),
+                        "— Odaberi kategoriju —",
+                        new { @class = "ng-select" })
+                    @Html.ValidationMessageFor(m => m.KategorijaId, "", new { @class = "ng-validation-error" })
+                </div>
+                <div>
+                    <label class="ng-field-label">Vrijeme pripreme (min)</label>
+                    @Html.TextBoxFor(m => m.VrijemePripreme, new { @class = "ng-input", type = "number", min = "1", max = "600", placeholder = "45" })
+                    @Html.ValidationMessageFor(m => m.VrijemePripreme, "", new { @class = "ng-validation-error" })
+                </div>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label class="ng-field-label">Fotografija (URL)</label>
+                @Html.TextBoxFor(m => m.Fotografija, new { @class = "ng-input", placeholder = "https://..." })
+            </div>
+
+            <hr class="section-divider" />
+
+            <p class="section-title">Ciljevi</p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
+                @foreach (var cilj in ViewBag.SviCiljevi as List<NutriGoal.Models.Ciljevi>)
+                {
+                    bool odabran = Model.OdabraniCiljeviIds.Contains(cilj.Id);
+                    <label style="display: inline-flex; align-items: center; gap: 8px; background: @(odabran ? "#D4E8D4" : "#F5F0E8"); border-radius: 50px; padding: 8px 16px; cursor: pointer; font-size: 14px; color: #1C3D2E;">
+                        <input type="checkbox" name="OdabraniCiljeviIds" value="@cilj.Id" @(odabran ? "checked" : "") style="accent-color: #1C3D2E;" />
+                        @cilj.Naziv
+                    </label>
+                }
+            </div>
+
+            <hr class="section-divider" />
+
+            <p class="section-title">Sastojci</p>
+
+            <div id="sastojci-lista">
+                @for (int i = 0; i < Model.Sastojci.Count; i++)
+                {
+                    <div class="sastojak-red" style="display: flex; gap: 12px; margin-bottom: 10px; align-items: center;">
+                        <select name="Sastojci[@i].SastojakId" class="ng-select" style="flex: 1; border-radius: 50px;">
+                            <option value="0">— Odaberi sastojak —</option>
+                            @foreach (var s in ViewBag.SviSastojci as List<NutriGoal.Models.Sastojci>)
+                            {
+                                <option value="@s.Id" @(Model.Sastojci[i].SastojakId == s.Id ? "selected" : "")>@s.Naziv</option>
+                            }
+                        </select>
+                        <input type="number" name="Sastojci[@i].KolicinaG" value="@Model.Sastojci[i].KolicinaG.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+                            class="ng-input" style="width: 120px;" placeholder="g" min="0" step="0.1" />
+                        <button type="button" onclick="ukloniRed(this)"
+                            style="background: #fee2e2; color: #991b1b; border: none; border-radius: 50px; padding: 8px 14px; cursor: pointer; font-size: 13px;">
+                            Ukloni
+                        </button>
+                    </div>
+                }
+            </div>
+
+            <button type="button" onclick="dodajSastojak()"
+                style="background: #EDE8DE; color: #1C3D2E; border: none; border-radius: 50px; padding: 9px 20px; font-size: 13px; font-weight: 500; cursor: pointer; margin-bottom: 8px;">
+                + Dodaj sastojak
+            </button>
+
+            <hr class="section-divider" />
+
+            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                @Html.ActionLink("Odustani", "Index", "Admin", null, new { style = "padding: 13px 28px; border-radius: 50px; background: #EDE8DE; color: #1C3D2E; font-size: 14px; font-weight: 500; text-decoration: none;" })
+                <button type="submit" style="background: #1C3D2E; color: white; border: none; border-radius: 50px; padding: 13px 28px; font-size: 14px; font-weight: 600; cursor: pointer;">
+                    @(jeUredivanje ? "Sačuvaj izmjene" : "Dodaj recept")
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+<div id="sastojak-template" style="display: none;">
+    <div class="sastojak-red" style="display: flex; gap: 12px; margin-bottom: 10px; align-items: center;">
+        <select class="ng-select" style="flex: 1; border-radius: 50px;">
+            <option value="0">— Odaberi sastojak —</option>
+            @foreach (var s in ViewBag.SviSastojci as List<NutriGoal.Models.Sastojci>)
+            {
+                <option value="@s.Id">@s.Naziv</option>
+            }
+        </select>
+        <input type="number" class="ng-input" style="width: 120px;" placeholder="g" min="0" step="0.1" />
+        <button type="button" onclick="ukloniRed(this)"
+            style="background: #fee2e2; color: #991b1b; border: none; border-radius: 50px; padding: 8px 14px; cursor: pointer; font-size: 13px;">
+            Ukloni
+        </button>
+    </div>
+</div>
+
+<script>
+    var brojRedova = @Model.Sastojci.Count;
+
+    function dodajSastojak() {
+        var template = document.getElementById('sastojak-template').firstElementChild.cloneNode(true);
+        template.querySelector('select').name = 'Sastojci[' + brojRedova + '].SastojakId';
+        template.querySelector('input').name = 'Sastojci[' + brojRedova + '].KolicinaG';
+        document.getElementById('sastojci-lista').appendChild(template);
+        brojRedova++;
+    }
+
+    function ukloniRed(btn) {
+        btn.parentElement.remove();
+    }
+</script>
