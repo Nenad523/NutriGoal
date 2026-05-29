@@ -179,6 +179,78 @@
                     </label>
                 }
             </div>
+
+            <hr class="section-divider" />
+
+            <p class="section-title">Sastojci</p>
+
+            <div id="sastojci-lista">
+                @for (int i = 0; i < Model.Sastojci.Count; i++)
+                {
+                    <div class="sastojak-red" style="display: flex; gap: 12px; margin-bottom: 10px; align-items: center;">
+                        <select name="Sastojci[@i].SastojakId" class="ng-select" style="flex: 1; border-radius: 50px;">
+                            <option value="0">— Odaberi sastojak —</option>
+                            @foreach (var s in ViewBag.SviSastojci as List<NutriGoal.Models.Sastojci>)
+                            {
+                                <option value="@s.Id" @(Model.Sastojci[i].SastojakId == s.Id ? "selected" : "")>@s.Naziv</option>
+                            }
+                        </select>
+                        <input type="number" name="Sastojci[@i].KolicinaG" value="@Model.Sastojci[i].KolicinaG"
+                            class="ng-input" style="width: 120px;" placeholder="g" min="0" step="0.1" />
+                        <button type="button" onclick="ukloniRed(this)"
+                            style="background: #fee2e2; color: #991b1b; border: none; border-radius: 50px; padding: 8px 14px; cursor: pointer; font-size: 13px;">
+                            Ukloni
+                        </button>
+                    </div>
+                }
+            </div>
+
+            <button type="button" onclick="dodajSastojak()"
+                style="background: #EDE8DE; color: #1C3D2E; border: none; border-radius: 50px; padding: 9px 20px; font-size: 13px; font-weight: 500; cursor: pointer; margin-bottom: 8px;">
+                + Dodaj sastojak
+            </button>
+
+            <hr class="section-divider" />
+
+            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                @Html.ActionLink("Odustani", "Index", "Admin", null, new { style = "padding: 13px 28px; border-radius: 50px; background: #EDE8DE; color: #1C3D2E; font-size: 14px; font-weight: 500; text-decoration: none;" })
+                <button type="submit" style="background: #1C3D2E; color: white; border: none; border-radius: 50px; padding: 13px 28px; font-size: 14px; font-weight: 600; cursor: pointer;">
+                    @(jeUredivanje ? "Sačuvaj izmjene" : "Dodaj recept")
+                </button>
+            </div>
         }
     </div>
 </div>
+
+<div id="sastojak-template" style="display: none;">
+    <div class="sastojak-red" style="display: flex; gap: 12px; margin-bottom: 10px; align-items: center;">
+        <select class="ng-select" style="flex: 1; border-radius: 50px;">
+            <option value="0">— Odaberi sastojak —</option>
+            @foreach (var s in ViewBag.SviSastojci as List<NutriGoal.Models.Sastojci>)
+            {
+                <option value="@s.Id">@s.Naziv</option>
+            }
+        </select>
+        <input type="number" class="ng-input" style="width: 120px;" placeholder="g" min="0" step="0.1" />
+        <button type="button" onclick="ukloniRed(this)"
+            style="background: #fee2e2; color: #991b1b; border: none; border-radius: 50px; padding: 8px 14px; cursor: pointer; font-size: 13px;">
+            Ukloni
+        </button>
+    </div>
+</div>
+
+<script>
+    var brojRedova = @Model.Sastojci.Count;
+
+    function dodajSastojak() {
+        var template = document.getElementById('sastojak-template').firstElementChild.cloneNode(true);
+        template.querySelector('select').name = 'Sastojci[' + brojRedova + '].SastojakId';
+        template.querySelector('input').name = 'Sastojci[' + brojRedova + '].KolicinaG';
+        document.getElementById('sastojci-lista').appendChild(template);
+        brojRedova++;
+    }
+
+    function ukloniRed(btn) {
+        btn.parentElement.remove();
+    }
+</script>
