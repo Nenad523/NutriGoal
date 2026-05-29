@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Web.Mvc;
 using NutriGoal.Models;
@@ -40,6 +41,24 @@ namespace NutriGoal.Controllers
                 }).ToList();
 
             return View(recepti);
+        }
+
+        // @desc - Forma za kreiranje novog recepta
+        // @route - GET: /Admin/Kreiraj
+        // @access - Private
+        public ActionResult Kreiraj()
+        {
+            if (!IsAdmin()) return RedirectToAction("Login", "Korisnik");
+
+            PopuniViewBag();
+            return View("Forma", new ReceptFormViewModel());
+        }
+
+        private void PopuniViewBag()
+        {
+            ViewBag.Kategorije = db.Kategorije.OrderBy(k => k.Naziv).ToList();
+            ViewBag.SviCiljevi = db.Ciljevi.OrderBy(c => c.Naziv).ToList();
+            ViewBag.SviSastojci = db.Sastojci.OrderBy(s => s.Naziv).ToList();
         }
     }
 }
