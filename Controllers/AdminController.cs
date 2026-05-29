@@ -17,11 +17,18 @@ namespace NutriGoal.Controllers
         // @desc - Povlacenje pocetne stranice za admina
         // @route - GET: /Admin/Index
         // @access - Private
-        public ActionResult Index()
+        public ActionResult Index(string naziv = null)
         {
             if (!IsAdmin()) return RedirectToAction("Login", "Korisnik");
 
-            var recepti = db.Recepti
+            ViewBag.FilterNaziv = naziv;
+
+            var query = db.Recepti.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(naziv))
+                query = query.Where(r => r.Naziv.Contains(naziv));
+
+            var recepti = query
                 .OrderBy(r => r.Naziv)
                 .Select(r => new ReceptViewModel
                 {
