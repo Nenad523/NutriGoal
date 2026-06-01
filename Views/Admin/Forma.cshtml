@@ -161,8 +161,20 @@
             </div>
 
             <div style="margin-bottom: 16px;">
-                <label class="ng-field-label">Fotografija (URL)</label>
-                @Html.TextBoxFor(m => m.Fotografija, new { @class = "ng-input", placeholder = "https://..." })
+                <label class="ng-field-label">Fotografija</label>
+                @Html.HiddenFor(m => m.Fotografija, new { id = "fotografija-url" })
+                <div id="foto-preview" style="display: @(string.IsNullOrEmpty(Model.Fotografija) ? "none" : "flex"); align-items: center; gap: 12px; margin-bottom: 10px;">
+                    <img id="foto-img" src="@Model.Fotografija" style="width: 80px; height: 60px; object-fit: cover; border-radius: 12px;" />
+                    <span id="foto-naziv" style="font-size: 13px; color: #374151; flex: 1;"></span>
+                    <button type="button" onclick="ukloniFotografiju()"
+                        style="background: #fee2e2; color: #991b1b; border: none; border-radius: 50px; padding: 6px 14px; cursor: pointer; font-size: 13px;">
+                        Ukloni
+                    </button>
+                </div>
+                <button type="button" id="btn-upload" onclick="otvoriWidget()"
+                    style="background: #EDE8DE; color: #1C3D2E; border: none; border-radius: 50px; padding: 11px 24px; font-size: 14px; font-weight: 500; cursor: pointer;">
+                    Odaberi sliku
+                </button>
             </div>
 
             <hr class="section-divider" />
@@ -254,3 +266,44 @@
         btn.parentElement.remove();
     }
 </script>
+
+@section scripts {
+    <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+    <script>
+        var cloudinaryWidget = cloudinary.createUploadWidget(
+            {
+                cloudName: 'dc6wjmmj6',
+                uploadPreset: 'nutrigoal_upload',
+                sources: ['local', 'url'],
+                multiple: false,
+                cropping: true,
+                croppingAspectRatio: 1.3,
+                showSkipCropButton: false,
+                minImageWidth: 520,
+                minImageHeight: 400,
+                language: 'en'
+            },
+            function (error, result) {
+                if (!error && result && result.event === 'success') {
+                    var url = result.info.secure_url;
+                    var naziv = result.info.original_filename + '.' + result.info.format;
+                    document.getElementById('fotografija-url').value = url;
+                    document.getElementById('foto-img').src = url;
+                    document.getElementById('foto-naziv').textContent = naziv;
+                    document.getElementById('foto-preview').style.display = 'flex';
+                }
+            }
+        );
+
+        function otvoriWidget() {
+            cloudinaryWidget.open();
+        }
+
+        function ukloniFotografiju() {
+            document.getElementById('fotografija-url').value = '';
+            document.getElementById('foto-img').src = '';
+            document.getElementById('foto-naziv').textContent = '';
+            document.getElementById('foto-preview').style.display = 'none';
+        }
+    </script>
+}
