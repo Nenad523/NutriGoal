@@ -156,6 +156,46 @@
     </div>
 
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+        <!-- KARTICA: MRSAVLJENJE -->
+        <div style="background: white; border-radius: 20px; border: 1px solid #e5e7eb; padding: 28px; display: flex; flex-direction: column; gap: 20px;">
+
+            <div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <span style="font-size: 28px;">🔥</span>
+                    <h3 style="font-size: 20px; font-weight: 700; color: #111827; margin: 0;">Mršavljenje</h3>
+                </div>
+                <p style="font-size: 14px; color: #6b7280; line-height: 1.6; margin: 0;">
+                    Smanjeni kalorijski deficit + visok unos proteina za očuvanje mišića i vitalnost.
+                </p>
+            </div>
+
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span style="background: #D4E8D4; color: #1C3D2E; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 50px;">↑ Proteini</span>
+                <span style="background: #EDE8DE; color: #374151; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 50px;">↓ Ugljeni hidrati</span>
+                <span style="background: #EDE8DE; color: #374151; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 50px;">= Masti</span>
+            </div>
+
+            <div>
+                <p style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #C87941; margin: 0 0 10px 0;">Preporučene namirnice</p>
+                <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #374151; line-height: 1.8;">
+                    <li>Pileća prsa, ćuretina, tuna, jaja, grčki jogurt</li>
+                    <li>Vlaknaste žitarice: zob, ječam, kinoa, hljeb od cjelovitog zrna</li>
+                    <li>Voće s vlaknima: bobice, jabuka, kruška, kivi, grejp</li>
+                </ul>
+            </div>
+
+            <div>
+                <p style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #C87941; margin: 0 0 10px 0;">⚠ Izbjegavati</p>
+                <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #374151; line-height: 1.8;">
+                    <li><strong>Tečne kalorije:</strong> sokovi, gazirana pića, slatke kafe</li>
+                    <li><strong>Ultra-prerađena hrana:</strong> čips, keksi, instant tijesta</li>
+                    <li><strong>Pržena hrana:</strong> pomfrit, pohano meso — visok kalorijski gustoć</li>
+                </ul>
+            </div>
+
+            @Html.ActionLink("Odaberi ovaj cilj →", "Profil", "Korisnik", null, new { style = "display: block; text-align: center; background: #1C3D2E; color: white; padding: 13px 24px; border-radius: 50px; font-size: 14px; font-weight: 600; text-decoration: none; margin-top: auto;" })
+        </div>
+
         <!-- kartice idu ovdje -->
     </div>
 
