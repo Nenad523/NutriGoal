@@ -131,9 +131,10 @@ namespace NutriGoal.Controllers
 
             var model = new ProfilViewModel();
 
+            var korisnik = db.Korisnici.Find(korisnikId);
+
             if (profil != null)
             {
-                // Popuni model sa postojećim podacima
                 model.Ime = profil.Ime;
                 model.Prezime = profil.Prezime;
                 model.DatumRodjenja = profil.DatumRodjenja;
@@ -144,7 +145,10 @@ namespace NutriGoal.Controllers
                 model.CiljId = profil.CiljId;
             }
 
+            model.OdabraneAlergijeIds = korisnik.Alergije.Select(a => a.Id).ToList();
+
             ViewBag.Ciljevi = db.Ciljevi.ToList();
+            ViewBag.Alergije = db.Alergije.ToList();
             return View(model);
         }
 
@@ -163,6 +167,7 @@ namespace NutriGoal.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.Ciljevi = db.Ciljevi.ToList();
+                ViewBag.Alergije = db.Alergije.ToList();
                 return View(model);
             }
 
@@ -202,9 +207,17 @@ namespace NutriGoal.Controllers
                 postojeciProfil.DatumAzuriranja = DateTime.Now;
             }
 
+            // Sinhronizacija alergija (many-to-many)
+            var korisnik = db.Korisnici.Find(korisnikId);
+            korisnik.Alergije.Clear();
+            if (model.OdabraneAlergijeIds != null && model.OdabraneAlergijeIds.Any())
+            {
+                var odabrane = db.Alergije.Where(a => model.OdabraneAlergijeIds.Contains(a.Id)).ToList();
+                foreach (var a in odabrane)
+                    korisnik.Alergije.Add(a);
+            }
+
             db.SaveChanges();
-            // Triger se automatski okine ovdje ↑
-            // i izračuna BMR, TDEE, PreporucenoKalorija
 
             return RedirectToAction("Profil");
         }

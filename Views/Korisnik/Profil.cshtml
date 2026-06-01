@@ -170,6 +170,26 @@
                     new { @class = "ng-select" })
             </div>
 
+            <div style="margin-bottom: 28px;">
+                <label class="ng-field-label" style="margin-bottom: 12px;">Alergije</label>
+                <p style="font-size: 13px; color: #6b7280; margin: 0 0 14px 0;">Označite namirnice na koje ste alergični. Recepti koji ih sadrže bit će označeni upozorenjem.</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    @foreach (var alergija in ViewBag.Alergije as List<NutriGoal.Models.Alergije>)
+                    {
+                        var odabrana = Model.OdabraneAlergijeIds.Contains(alergija.Id);
+                        var borderBoja = odabrana ? "#1C3D2E" : "transparent";
+                        <label style="display: flex; align-items: center; gap: 10px; background: #F5F0E8; border-radius: 12px; padding: 12px 16px; cursor: pointer; border: 2px solid @borderBoja; transition: border-color 0.15s;">
+                            <input type="checkbox"
+                                   name="OdabraneAlergijeIds"
+                                   value="@alergija.Id"
+                                   @(odabrana ? "checked" : "")
+                                   style="accent-color: #1C3D2E; width: 16px; height: 16px; cursor: pointer; flex-shrink: 0;" />
+                            <span style="font-size: 14px; font-weight: 500; color: #111827;">@alergija.Naziv</span>
+                        </label>
+                    }
+                </div>
+            </div>
+
             <button type="submit" class="ng-submit-btn">Sačuvaj profil</button>
         }
 
