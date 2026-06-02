@@ -143,6 +143,176 @@
 </section>
 <!-- KRAJ SEKCIJE 3 KORAKA -->
 
+<!-- POCETAK SEKCIJE CILJEVI -->
+<section style="max-width: 1280px; margin: 0 auto; padding: clamp(48px, 6vw, 80px) 24px;">
+
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 40px;">
+        <h2 style="font-size: clamp(28px, 4vw, 44px); font-weight: 800; color: #111827; margin: 0;">
+            Tri jasna cilja, jedan put.
+        </h2>
+        <p style="font-size: 14px; color: #6b7280; margin: 0; max-width: 360px; text-align: right; line-height: 1.6;">
+            Odaberite svoj cilj, a mi ćemo posložiti makronutrijente i recepte.
+        </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+        <!-- KARTICA: MRSAVLJENJE -->
+        <div style="background: white; border-radius: 20px; border: 1px solid #e5e7eb; padding: 28px; display: flex; flex-direction: column; gap: 20px;">
+
+            <div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <span style="font-size: 28px;">🔥</span>
+                    <h3 style="font-size: 20px; font-weight: 700; color: #111827; margin: 0;">Mršavljenje</h3>
+                </div>
+                <p style="font-size: 14px; color: #6b7280; line-height: 1.6; margin: 0;">
+                    Smanjeni kalorijski deficit + visok unos proteina za očuvanje mišića i vitalnost.
+                </p>
+            </div>
+
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span style="background: #D4E8D4; color: #1C3D2E; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 50px;">↑ Proteini</span>
+                <span style="background: #EDE8DE; color: #374151; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 50px;">↓ Ugljeni hidrati</span>
+                <span style="background: #EDE8DE; color: #374151; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 50px;">= Masti</span>
+            </div>
+
+            <div>
+                <p style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #C87941; margin: 0 0 10px 0;">Preporučene namirnice</p>
+                <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #374151; line-height: 1.8;">
+                    <li>Pileća prsa, ćuretina, tuna, jaja, grčki jogurt</li>
+                    <li>Vlaknaste žitarice: zob, ječam, kinoa, hljeb od cjelovitog zrna</li>
+                    <li>Voće s vlaknima: bobice, jabuka, kruška, kivi, grejp</li>
+                </ul>
+            </div>
+
+            <div>
+                <p style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #C87941; margin: 0 0 10px 0;">⚠ Izbjegavati</p>
+                <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #374151; line-height: 1.8;">
+                    <li><strong>Tečne kalorije:</strong> sokovi, gazirana pića, slatke kafe</li>
+                    <li><strong>Ultra-prerađena hrana:</strong> čips, keksi, instant tijesta</li>
+                    <li><strong>Pržena hrana:</strong> pomfrit, pohano meso — visok kalorijski gustoć</li>
+                </ul>
+            </div>
+
+            @Html.ActionLink("Odaberi ovaj cilj →", "Profil", "Korisnik", null, new { style = "display: block; text-align: center; background: #1C3D2E; color: white; padding: 13px 24px; border-radius: 50px; font-size: 14px; font-weight: 600; text-decoration: none; margin-top: auto;" })
+        </div>
+
+        <!-- KARTICA: IZGRADNJA MISICA -->
+        <div style="background: white; border-radius: 20px; border: 1px solid #e5e7eb; padding: 28px; display: flex; flex-direction: column; gap: 20px;">
+
+            <div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <span style="font-size: 28px;">💪</span>
+                    <h3 style="font-size: 20px; font-weight: 700; color: #111827; margin: 0;">Izgradnja mišića</h3>
+                </div>
+                <p style="font-size: 14px; color: #6b7280; line-height: 1.6; margin: 0;">
+                    Kalorijski suficit + progresivan trening snage za maksimalan rast mišićne mase.
+                </p>
+            </div>
+
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span style="background: #D4E8D4; color: #1C3D2E; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 50px;">↑ Proteini</span>
+                <span style="background: #D4E8D4; color: #1C3D2E; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 50px;">↑ Ugljeni hidrati</span>
+                <span style="background: #EDE8DE; color: #374151; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 50px;">= Masti</span>
+            </div>
+
+            <div>
+                <p style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #C87941; margin: 0 0 10px 0;">Preporučene namirnice</p>
+                <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #374151; line-height: 1.8;">
+                    <li>Kvalitetni proteini: govedina, losos, tuna, jaja, mlijeko, sir</li>
+                    <li>Kompleksni UH: zob, smeđi pirinač, krompir, integralna pasta</li>
+                    <li>Oporavak: jogurt, kefir, svježi sir — oporavak 24–72h</li>
+                </ul>
+            </div>
+
+            <div>
+                <p style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #C87941; margin: 0 0 10px 0;">⚠ Izbjegavati</p>
+                <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #374151; line-height: 1.8;">
+                    <li><strong>Prazne kalorije:</strong> alkohol — smanjuje sintezu proteina</li>
+                    <li><strong>Prekomjerno kardio:</strong> duge trke svaki dan crpe energiju za rast</li>
+                    <li><strong>Preskakanje obroka:</strong> razmak više od 5h smanjuje mišićnu sintezu</li>
+                </ul>
+            </div>
+
+            @Html.ActionLink("Odaberi ovaj cilj →", "Profil", "Korisnik", null, new { style = "display: block; text-align: center; background: #1C3D2E; color: white; padding: 13px 24px; border-radius: 50px; font-size: 14px; font-weight: 600; text-decoration: none; margin-top: auto;" })
+        </div>
+
+        <!-- KARTICA: ODRZAVANJE -->
+        <div style="background: white; border-radius: 20px; border: 1px solid #e5e7eb; padding: 28px; display: flex; flex-direction: column; gap: 20px;">
+
+            <div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <span style="font-size: 28px;">⚖️</span>
+                    <h3 style="font-size: 20px; font-weight: 700; color: #111827; margin: 0;">Održavanje</h3>
+                </div>
+                <p style="font-size: 14px; color: #6b7280; line-height: 1.6; margin: 0;">
+                    Balans makronutrijenata za stabilnu energiju i dugoročno zdravlje bez ekstremnih dijeta.
+                </p>
+            </div>
+
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span style="background: #EDE8DE; color: #374151; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 50px;">= Proteini</span>
+                <span style="background: #EDE8DE; color: #374151; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 50px;">= Ugljeni hidrati</span>
+                <span style="background: #EDE8DE; color: #374151; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 50px;">= Masti</span>
+            </div>
+
+            <div>
+                <p style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #C87941; margin: 0 0 10px 0;">Preporučene namirnice</p>
+                <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #374151; line-height: 1.8;">
+                    <li>Kvalitetni proteini: piletina, riba, jaja, mahunarke, mliječni proizvodi</li>
+                    <li>Zdrave masti: maslinovo ulje, orasi, sjemenke, avokado, masna riba</li>
+                    <li>Šareno povrće: 5 različitih boja dnevno — antioksidansi i minerali</li>
+                </ul>
+            </div>
+
+            <div>
+                <p style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #C87941; margin: 0 0 10px 0;">⚠ Izbjegavati</p>
+                <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #374151; line-height: 1.8;">
+                    <li><strong>Trans masti:</strong> margarini, industrijska peciva — srčane bolesti</li>
+                    <li><strong>Pretjerani šećeri:</strong> više od 50g dodanih šećera dnevno povećava upalu</li>
+                    <li><strong>Pretjerana sol:</strong> više od 5g/dan podiže krvni pritisak</li>
+                </ul>
+            </div>
+
+            @Html.ActionLink("Odaberi ovaj cilj →", "Profil", "Korisnik", null, new { style = "display: block; text-align: center; background: #1C3D2E; color: white; padding: 13px 24px; border-radius: 50px; font-size: 14px; font-weight: 600; text-decoration: none; margin-top: auto;" })
+        </div>
+
+    </div>
+</section>
+
+</section>
+<!-- KRAJ SEKCIJE CILJEVI -->
+
+@if (Session["KorisnikId"] != null)
+{
+    <section style="max-width: 1280px; margin: 0 auto; padding: 0 24px clamp(48px, 6vw, 80px) 24px;">
+        @if (ViewBag.PreporucenoKalorija == null)
+        {
+            <div style="background: #1C3D2E; border-radius: 20px; padding: clamp(28px, 4vw, 48px) clamp(24px, 4vw, 56px); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
+                <div>
+                    <p style="font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #A8D5B5; margin: 0 0 8px 0;">Vaš profil</p>
+                    <h2 style="font-size: clamp(20px, 2.5vw, 28px); font-weight: 600; color: white; margin: 0 0 8px 0;">Saznajte vašu preporučenu dnevnu količinu kalorija</h2>
+                    <p style="font-size: 15px; color: #A8D5B5; margin: 0;">Popunite profil kako bismo izračunali BMR, TDEE i personalizovane preporuke.</p>
+                </div>
+                @Html.ActionLink("Popuni profil →", "Profil", "Korisnik", null, new { style = "background: #C87941; color: white; padding: 14px 28px; border-radius: 50px; font-size: 15px; font-weight: 600; text-decoration: none; white-space: nowrap; flex-shrink: 0;" })
+            </div>
+        }
+        else
+        {
+            <div style="background: #1C3D2E; border-radius: 20px; padding: clamp(28px, 4vw, 48px) clamp(24px, 4vw, 56px); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
+                <div>
+                    <p style="font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #A8D5B5; margin: 0 0 8px 0;">Vaša preporuka</p>
+                    <h2 style="font-size: clamp(20px, 2.5vw, 28px); font-weight: 600; color: white; margin: 0 0 8px 0;">Preporučena dnevna količina kalorija</h2>
+                    <p style="font-size: 15px; color: #A8D5B5; margin: 0;">Na osnovu vašeg profila i cilja, vaša dnevna preporuka je:</p>
+                </div>
+                <div style="text-align: center; flex-shrink: 0;">
+                    <p style="font-size: clamp(36px, 5vw, 56px); font-weight: 700; color: #C87941; margin: 0; line-height: 1;">@Math.Round((decimal)ViewBag.PreporucenoKalorija)</p>
+                    <p style="font-size: 14px; font-weight: 600; color: #A8D5B5; margin: 4px 0 0 0; letter-spacing: 0.06em; text-transform: uppercase;">kcal / dan</p>
+                </div>
+            </div>
+        }
+    </section>
+}
+
 @if (Session["KorisnikId"] == null)
 {
     <!-- POCETAK CTA SEKCIJE -->

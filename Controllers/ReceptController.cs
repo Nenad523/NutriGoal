@@ -268,6 +268,8 @@ namespace NutriGoal.Controllers
                 db.SaveChanges();
             }
 
+            if (Request.UrlReferrer != null)
+                return Redirect(Request.UrlReferrer.ToString());
             return RedirectToAction("Index");
         }
 
@@ -293,6 +295,8 @@ namespace NutriGoal.Controllers
                 db.SaveChanges();
             }
 
+            if (Request.UrlReferrer != null)
+                return Redirect(Request.UrlReferrer.ToString());
             return RedirectToAction("Index");
         }
         // @desc - Dodavanje komentara na recept
