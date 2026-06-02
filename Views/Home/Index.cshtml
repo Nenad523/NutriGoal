@@ -282,6 +282,37 @@
 </section>
 <!-- KRAJ SEKCIJE CILJEVI -->
 
+@if (Session["KorisnikId"] != null)
+{
+    <section style="max-width: 1280px; margin: 0 auto; padding: 0 24px clamp(48px, 6vw, 80px) 24px;">
+        @if (ViewBag.PreporucenoKalorija == null)
+        {
+            <div style="background: #1C3D2E; border-radius: 20px; padding: clamp(28px, 4vw, 48px) clamp(24px, 4vw, 56px); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
+                <div>
+                    <p style="font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #A8D5B5; margin: 0 0 8px 0;">Vaš profil</p>
+                    <h2 style="font-size: clamp(20px, 2.5vw, 28px); font-weight: 600; color: white; margin: 0 0 8px 0;">Saznajte vašu preporučenu dnevnu količinu kalorija</h2>
+                    <p style="font-size: 15px; color: #A8D5B5; margin: 0;">Popunite profil kako bismo izračunali BMR, TDEE i personalizovane preporuke.</p>
+                </div>
+                @Html.ActionLink("Popuni profil →", "Profil", "Korisnik", null, new { style = "background: #C87941; color: white; padding: 14px 28px; border-radius: 50px; font-size: 15px; font-weight: 600; text-decoration: none; white-space: nowrap; flex-shrink: 0;" })
+            </div>
+        }
+        else
+        {
+            <div style="background: #1C3D2E; border-radius: 20px; padding: clamp(28px, 4vw, 48px) clamp(24px, 4vw, 56px); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
+                <div>
+                    <p style="font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #A8D5B5; margin: 0 0 8px 0;">Vaša preporuka</p>
+                    <h2 style="font-size: clamp(20px, 2.5vw, 28px); font-weight: 600; color: white; margin: 0 0 8px 0;">Preporučena dnevna količina kalorija</h2>
+                    <p style="font-size: 15px; color: #A8D5B5; margin: 0;">Na osnovu vašeg profila i cilja, vaša dnevna preporuka je:</p>
+                </div>
+                <div style="text-align: center; flex-shrink: 0;">
+                    <p style="font-size: clamp(36px, 5vw, 56px); font-weight: 700; color: #C87941; margin: 0; line-height: 1;">@Math.Round((decimal)ViewBag.PreporucenoKalorija)</p>
+                    <p style="font-size: 14px; font-weight: 600; color: #A8D5B5; margin: 4px 0 0 0; letter-spacing: 0.06em; text-transform: uppercase;">kcal / dan</p>
+                </div>
+            </div>
+        }
+    </section>
+}
+
 @if (Session["KorisnikId"] == null)
 {
     <!-- POCETAK CTA SEKCIJE -->

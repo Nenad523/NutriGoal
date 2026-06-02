@@ -52,6 +52,7 @@ namespace NutriGoal.Controllers
             {
                 var korisnikId = (int)Session["KorisnikId"];
                 var profil = db.KorisnickiProfil.FirstOrDefault(kp => kp.KorisnikId == korisnikId);
+                ViewBag.PreporucenoKalorija = profil != null ? profil.PreporucenoKalorija : null;
 
                 if (profil != null && profil.CiljId != null)
                 {
