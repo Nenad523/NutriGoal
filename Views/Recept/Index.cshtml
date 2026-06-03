@@ -387,7 +387,27 @@
     @@media (max-width: 768px) {
         .sidebar { display: none; }
         .layout-wrapper { flex-direction: column; }
-        .mobile-filter-bar { display: flex; }
+        .mobile-filter-bar {
+            display: flex;
+            position: sticky;
+            top: 64px;
+            z-index: 45;
+            border-radius: 0;
+            margin: 0 -24px;
+            width: calc(100% + 48px);
+        }
+        .mobile-filter-panel.otvoren {
+            position: fixed;
+            top: 116px;
+            left: 0;
+            right: 0;
+            z-index: 44;
+            border-radius: 0;
+            margin: 0;
+            padding: 20px 24px;
+            max-height: calc(100vh - 116px);
+            overflow-y: auto;
+        }
     }
 </style>
 
