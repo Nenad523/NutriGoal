@@ -138,10 +138,11 @@ namespace NutriGoal.Controllers
                 OdabraniCiljeviIds = recept.Ciljevi.Select(c => c.Id).ToList(),
                 Sastojci = db.ReceptSastojci
                     .Where(rs => rs.ReceptId == id)
+                    .ToList()
                     .Select(rs => new SastojakInput
                     {
                         SastojakId = rs.SastojakId,
-                        KolicinaG = rs.KolicinaG
+                        KolicinaG = (int)rs.KolicinaG
                     }).ToList()
             };
 

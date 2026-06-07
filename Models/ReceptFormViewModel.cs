@@ -34,6 +34,6 @@ namespace NutriGoal.Models
     public class SastojakInput
     {
         public int SastojakId { get; set; }
-        public decimal KolicinaG { get; set; }
+        public int KolicinaG { get; set; }
     }
 }

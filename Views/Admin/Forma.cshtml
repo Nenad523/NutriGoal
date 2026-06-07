@@ -207,8 +207,8 @@
                                 <option value="@s.Id" @(Model.Sastojci[i].SastojakId == s.Id ? "selected" : "")>@s.Naziv</option>
                             }
                         </select>
-                        <input type="number" name="Sastojci[@i].KolicinaG" value="@Model.Sastojci[i].KolicinaG.ToString(System.Globalization.CultureInfo.InvariantCulture)"
-                            class="ng-input" style="width: 120px;" placeholder="g" min="0" step="0.1" />
+                        <input type="number" name="Sastojci[@i].KolicinaG" value="@Model.Sastojci[i].KolicinaG"
+                            class="ng-input" style="width: 120px;" placeholder="g" min="0" step="1" />
                         <button type="button" onclick="ukloniRed(this)"
                             style="background: #fee2e2; color: #991b1b; border: none; border-radius: 50px; padding: 8px 14px; cursor: pointer; font-size: 13px;">
                             Ukloni
@@ -243,7 +243,7 @@
                 <option value="@s.Id">@s.Naziv</option>
             }
         </select>
-        <input type="number" class="ng-input" style="width: 120px;" placeholder="g" min="0" step="0.1" />
+        <input type="number" class="ng-input" style="width: 120px;" placeholder="g" min="0" step="1" />
         <button type="button" onclick="ukloniRed(this)"
             style="background: #fee2e2; color: #991b1b; border: none; border-radius: 50px; padding: 8px 14px; cursor: pointer; font-size: 13px;">
             Ukloni
