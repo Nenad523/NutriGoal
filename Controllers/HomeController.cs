@@ -24,13 +24,13 @@ namespace NutriGoal.Controllers
                 naslovObroka = "Dobro jutro!";
                 opisObroka = "Počnite dan pravim obrokom.";
             }
-            else if (sat >= 12 && sat < 17)
+            else if (sat >= 14 && sat < 18)
             {
                 kategorijaObroka = "Ručak";
                 naslovObroka = "Vrijeme je za ručak.";
                 opisObroka = "Napunite energiju za ostatak dana.";
             }
-            else if (sat >= 17 && sat < 21)
+            else if (sat >= 19 && sat < 23)
             {
                 kategorijaObroka = "Večera";
                 naslovObroka = "Večernji obrok.";
