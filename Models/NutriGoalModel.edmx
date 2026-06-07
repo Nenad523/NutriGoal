@@ -97,16 +97,6 @@
           <Property Name="Vrijednost" Type="int" Nullable="false" />
           <Property Name="DatumOcjene" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="PlanIshrane">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="KorisnikId" Type="int" Nullable="false" />
-          <Property Name="DatumKreiranja" Type="datetime" Nullable="false" />
-          <Property Name="DatumOd" Type="date" Nullable="false" />
-          <Property Name="DatumDo" Type="date" Nullable="false" />
-        </EntityType>
         <EntityType Name="ReceptCiljevi">
           <Key>
             <PropertyRef Name="ReceptId" />
@@ -159,16 +149,6 @@
           <Property Name="ProteinNa100g" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="UHNa100g" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="MastiNa100g" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-        </EntityType>
-        <EntityType Name="StavkePlana">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PlanId" Type="int" Nullable="false" />
-          <Property Name="ReceptId" Type="int" Nullable="false" />
-          <Property Name="DanSedmice" Type="int" Nullable="false" />
-          <Property Name="ObrokTip" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <Association Name="FK__Favoriti__Korisn__0A9D95DB">
           <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="1" />
@@ -290,18 +270,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PlanIshra__Koris__0F624AF8">
-          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="1" />
-          <End Role="PlanIshrane" Type="Self.PlanIshrane" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Korisnici">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PlanIshrane">
-              <PropertyRef Name="KorisnikId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__ReceptCil__CiljI__6E01572D">
           <End Role="Ciljevi" Type="Self.Ciljevi" Multiplicity="1" />
           <End Role="ReceptCiljevi" Type="Self.ReceptCiljevi" Multiplicity="*" />
@@ -386,30 +354,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__StavkePla__PlanI__151B244E">
-          <End Role="PlanIshrane" Type="Self.PlanIshrane" Multiplicity="1" />
-          <End Role="StavkePlana" Type="Self.StavkePlana" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PlanIshrane">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StavkePlana">
-              <PropertyRef Name="PlanId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__StavkePla__Recep__160F4887">
-          <End Role="Recepti" Type="Self.Recepti" Multiplicity="1" />
-          <End Role="StavkePlana" Type="Self.StavkePlana" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Recepti">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StavkePlana">
-              <PropertyRef Name="ReceptId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Function Name="fn_IzracunajBMR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="decimal">
           <Parameter Name="Pol" Type="char" Mode="In" />
           <Parameter Name="Visina" Type="decimal" Mode="In" />
@@ -454,13 +398,11 @@
           <EntitySet Name="KorisnickiProfil" EntityType="Self.KorisnickiProfil" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KorisnikAlergije" EntityType="Self.KorisnikAlergije" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ocjene" EntityType="Self.Ocjene" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PlanIshrane" EntityType="Self.PlanIshrane" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReceptCiljevi" EntityType="Self.ReceptCiljevi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recepti" EntityType="Self.Recepti" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReceptSastojci" EntityType="Self.ReceptSastojci" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SastojakAlergija" EntityType="Self.SastojakAlergija" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sastojci" EntityType="Self.Sastojci" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="StavkePlana" EntityType="Self.StavkePlana" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Favoriti__Korisn__0A9D95DB" Association="Self.FK__Favoriti__Korisn__0A9D95DB">
             <End Role="Korisnici" EntitySet="Korisnici" />
             <End Role="Favoriti" EntitySet="Favoriti" />
@@ -501,10 +443,6 @@
             <End Role="Recepti" EntitySet="Recepti" />
             <End Role="Ocjene" EntitySet="Ocjene" />
           </AssociationSet>
-          <AssociationSet Name="FK__PlanIshra__Koris__0F624AF8" Association="Self.FK__PlanIshra__Koris__0F624AF8">
-            <End Role="Korisnici" EntitySet="Korisnici" />
-            <End Role="PlanIshrane" EntitySet="PlanIshrane" />
-          </AssociationSet>
           <AssociationSet Name="FK__ReceptCil__CiljI__6E01572D" Association="Self.FK__ReceptCil__CiljI__6E01572D">
             <End Role="Ciljevi" EntitySet="Ciljevi" />
             <End Role="ReceptCiljevi" EntitySet="ReceptCiljevi" />
@@ -532,14 +470,6 @@
           <AssociationSet Name="FK__SastojakA__Sasto__76969D2E" Association="Self.FK__SastojakA__Sasto__76969D2E">
             <End Role="Sastojci" EntitySet="Sastojci" />
             <End Role="SastojakAlergija" EntitySet="SastojakAlergija" />
-          </AssociationSet>
-          <AssociationSet Name="FK__StavkePla__PlanI__151B244E" Association="Self.FK__StavkePla__PlanI__151B244E">
-            <End Role="PlanIshrane" EntitySet="PlanIshrane" />
-            <End Role="StavkePlana" EntitySet="StavkePlana" />
-          </AssociationSet>
-          <AssociationSet Name="FK__StavkePla__Recep__160F4887" Association="Self.FK__StavkePla__Recep__160F4887">
-            <End Role="Recepti" EntitySet="Recepti" />
-            <End Role="StavkePlana" EntitySet="StavkePlana" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -996,7 +926,7 @@
             <Parameter Name="Sortiranje" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="fn_NutritivneVrijednostiRecepta" IsComposable="true" ReturnType="Collection(NutriGoalModel.fn_NutritivneVrijednostiRecepta_Result)">
-            <Parameter Name="ReceptId" Mode="In" Type="Int32" />
+          <Parameter Name="ReceptId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_PreporuciRecepte_Result">
@@ -1129,17 +1059,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PlanIshrane">
-            <EntityTypeMapping TypeName="NutriGoalModel.PlanIshrane">
-              <MappingFragment StoreEntitySet="PlanIshrane">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="KorisnikId" ColumnName="KorisnikId" />
-                <ScalarProperty Name="DatumKreiranja" ColumnName="DatumKreiranja" />
-                <ScalarProperty Name="DatumOd" ColumnName="DatumOd" />
-                <ScalarProperty Name="DatumDo" ColumnName="DatumDo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Recepti">
             <EntityTypeMapping TypeName="NutriGoalModel.Recepti">
               <MappingFragment StoreEntitySet="Recepti">
@@ -1177,17 +1096,6 @@
                 <ScalarProperty Name="ProteinNa100g" ColumnName="ProteinNa100g" />
                 <ScalarProperty Name="UHNa100g" ColumnName="UHNa100g" />
                 <ScalarProperty Name="MastiNa100g" ColumnName="MastiNa100g" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StavkePlana">
-            <EntityTypeMapping TypeName="NutriGoalModel.StavkePlana">
-              <MappingFragment StoreEntitySet="StavkePlana">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="PlanId" ColumnName="PlanId" />
-                <ScalarProperty Name="ReceptId" ColumnName="ReceptId" />
-                <ScalarProperty Name="DanSedmice" ColumnName="DanSedmice" />
-                <ScalarProperty Name="ObrokTip" ColumnName="ObrokTip" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
