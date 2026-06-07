@@ -35,11 +35,9 @@ namespace NutriGoal.Models
         public virtual DbSet<Korisnici> Korisnici { get; set; }
         public virtual DbSet<KorisnickiProfil> KorisnickiProfil { get; set; }
         public virtual DbSet<Ocjene> Ocjene { get; set; }
-        public virtual DbSet<PlanIshrane> PlanIshrane { get; set; }
         public virtual DbSet<Recepti> Recepti { get; set; }
         public virtual DbSet<ReceptSastojci> ReceptSastojci { get; set; }
         public virtual DbSet<Sastojci> Sastojci { get; set; }
-        public virtual DbSet<StavkePlana> StavkePlana { get; set; }
     
         public virtual ObjectResult<sp_PreporuciRecepte_Result> sp_PreporuciRecepte(Nullable<int> korisnikId)
         {

@@ -218,7 +218,6 @@ namespace NutriGoal.Controllers
             db.Komentari.RemoveRange(db.Komentari.Where(k => k.ReceptId == id));
             db.Ocjene.RemoveRange(db.Ocjene.Where(o => o.ReceptId == id));
             db.Favoriti.RemoveRange(db.Favoriti.Where(f => f.ReceptId == id));
-            db.StavkePlana.RemoveRange(db.StavkePlana.Where(s => s.ReceptId == id));
             recept.Ciljevi.Clear();
 
             db.Recepti.Remove(recept);

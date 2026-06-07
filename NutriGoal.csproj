@@ -196,9 +196,6 @@
     <Compile Include="Models\Ocjene.cs">
       <DependentUpon>NutriGoalModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PlanIshrane.cs">
-      <DependentUpon>NutriGoalModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ProfilViewModel.cs" />
     <Compile Include="Models\ReceptFormViewModel.cs" />
     <Compile Include="Models\Recepti.cs">
@@ -217,9 +214,6 @@
       <DependentUpon>NutriGoalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_PretragaRecepata_Result.cs">
-      <DependentUpon>NutriGoalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\StavkePlana.cs">
       <DependentUpon>NutriGoalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

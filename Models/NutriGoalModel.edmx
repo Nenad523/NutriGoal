@@ -543,7 +543,6 @@
           <NavigationProperty Name="Komentari" Relationship="Self.FK__Komentari__Koris__00200768" FromRole="Korisnici" ToRole="Komentari" />
           <NavigationProperty Name="KorisnickiProfil" Relationship="Self.FK__Korisnick__Koris__6477ECF3" FromRole="Korisnici" ToRole="KorisnickiProfil" />
           <NavigationProperty Name="Ocjene" Relationship="Self.FK__Ocjene__Korisnik__05D8E0BE" FromRole="Korisnici" ToRole="Ocjene" />
-          <NavigationProperty Name="PlanIshrane" Relationship="Self.FK__PlanIshra__Koris__0F624AF8" FromRole="Korisnici" ToRole="PlanIshrane" />
           <NavigationProperty Name="Alergije" Relationship="Self.KorisnikAlergije" FromRole="Korisnici" ToRole="Alergije" />
         </EntityType>
         <EntityType Name="KorisnickiProfil">
@@ -579,18 +578,6 @@
           <NavigationProperty Name="Korisnici" Relationship="Self.FK__Ocjene__Korisnik__05D8E0BE" FromRole="Ocjene" ToRole="Korisnici" />
           <NavigationProperty Name="Recepti" Relationship="Self.FK__Ocjene__ReceptId__06CD04F7" FromRole="Ocjene" ToRole="Recepti" />
         </EntityType>
-        <EntityType Name="PlanIshrane">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="KorisnikId" Type="Int32" Nullable="false" />
-          <Property Name="DatumKreiranja" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DatumOd" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DatumDo" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Korisnici" Relationship="Self.FK__PlanIshra__Koris__0F624AF8" FromRole="PlanIshrane" ToRole="Korisnici" />
-          <NavigationProperty Name="StavkePlana" Relationship="Self.FK__StavkePla__PlanI__151B244E" FromRole="PlanIshrane" ToRole="StavkePlana" />
-        </EntityType>
         <EntityType Name="Recepti">
           <Key>
             <PropertyRef Name="Id" />
@@ -612,7 +599,6 @@
           <NavigationProperty Name="Komentari" Relationship="Self.FK__Komentari__Recep__01142BA1" FromRole="Recepti" ToRole="Komentari" />
           <NavigationProperty Name="Ocjene" Relationship="Self.FK__Ocjene__ReceptId__06CD04F7" FromRole="Recepti" ToRole="Ocjene" />
           <NavigationProperty Name="ReceptSastojci" Relationship="Self.FK__ReceptSas__Recep__72C60C4A" FromRole="Recepti" ToRole="ReceptSastojci" />
-          <NavigationProperty Name="StavkePlana" Relationship="Self.FK__StavkePla__Recep__160F4887" FromRole="Recepti" ToRole="StavkePlana" />
           <NavigationProperty Name="Ciljevi" Relationship="Self.ReceptCiljevi" FromRole="Recepti" ToRole="Ciljevi" />
         </EntityType>
         <EntityType Name="ReceptSastojci">
@@ -638,18 +624,6 @@
           <Property Name="MastiNa100g" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <NavigationProperty Name="ReceptSastojci" Relationship="Self.FK__ReceptSas__Sasto__73BA3083" FromRole="Sastojci" ToRole="ReceptSastojci" />
           <NavigationProperty Name="Alergije" Relationship="Self.SastojakAlergija" FromRole="Sastojci" ToRole="Alergije" />
-        </EntityType>
-        <EntityType Name="StavkePlana">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PlanId" Type="Int32" Nullable="false" />
-          <Property Name="ReceptId" Type="Int32" Nullable="false" />
-          <Property Name="DanSedmice" Type="Int32" Nullable="false" />
-          <Property Name="ObrokTip" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="PlanIshrane" Relationship="Self.FK__StavkePla__PlanI__151B244E" FromRole="StavkePlana" ToRole="PlanIshrane" />
-          <NavigationProperty Name="Recepti" Relationship="Self.FK__StavkePla__Recep__160F4887" FromRole="StavkePlana" ToRole="Recepti" />
         </EntityType>
         <Association Name="FK__Korisnick__CiljI__656C112C">
           <End Role="Ciljevi" Type="Self.Ciljevi" Multiplicity="0..1" />
@@ -747,18 +721,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PlanIshra__Koris__0F624AF8">
-          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="1" />
-          <End Role="PlanIshrane" Type="Self.PlanIshrane" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Korisnici">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PlanIshrane">
-              <PropertyRef Name="KorisnikId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Ocjene__ReceptId__06CD04F7">
           <End Role="Recepti" Type="Self.Recepti" Multiplicity="1" />
           <End Role="Ocjene" Type="Self.Ocjene" Multiplicity="*" />
@@ -771,18 +733,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__StavkePla__PlanI__151B244E">
-          <End Role="PlanIshrane" Type="Self.PlanIshrane" Multiplicity="1" />
-          <End Role="StavkePlana" Type="Self.StavkePlana" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PlanIshrane">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StavkePlana">
-              <PropertyRef Name="PlanId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__ReceptSas__Recep__72C60C4A">
           <End Role="Recepti" Type="Self.Recepti" Multiplicity="1" />
           <End Role="ReceptSastojci" Type="Self.ReceptSastojci" Multiplicity="*" />
@@ -791,18 +741,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="ReceptSastojci">
-              <PropertyRef Name="ReceptId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__StavkePla__Recep__160F4887">
-          <End Role="Recepti" Type="Self.Recepti" Multiplicity="1" />
-          <End Role="StavkePlana" Type="Self.StavkePlana" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Recepti">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StavkePlana">
               <PropertyRef Name="ReceptId" />
             </Dependent>
           </ReferentialConstraint>
@@ -840,11 +778,9 @@
           <EntitySet Name="Korisnici" EntityType="Self.Korisnici" />
           <EntitySet Name="KorisnickiProfil" EntityType="Self.KorisnickiProfil" />
           <EntitySet Name="Ocjene" EntityType="Self.Ocjene" />
-          <EntitySet Name="PlanIshrane" EntityType="Self.PlanIshrane" />
           <EntitySet Name="Recepti" EntityType="Self.Recepti" />
           <EntitySet Name="ReceptSastojci" EntityType="Self.ReceptSastojci" />
           <EntitySet Name="Sastojci" EntityType="Self.Sastojci" />
-          <EntitySet Name="StavkePlana" EntityType="Self.StavkePlana" />
           <AssociationSet Name="FK__Korisnick__CiljI__656C112C" Association="Self.FK__Korisnick__CiljI__656C112C">
             <End Role="Ciljevi" EntitySet="Ciljevi" />
             <End Role="KorisnickiProfil" EntitySet="KorisnickiProfil" />
@@ -877,25 +813,13 @@
             <End Role="Korisnici" EntitySet="Korisnici" />
             <End Role="Ocjene" EntitySet="Ocjene" />
           </AssociationSet>
-          <AssociationSet Name="FK__PlanIshra__Koris__0F624AF8" Association="Self.FK__PlanIshra__Koris__0F624AF8">
-            <End Role="Korisnici" EntitySet="Korisnici" />
-            <End Role="PlanIshrane" EntitySet="PlanIshrane" />
-          </AssociationSet>
           <AssociationSet Name="FK__Ocjene__ReceptId__06CD04F7" Association="Self.FK__Ocjene__ReceptId__06CD04F7">
             <End Role="Recepti" EntitySet="Recepti" />
             <End Role="Ocjene" EntitySet="Ocjene" />
           </AssociationSet>
-          <AssociationSet Name="FK__StavkePla__PlanI__151B244E" Association="Self.FK__StavkePla__PlanI__151B244E">
-            <End Role="PlanIshrane" EntitySet="PlanIshrane" />
-            <End Role="StavkePlana" EntitySet="StavkePlana" />
-          </AssociationSet>
           <AssociationSet Name="FK__ReceptSas__Recep__72C60C4A" Association="Self.FK__ReceptSas__Recep__72C60C4A">
             <End Role="Recepti" EntitySet="Recepti" />
             <End Role="ReceptSastojci" EntitySet="ReceptSastojci" />
-          </AssociationSet>
-          <AssociationSet Name="FK__StavkePla__Recep__160F4887" Association="Self.FK__StavkePla__Recep__160F4887">
-            <End Role="Recepti" EntitySet="Recepti" />
-            <End Role="StavkePlana" EntitySet="StavkePlana" />
           </AssociationSet>
           <AssociationSet Name="FK__ReceptSas__Sasto__73BA3083" Association="Self.FK__ReceptSas__Sasto__73BA3083">
             <End Role="Sastojci" EntitySet="Sastojci" />

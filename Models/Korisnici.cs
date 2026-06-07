@@ -21,7 +21,6 @@ namespace NutriGoal.Models
             this.Komentari = new HashSet<Komentari>();
             this.KorisnickiProfil = new HashSet<KorisnickiProfil>();
             this.Ocjene = new HashSet<Ocjene>();
-            this.PlanIshrane = new HashSet<PlanIshrane>();
             this.Alergije = new HashSet<Alergije>();
         }
     
@@ -39,8 +38,6 @@ namespace NutriGoal.Models
         public virtual ICollection<KorisnickiProfil> KorisnickiProfil { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ocjene> Ocjene { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlanIshrane> PlanIshrane { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Alergije> Alergije { get; set; }
     }
